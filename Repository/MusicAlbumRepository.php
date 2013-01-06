@@ -16,7 +16,7 @@ class MusicAlbumRepository extends EntityRepository
      * Number of album per page
      * @var integer
      */
-    const NB_PER_PAGE = 1;
+    const NB_PER_PAGE = 10;
 
     /**
      * Get music album with pagination
