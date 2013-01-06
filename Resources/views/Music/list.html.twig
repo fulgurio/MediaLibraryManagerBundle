@@ -1,0 +1,50 @@
+{% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+{% block content %}
+			<h1>{% trans %}fulgurio.medialibrarymanager.music.music{% endtrans %}</h1>
+{% if app.session.hasFlash('notice') %}			<div class="alert alert-success">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{#}			<form class="input-append pull-left">
+				<input type="text" class="span2">
+				<button type="submit" class="btn">Search</button>
+			</form>#}
+			<div class="clearfix">
+				<a class="btn pull-right" href="{{ path('FulgurioMLM_Music_Add') }}">{% trans %}fulgurio.medialibrarymanager.music.add_new_album{% endtrans %}</a>
+			</div>
+{% if albums is empty %}
+			<p>{% trans %}fulgurio.medialibrarymanager.music.no_album{% endtrans %}</p>
+{% else %}
+			<form method="post">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>{#Cover#}</th>
+							<th>{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}</th>
+							<th>{% trans %}fulgurio.medialibrarymanager.music.album{% endtrans %}</th>
+							<th>{#Option#}</th>
+						</tr>
+					</tbody>
+					<tbody>
+{% for album in albums %}
+						<tr>
+							<td><img src="/{{ album.webpath }}" class="img-polaroid" alt="<td>{{ album.artist }} - {{ album.title }}"></td>
+							<td>{{ album.artist }}</td>
+							<td>{{ album.title }}</td>
+							<td>
+								<a href="{{ path('FulgurioMLM_Music_Edit', {albumId: album.id}) }}" class="icon-edit"></a>
+								<a href="{{ path('FulgurioMLM_Music_Remove', {albumId: album.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+							</td>
+						</tr>
+{% endfor %}
+					</tbody>
+				</table>
+			</form>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

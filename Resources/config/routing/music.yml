@@ -1,0 +1,15 @@
+FulgurioMLM_Music_Add:
+    pattern:  /add
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:add }
+
+FulgurioMLM_Music_Edit:
+    pattern:  /{albumId}/edit
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:add }
+    
+FulgurioMLM_Music_Remove:
+    pattern:  /{albumId}/remove
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:remove }
+
+FulgurioMLM_Music_List:
+    pattern:  /
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:list }

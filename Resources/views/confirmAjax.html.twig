@@ -1,0 +1,13 @@
+<form action="{{ action }}" method="post">
+	<p>{{ confirmationMessage }}</p>
+	<p>
+		<button type="submit" name="confirm" class="btn btn-primary" value="yes">{% trans %}fulgurio.medialibrarymanager.common.yes{% endtrans %}</button>
+		<button type="submit" name="confirm" class="btn popupClose" value="no">{% trans %}fulgurio.medialibrarymanager.common.no{% endtrans %}</button>
+	</p>
+</form>
+<script>
+$('.popupClose').click(function(e) {
+	e.preventDefault();
+	$('#myModal').modal('hide');
+});
+</script>

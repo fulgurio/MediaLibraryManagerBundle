@@ -1,0 +1,8 @@
+FulgurioMLM_Music:
+    resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing/music.yml"
+    prefix:   /music
+
+FulgurioMLMHomepage:
+    pattern:  /
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Front:index }
+

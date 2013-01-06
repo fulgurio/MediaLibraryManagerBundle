@@ -1,0 +1,76 @@
+{% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+{% block css %}
+<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascript %}
+<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
+{% endblock %}
+{% block content %}
+{% if app.request.attributes.get('albumId') is null %}
+			<h1>{% trans %}fulgurio.medialibrarymanager.music.add_new_album{% endtrans %}</h1>
+			<form class="form-horizontal" method="post" action="{{ path('FulgurioMLM_Music_Add') }}" enctype="multipart/form-data">
+{% else %}
+			<h1>{% trans with {'%ALBUM_NAME%': album.title} %}fulgurio.medialibrarymanager.music.edit_album{% endtrans %}</h1>
+			<form class="form-horizontal" method="post" action="{{ path('FulgurioMLM_Music_Edit', {albumId: app.request.attributes.get('albumId')}) }}" enctype="multipart/form-data">
+{% endif %}
+				<fieldset>
+{{ form_errors(form) }}
+					<div class="control-group{% if form.getChild('artist').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputArtist">{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}</label>
+						<div class="controls">
+							<input type="text" id="inputArtist" maxlength="{{ form.getChild('artist').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}" name="{{ form.getChild('artist').get('full_name') }}" value="{{ form.getChild('artist').get('value') }}" />
+{% if form.getChild('artist').get('errors') %}{% for error in form.getChild('artist').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="control-group{% if form.getChild('title').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputAlbum">{% trans %}fulgurio.medialibrarymanager.music.album_name{% endtrans %}</label>
+						<div class="controls">
+							<input type="text" id="inputAlbum" required="required" maxlength="{{ form.getChild('title').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.album_name{% endtrans %}" name="{{ form.getChild('title').get('full_name') }}" value="{{ form.getChild('title').get('value') }}" />
+{% if form.getChild('title').get('errors') %}{% for error in form.getChild('title').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="control-group{% if form.getChild('media_type').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputMediaType">{% trans %}fulgurio.medialibrarymanager.music.media_type{% endtrans %}</label>
+						<div class="controls">
+							<select id="inputMediaType" class="input-mini" name="{{ form.getChild('media_type').get('full_name') }}">
+{% for media_type in form.getChild('media_type').get('choices') %}
+							<option value="{{ media_type.value }}"{% if media_type.value == form.getChild('media_type').get('value') %} selected="selected"{% endif %}>{{ media_type.label }}</option>
+{% endfor %}
+							</select>
+{% if form.getChild('media_type').get('errors') %}{% for error in form.getChild('media_type').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="control-group{% if form.getChild('publication_year').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputPublicationDate">{% trans %}fulgurio.medialibrarymanager.music.publication_year{% endtrans %}</label>
+						<div class="controls">
+							<input type="text" class="input-mini" id="inputPublicationDate" placeholder="{% trans %}fulgurio.medialibrarymanager.music.publication_year{% endtrans %}" name="{{ form.getChild('publication_year').get('full_name') }}" value="{{ form.getChild('publication_year').get('value') }}" />
+{% if form.getChild('publication_year').get('errors') %}{% for error in form.getChild('publication_year').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="control-group{% if form.getChild('publisher').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputPublisher">{% trans %}fulgurio.medialibrarymanager.music.publisher{% endtrans %}</label>
+						<div class="controls">
+							<input type="text" id="inputPublisher" maxlength="{{ form.getChild('publisher').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.publisher{% endtrans %}" name="{{ form.getChild('publisher').get('full_name') }}" value="{{ form.getChild('publisher').get('value') }}" />
+{% if form.getChild('publisher').get('errors') %}{% for error in form.getChild('publisher').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="control-group{% if form.getChild('file').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputCover">{% trans %}fulgurio.medialibrarymanager.music.cover{% endtrans %}</label>
+						<div class="controls">
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="fileupload-new thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('albumId') is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.webpath }}{% endif %}" alt="" /></div>
+								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px;"></div>
+								<span class="btn btn-file"><span class="fileupload-new">{% trans %}fulgurio.medialibrarymanager.common.select_image{% endtrans %}</span><span class="fileupload-exists">{% trans %}fulgurio.medialibrarymanager.common.change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.getChild('file').get('full_name') }}" /></span>
+								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans %}fulgurio.medialibrarymanager.common.remove_image{% endtrans %}</a>
+							</div>
+{% if form.getChild('file').get('errors') %}{% for error in form.getChild('file').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
+						<button type="submit" class="btn btn-primary">{% trans %}fulgurio.medialibrarymanager.common.save{% endtrans %}</button>
+						<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans %}fulgurio.medialibrarymanager.common.cancel{% endtrans %}</a>
+					</div>
+				</fieldset>
+			</form>
+{% endblock %}

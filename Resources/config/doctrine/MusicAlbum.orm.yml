@@ -1,0 +1,40 @@
+Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
+    type: entity
+    table: music_album
+    repositoryClass: Fulgurio\MediaLibraryManagerBundle\Repository\MusicAlbumRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        media_type:
+            type: smallint
+        artist:
+            type: string
+            length: '128'
+            nullable: true
+        title:
+            type: string
+            length: '128'
+        publication_year:
+            type: smallint
+            nullable: true
+        publisher:
+            type: string
+            length: '32'
+            nullable: true
+        cover:
+            type: string
+            length: '64'
+            nullable: true
+    lifecycleCallbacks:
+        prePersist: [ preUpload ]
+        preUpdate: [ preUpload ]
+        postPersist: [ upload ]
+        postUpdate: [ upload ]
+        postRemove: [ removeUpload ]
+#  oneToMany:
+#    tracks:
+#      targetEntity: MusicTrack
+#      mappedBy: music_album

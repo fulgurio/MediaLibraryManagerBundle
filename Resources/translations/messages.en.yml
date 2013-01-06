@@ -1,0 +1,34 @@
+fulgurio:
+  medialibrarymanager:
+    common:
+      title:                    Media Library Manager
+      homepage:                 Homepage
+      save:                     Save
+      search:                   Search
+      cancel:                   Cancel
+      yes:                      Yes
+      no:                       No
+      select_image:             Select image
+      change_image:             Change
+      remove_image:             Remove
+    music:
+      music:                    Music
+      no_album:                 No album
+      album:                    Album
+      album_name:               Album name
+      artist:                   Artiste
+      media_type:               Media type
+      publication_year:         Publication year
+      publisher:                Publisher
+      cover:                    Cover
+      add_new_album:            Add new album
+      edit_album:               Edit "%ALBUM_NAME%" album
+      adding_music_success:     New album added successfully !
+      editing_music_success:    Album edited successfully !
+      delete_confirm_message:   Do you really want to remove "%ALBUM_NAME%" ?
+      invalid_artist:           Data is invalid
+      invalid_title:            Data is invalid
+      invalid_publication_year: Data is invalid
+      invalid_publisher:        Data is invalid
+      invalid_media_type:       Data is invalid
+      invalid_cover:            File format not support (please upload a png or jpg format)

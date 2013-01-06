@@ -1,0 +1,220 @@
+<?php
+
+namespace Fulgurio\MediaLibraryManagerBundle\Entity;
+
+use Fulgurio\MediaLibraryManagerBundle\Entity\MediaCoverAbstract;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * MusicAlbum
+ */
+class MusicAlbum extends MediaCoverAbstract
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $media_type;
+
+    /**
+     * @var string
+     */
+    private $artist;
+
+    /**
+     * @var string
+     */
+    private $title;
+
+    /**
+     * @var integer
+     */
+    private $publication_year;
+
+    /**
+     * @var string
+     */
+    private $publisher;
+
+//     /**
+//      * @var string
+//      */
+//     private $cover;
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set media_type
+     *
+     * @param integer $mediaType
+     * @return MusicAlbum
+     */
+    public function setMediaType($mediaType)
+    {
+        $this->media_type = $mediaType;
+
+        return $this;
+    }
+
+    /**
+     * Get media_type
+     *
+     * @return integer
+     */
+    public function getMediaType()
+    {
+        return $this->media_type;
+    }
+
+    /**
+     * Set artist
+     *
+     * @param string $artist
+     * @return MusicAlbum
+     */
+    public function setArtist($artist)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return string
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return MusicAlbum
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set publication_year
+     *
+     * @param integer $publicationYear
+     * @return MusicAlbum
+     */
+    public function setPublicationYear($publicationYear)
+    {
+        $this->publication_year = $publicationYear;
+
+        return $this;
+    }
+
+    /**
+     * Get publication_year
+     *
+     * @return integer
+     */
+    public function getPublicationYear()
+    {
+        return $this->publication_year;
+    }
+
+    /**
+     * Set publisher
+     *
+     * @param string $publisher
+     * @return MusicAlbum
+     */
+    public function setPublisher($publisher)
+    {
+        $this->publisher = $publisher;
+
+        return $this;
+    }
+
+    /**
+     * Get publisher
+     *
+     * @return string
+     */
+    public function getPublisher()
+    {
+        return $this->publisher;
+    }
+
+//     /**
+//      * Set cover
+//      *
+//      * @param string $cover
+//      * @return MusicAlbum
+//      */
+//     public function setCover($cover)
+//     {
+//         $this->cover = $cover;
+
+//         return $this;
+//     }
+
+//     /**
+//      * Get cover
+//      *
+//      * @return string
+//      */
+//     public function getCover()
+//     {
+//         return $this->cover;
+//     }
+//     /**
+//      * @ORM\PrePersist
+//      */
+//     public function preUpload()
+//     {
+//         // Add your code here
+//     }
+
+//     /**
+//      * @ORM\PostPersist
+//      */
+//     public function upload()
+//     {
+//         // Add your code here
+//     }
+
+//     /**
+//      * @ORM\PostRemove
+//      */
+//     public function removeUpload()
+//     {
+//         // Add your code here
+//     }
+}
