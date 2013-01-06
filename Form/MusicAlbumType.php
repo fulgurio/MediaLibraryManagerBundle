@@ -7,6 +7,7 @@ use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
+// use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MusicAlbumType extends AbstractType
 {
@@ -29,6 +30,12 @@ class MusicAlbumType extends AbstractType
             ->add('publication_year', 'number', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publication_year'))
             ->add('publisher', 'text', array('max_length' => 32, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publisher'))
             ->add('file', 'file', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_cover'))
+//             ->add('tracks', 'collection', array(
+//             		'type' => new MusicTrackType(),
+//             		'allow_add' => TRUE,
+//             		'allow_delete' => TRUE,
+//             		'by_reference' => FALSE,
+//             ))
             ->addValidator(new CallbackValidator(function(FormInterface $form) {
                 $yearField = $form->get('publication_year');
                 if (strval(intval($yearField->getData())) == $yearField->getData() && ($yearField->getData() > date('Y') + 1 || $yearField->getData() < 1900))
@@ -38,6 +45,13 @@ class MusicAlbumType extends AbstractType
             }));
         ;
     }
+
+//     public function setDefaultOptions(OptionsResolverInterface $resolver)
+//     {
+//         $resolver->setDefaults(array(
+//                 'data_class' => 'Acme\TaskBundle\Entity\Category',
+//         ));
+//     }
 
     /**
      * (non-PHPdoc)

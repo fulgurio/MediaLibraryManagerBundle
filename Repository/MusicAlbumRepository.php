@@ -12,4 +12,21 @@ use Doctrine\ORM\EntityRepository;
  */
 class MusicAlbumRepository extends EntityRepository
 {
+    /**
+     * Number of album per page
+     * @var integer
+     */
+    const NB_PER_PAGE = 1;
+
+    /**
+     * Get music album with pagination
+     *
+     * @param Paginator $paginator KNPPaginator
+     * @param integer $page Current page
+     */
+    public function findWithPaginator($paginator, $page)
+    {
+        $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma ORDER BY ma.artist DESC');
+        return ($paginator->paginate($query, $page, self::NB_PER_PAGE));
+    }
 }

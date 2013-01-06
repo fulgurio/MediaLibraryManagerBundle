@@ -18,7 +18,8 @@ class MusicController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         // @todo : Filter by owner
-        $albums = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $albums = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')->findWithPaginator($paginator, $this->get('request')->query->get('page', 1));
         return $this->render(
                 'FulgurioMediaLibraryManagerBundle:Music:list.html.twig',
                 array(

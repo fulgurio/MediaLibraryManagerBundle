@@ -6,17 +6,21 @@ fulgurio:
       save:                     Save
       search:                   Search
       cancel:                   Cancel
+      popup_confirmation:       Confirmation popup
       yes:                      Yes
       no:                       No
       select_image:             Select image
       change_image:             Change
       remove_image:             Remove
+      first_page:               First page
+      last_page:                Last page
+      previous_page:            Previous page
+      next_page:                Next page
     music:
       music:                    Music
       no_album:                 No album
-      album:                    Album
       album_name:               Album name
-      artist:                   Artiste
+      artist:                   Artist
       media_type:               Media type
       publication_year:         Publication year
       publisher:                Publisher
