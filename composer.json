@@ -1,5 +1,5 @@
 {
-    "name": "fulgurio/MediaLibraryManagerBundle",
+    "name": "fulgurio/media-library-manager-bundle",
     "type": "symfony-bundle",
     "description": "Own media library manager online with Symfony2 framework",
     "keywords": ["media", "library"],
