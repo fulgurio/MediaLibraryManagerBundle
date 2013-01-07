@@ -25,5 +25,5 @@
         }
     },
 
-    "target-dir": "Fulgurio/Bundle/MediaLibraryManagerBundle"
+    "target-dir": "Fulgurio/MediaLibraryManagerBundle"
 }
