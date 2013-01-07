@@ -1,24 +1,45 @@
 {% if pageCount > 1 %}
 				<div class="pagination pull-right">
-				    <ul>
-{% if first is defined and current != first %}
-						<li><a href="{{ path(route, query|merge({'page': first})) }}" class="page_first" title="{% trans %}fulgurio.medialibrarymanager.common.first_page{% endtrans %}">|&laquo;</a></li>
-{% endif %}
-{% if previous is defined %}
-						<li><a href="{{ path(route, query|merge({'page': previous})) }}" title="{% trans %}fulgurio.medialibrarymanager.common.previous_page{% endtrans %}">&laquo;</a></li>
-{% else %}
+					<ul>
+{%   if app.request.method == 'POST' %}
+{%     if first is defined and current != first %}
+						<li><button class="btn btn-link" name="page" value="{{ first }}" class="page_first" title="{% trans %}fulgurio.medialibrarymanager.common.first_page{% endtrans %}">|&laquo;</button></li>
+{%     endif %}
+{%     if previous is defined %}
+						<li><button class="btn btn-link" name="page" value="{{ previous }}" title="{% trans %}fulgurio.medialibrarymanager.common.previous_page{% endtrans %}">&laquo;</button></li>
+{%     else %}
 						<li class="disabled"><a>&laquo;</a></li>
-{% endif %}
+{%     endif %}
 						<li class="active"><a>Page <strong>{{ current }}</strong> / {{pagesInRange|length}}</a></li>
-{% if next is defined %}
-						<li><a href="{{ path(route, query|merge({'page': next})) }}" title="{% trans %}fulgurio.medialibrarymanager.common.next_page{% endtrans %}">&raquo;</a></li>
-{% else %}
+{%     if next is defined %}
+						<li><button class="btn btn-link" name="page" value="{{ next }}" title="{% trans %}fulgurio.medialibrarymanager.common.next_page{% endtrans %}">&raquo;</button></li>
+{%     else %}
 						<li class="disabled"><a>&raquo;</a></li>
-{% endif %}
-{% if last is defined and current != last %}
+{%     endif %}
+{%     if last is defined and current != last %}
+
+						<li><button class="btn btn-link" name="page" value="{{ last }}" class="page_last" title="{% trans %}fulgurio.medialibrarymanager.common.last_page{% endtrans %}">&raquo;|</button></li>
+{%     endif %}
+{%   else %}
+{%     if first is defined and current != first %}
+						<li><a href="{{ path(route, query|merge({'page': first})) }}" class="page_first" title="{% trans %}fulgurio.medialibrarymanager.common.first_page{% endtrans %}">|&laquo;</a></li>
+{%     endif %}
+{%     if previous is defined %}
+						<li><a href="{{ path(route, query|merge({'page': previous})) }}" title="{% trans %}fulgurio.medialibrarymanager.common.previous_page{% endtrans %}">&laquo;</a></li>
+{%     else %}
+						<li class="disabled"><a>&laquo;</a></li>
+{%     endif %}
+						<li class="active"><a>Page <strong>{{ current }}</strong> / {{pagesInRange|length}}</a></li>
+{%     if next is defined %}
+						<li><a href="{{ path(route, query|merge({'page': next})) }}" title="{% trans %}fulgurio.medialibrarymanager.common.next_page{% endtrans %}">&raquo;</a></li>
+{%     else %}
+						<li class="disabled"><a>&raquo;</a></li>
+{%     endif %}
+{%     if last is defined and current != last %}
 
 						<li><a href="{{ path(route, query|merge({'page': last})) }}" class="page_last" title="{% trans %}fulgurio.medialibrarymanager.common.last_page{% endtrans %}">&raquo;|</a></li>
-{% endif %}
+{%     endif %}
+{%   endif %}
 					</ul>
 				</div>
 {% endif %}

@@ -2,22 +2,28 @@
 {% block content %}
 			<h1>{% trans %}fulgurio.medialibrarymanager.music.music{% endtrans %}</h1>
 {% if app.session.hasFlash('notice') %}			<div class="alert alert-success">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{% if albums is not empty %}
+			<form method="post" action="{{ path('FulgurioMLM_Music_List') }}">
+				<div class="input-append pull-left">
+					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
+					<button type="submit" class="btn">{% trans %}fulgurio.medialibrarymanager.common.search{% endtrans %}</button>
+				</div>
+{% endif %}
 			<div class="clearfix">
 				<a class="btn pull-right" href="{{ path('FulgurioMLM_Music_Add') }}">{% trans %}fulgurio.medialibrarymanager.music.add_new_album{% endtrans %}</a>
 			</div>
 {% if albums is empty %}
 			<p>{% trans %}fulgurio.medialibrarymanager.music.no_album{% endtrans %}</p>
 {% else %}
-			<form method="post">
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>{#Cover#}</th>
 							<th>{{ albums.sortable('fulgurio.medialibrarymanager.music.artist'|trans, 'ma.artist')|raw }}</th>
 							<th>{{ albums.sortable('fulgurio.medialibrarymanager.music.album_name'|trans, 'ma.title')|raw }}</th>
-							<th>{#Option#}</th>
+							<th>{#Options#}</th>
 						</tr>
-					</tbody>
+					</thead>
 					<tbody>
 {% for album in albums %}
 						<tr>
@@ -34,12 +40,6 @@
 				</table>
 {{ albums.render('FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}
 			</form>
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel">{% trans %}fulgurio.medialibrarymanager.common.popup_confirmation{% endtrans %}</h3>
-	</div>
-	<div class="modal-body"></div>
-</div>
+{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
 {% endif %}
 {% endblock %}
