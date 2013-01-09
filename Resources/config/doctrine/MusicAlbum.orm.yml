@@ -34,7 +34,8 @@ Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
         postPersist: [ upload ]
         postUpdate: [ upload ]
         postRemove: [ removeUpload ]
-#  oneToMany:
-#    tracks:
-#      targetEntity: MusicTrack
-#      mappedBy: music_album
+    oneToMany:
+        tracks:
+            targetEntity: MusicTrack
+            mappedBy: music_album
+            orderBy: { track_number : ASC }

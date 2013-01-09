@@ -1,0 +1,26 @@
+							<li>
+								<span>{% trans with {'%TRACK_NB%': trackNb} %}fulgurio.medialibrarymanager.music.track_n{% endtrans %}</span>
+{#}								<input type="hidden" name="{{ track.getChild('volume_number').get('full_name') }}" value="{{ volumeNb }}" />
+								<input type="hidden" name="{{ track.getChild('track_number').get('full_name') }}" value="{{ trackNb }}" />
+#}								<div class="control-group{% if track.getChild('title').get('errors') %} error{% endif %}">
+									<label class="control-label" for="inputTrackTitle_{{ volumeNb }}_{{ trackNb }}">{% trans %}fulgurio.medialibrarymanager.music.track.title{% endtrans %}</label>
+									<div class="controls">
+									<input type="text" id="inputTrackTitle_{{ volumeNb }}_{{ trackNb }}" maxlength="{{ track.getChild('title').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.track.title{% endtrans %}" name="{{ track.getChild('title').get('full_name') }}" value="{{ track.getChild('title').get('value') }}" />
+{% if track.getChild('title').get('errors') %}{% for error in track.getChild('title').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+									</div>
+								</div>
+								<div class="control-group{% if track.getChild('duration').get('errors') %} error{% endif %}">
+									<label class="control-label" for="inputTrackDuration_{{ volumeNb }}_{{ trackNb }}">{% trans %}fulgurio.medialibrarymanager.music.track.duration{% endtrans %}</label>
+									<div class="controls">
+									<input type="text" class="input-mini" id="inputTrackDuration_{{ volumeNb }}_{{ trackNb }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.track.duration{% endtrans %}" name="{{ track.getChild('duration').get('full_name') }}" value="{{ track.getChild('duration').get('value') }}" />
+{% if track.getChild('duration').get('errors') %}{% for error in track.getChild('duration').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+									</div>
+								</div>
+								<div class="control-group{% if track.getChild('lyrics').get('errors') %} error{% endif %}">
+									<label class="control-label" for="inputTrackLyrics_{{ volumeNb }}_{{ trackNb }}">{% trans %}fulgurio.medialibrarymanager.music.track.lyrics{% endtrans %}</label>
+									<div class="controls">
+									<textarea id="inputTrackLyrics_{{ volumeNb }}_{{ trackNb }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.track.lyrics{% endtrans %}" name="{{ track.getChild('lyrics').get('full_name') }}">{{ track.getChild('lyrics').get('value') }}</textarea>
+{% if track.getChild('lyrics').get('errors') %}{% for error in track.getChild('lyrics').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+									</div>
+								</div>
+							</li>

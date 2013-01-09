@@ -2,6 +2,7 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Form;
 
 use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
+use Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,11 +28,11 @@ class MusicAlbumHandler
     {
         if ($this->request->getMethod() == 'POST')
         {
-//             if ($this->request->get('realSubmit') !== '1')
-//             {
-//                 return FALSE;
-//             }
             $this->form->bindRequest($this->request);
+            if ($this->request->get('realSubmit') !== '1')
+            {
+                return FALSE;
+            }
             if ($this->form->isValid())
             {
                 $em = $this->doctrine->getEntityManager();
@@ -40,6 +41,13 @@ class MusicAlbumHandler
                 }
                 else
                 {
+                }
+                foreach ($album->getTracks() as $trackNb => $track)
+                {
+                    $track->setVolumeNumber(1);//@todo
+                    $track->setTrackNumber($trackNb + 1);
+                    $track->setMusicAlbum($album);
+                    $em->persist($track);
                 }
 //                 $album->setOwner($this->currentUser);
                 $em->persist($album);

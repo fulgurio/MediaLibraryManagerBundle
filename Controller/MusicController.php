@@ -3,6 +3,7 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Controller;
 
 use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
+use Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack;
 use Fulgurio\MediaLibraryManagerBundle\Form\MusicAlbumType;
 use Fulgurio\MediaLibraryManagerBundle\Form\MusicAlbumHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -72,14 +73,18 @@ class MusicController extends Controller
     {
         $album = $this->getAlbum($albumId);
         $request = $this->container->get('request');
-        if ($request->request->get('confirm') === 'yes')
+        if ($request->get('confirm') === 'yes')
         {
             $em = $this->getDoctrine()->getEntityManager();
+            foreach ($album->getTracks() as $track)
+            {
+                $em->remove($track);
+            }
             $em->remove($album);
             $em->flush();
             return new RedirectResponse($this->generateUrl('FulgurioMLM_Music_List'));
         }
-        else if ($request->request->get('confirm') === 'no')
+        else if ($request->get('confirm') === 'no')
         {
             // @todo : if pagination; it s better to come back a the same page
             return new RedirectResponse($this->generateUrl('FulgurioMLM_Music_List'));

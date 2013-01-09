@@ -15,6 +15,7 @@ class MusicAlbumRepository extends EntityRepository
     /**
      * Number of album per page
      * @var integer
+     * @todo : put the value into config
      */
     const NB_PER_PAGE = 10;
 
@@ -29,13 +30,13 @@ class MusicAlbumRepository extends EntityRepository
     {
         if (!is_null($filter) && trim($filter) != '')
         {
-            $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma WHERE ma.artist LIKE :artist OR ma.title LIKE :title ORDER BY ma.artist DESC');
+            $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma WHERE ma.artist LIKE :artist OR ma.title LIKE :title ORDER BY ma.artist ASC, ma.title ASC');
             $query->setParameter('artist', $filter . '%');
             $query->setParameter('title', $filter . '%');
         }
         else
         {
-            $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma ORDER BY ma.artist DESC');
+            $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma ORDER BY ma.artist ASC, ma.title ASC');
         }
         return ($paginator->paginate($query, $page, self::NB_PER_PAGE));
     }

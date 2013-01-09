@@ -13,6 +13,7 @@ class MusicAlbum extends MediaCoverAbstract
 {
     /**
      * @var integer
+     *
      */
     private $id;
 
@@ -28,6 +29,7 @@ class MusicAlbum extends MediaCoverAbstract
 
     /**
      * @var string
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -46,6 +48,18 @@ class MusicAlbum extends MediaCoverAbstract
 //      */
 //     private $cover;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $tracks;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tracks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -194,6 +208,39 @@ class MusicAlbum extends MediaCoverAbstract
 //     {
 //         return $this->cover;
 //     }
+
+    /**
+     * Add tracks
+     *
+     * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks
+     * @return MusicAlbum
+     */
+    public function addTrack(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks)
+    {
+        $this->tracks[] = $tracks;
+
+        return $this;
+    }
+
+    /**
+     * Remove tracks
+     *
+     * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks
+     */
+    public function removeTrack(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks)
+    {
+        $this->tracks->removeElement($tracks);
+    }
+
+    /**
+     * Get tracks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTracks()
+    {
+        return $this->tracks;
+    }
 //     /**
 //      * @ORM\PrePersist
 //      */

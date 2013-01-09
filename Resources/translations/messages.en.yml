@@ -36,3 +36,11 @@ fulgurio:
       invalid_publisher:        Data is invalid
       invalid_media_type:       Data is invalid
       invalid_cover:            File format not support (please upload a png or jpg format)
+      tracks:                   Tracks
+      track_n:                  Track n°%TRACK_NB%
+      add_track:                Add track
+      remove_track:             Remove track
+      track:
+          title:                Title
+          duration:             Duration
+          lyrics:               Lyrics
