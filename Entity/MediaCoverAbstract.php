@@ -15,9 +15,15 @@ abstract class MediaCoverAbstract
     protected $cover;
 
     /**
+     * @var integer
+     */
+    private $coverSize = 50;
+
+    /**
      * @Assert\File(maxSize="6000000")
      */
     public $file;
+
 
     public function preUpload()
     {
@@ -35,12 +41,7 @@ abstract class MediaCoverAbstract
         {
             return;
         }
-
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->cover);
-
+        $this->cropPicture($this->file->getPathname(), $this->getUploadRootDir() . '/' . $this->cover, $this->coverSize, $this->coverSize, 80);
         unset($this->file);
     }
 
@@ -79,6 +80,47 @@ abstract class MediaCoverAbstract
     }
 
     /**
+     * Image cropper
+     *
+     * @param string $sourcefile
+     * @param string $destfile
+     * @param integer $fw
+     * @param integer $fh
+     * @param integer $jpegquality
+     * @return array New site of picture
+     */
+    private function cropPicture($sourcefile, $destfile, $fw, $fh, $jpegquality = 100)
+    {
+        list($ow, $oh, $from_type) = getimagesize($sourcefile);
+        switch($from_type) {
+            case 1: // GIF
+                $srcImage = imageCreateFromGif($sourcefile) or die('Impossible de convertir cette image');
+                break;
+            case 2: // JPG
+                $srcImage = imageCreateFromJpeg($sourcefile) or die('Impossible de convertir cette image');
+                break;
+            case 3: // PNG
+                $srcImage = imageCreateFromPng($sourcefile) or die('Impossible de convertir cette image');
+                break;
+            default:
+                return;
+        }
+        if (($fw / $ow) > ($fh / $oh)) {
+            $tempw = $fw;
+            $temph = ($fw / $ow) * $oh;
+        }
+        else {
+            $tempw = ($fh / $oh) * $ow;
+            $temph = $fh;
+        }
+        $tempImage = imageCreateTrueColor($fw, $fh);
+        //    imageAntiAlias($tempImage, TRUE);
+        imagecopyresampled($tempImage, $srcImage, ($fw - $tempw) / 2, ($fh - $temph) / 2, 0, 0, $tempw, $temph, $ow, $oh);
+        imageJpeg($tempImage, $destfile, $jpegquality);
+        return (getimagesize($destfile));
+    }
+
+    /**
      * Set cover
      *
      * @param string $cover
@@ -99,5 +141,15 @@ abstract class MediaCoverAbstract
     public function getCover()
     {
         return $this->cover;
+    }
+
+    /**
+     * Set cover size
+     *
+     * @param integer $size
+     */
+    public function setCoverSize($size)
+    {
+        $this->coverSize = $size;
     }
 }

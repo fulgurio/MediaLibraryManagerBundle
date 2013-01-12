@@ -36,14 +36,8 @@ class MusicController extends Controller
      */
     public function addAction($albumId = NULL)
     {
-        if (is_null($albumId))
-        {
-            $album = new MusicAlbum();
-        }
-        else
-        {
-            $album = $this->getAlbum($albumId);
-        }
+        $album = is_null($albumId) ? new MusicAlbum() : $this->getAlbum($albumId);
+        $album->setCoverSize($this->container->getParameter('fulgurio_media_library_manager.cover_size'));
         $form = $this->createForm(new MusicAlbumType(), $album);
         $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $this->get('request'));
         if ($formHandler->process($album))
