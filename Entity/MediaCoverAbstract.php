@@ -36,7 +36,7 @@ abstract class MediaCoverAbstract
 
 
     /**
-     * @ORM\PrePersist
+     * ORM\PrePersist
      */
     public function preUpload()
     {
@@ -54,7 +54,7 @@ abstract class MediaCoverAbstract
     }
 
     /**
-     * @ORM\PostPersist
+     * ORM\PostPersist
      */
     public function upload()
     {
@@ -74,7 +74,7 @@ abstract class MediaCoverAbstract
     }
 
     /**
-     * @ORM\PostRemove
+     * ORM\PostRemove
      */
     public function removeUpload()
     {
