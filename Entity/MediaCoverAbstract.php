@@ -15,6 +15,16 @@ abstract class MediaCoverAbstract
     protected $cover;
 
     /**
+     * @var string
+     */
+    private $coverThumbnail;
+
+    /**
+     * @var string
+     */
+    private $coverUrl;
+
+    /**
      * @var integer
      */
     private $coverSize = 50;
@@ -25,26 +35,47 @@ abstract class MediaCoverAbstract
     public $file;
 
 
+    /**
+     * @ORM\PrePersist
+     */
     public function preUpload()
     {
-        if (null !== $this->file)
+        if (NULL !== $this->file)
         {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), TRUE));
             $this->cover = $filename . '.' . $this->file->guessExtension();
         }
+        else if (NULL !== $this->coverUrl)
+        {
+            $filename = sha1(uniqid(mt_rand(), TRUE));
+            $this->cover = $filename . strrchr($this->coverUrl, '.');
+        }
     }
 
+    /**
+     * @ORM\PostPersist
+     */
     public function upload()
     {
-        if (null === $this->file)
+        if (NULL === $this->file)
         {
+            if ($this->coverUrl !== NULL)
+            {
+                //@todo: check if config allow url access
+                $this->cropPicture($this->coverUrl, $this->getUploadRootDir() . '/' . $this->getThumbnail(), $this->coverSize, $this->coverSize, 80);
+                copy($this->coverUrl, $this->getUploadRootDir() . '/' . $this->cover);
+            }
             return;
         }
-        $this->cropPicture($this->file->getPathname(), $this->getUploadRootDir() . '/' . $this->cover, $this->coverSize, $this->coverSize, 80);
+        $this->cropPicture($this->file->getPathname(), $this->getUploadRootDir() . '/' . $this->getThumbnail(), $this->coverSize, $this->coverSize, 80);
+        $this->file->move($this->getUploadRootDir(), $this->cover);
         unset($this->file);
     }
 
+    /**
+     * @ORM\PostRemove
+     */
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath())
@@ -54,28 +85,55 @@ abstract class MediaCoverAbstract
         }
     }
 
+    /**
+     * Get cover with absolut path
+     *
+     * @return string
+     */
     public function getAbsolutePath()
     {
         return null === $this->cover ? null : $this->getUploadRootDir() . '/' . $this->cover;
     }
 
+    /**
+     * Get cover for url
+     *
+     * @return string
+     */
     public function getWebPath()
     {
         return null === $this->cover ? null : $this->getUploadDir() . '/' . $this->cover;
     }
 
-    protected function getUploadRootDir()
+    /**
+     * Get thumbnail url
+     *
+     * @return string
+     */
+    public function getThumbnailUrl()
     {
-        // the absolute directory path where uploaded
-        // documents should be saved
+    	return NULL === $this->getThumbnail() ? NULL : $this->getUploadDir() . '/' . $this->getThumbnail();
+    }
+
+    /**
+     * Get absolut path of cover directory
+     *
+     * @return string
+     */
+    private function getUploadRootDir()
+    {
+        //@todo : add owner
         return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
-    protected function getUploadDir()
+    /**
+     * Name of the upload dir
+     *
+     * @return string
+     */
+    private function getUploadDir()
     {
         //@todo : use owner id
-        // get rid of the __DIR__ so it doesn't screw up
-        // when displaying uploaded doc/image in the view.
         return 'uploads';
     }
 
@@ -144,6 +202,29 @@ abstract class MediaCoverAbstract
     }
 
     /**
+     * Set coverUrl
+     *
+     * @param string $coverUrl
+     * @return MusicAlbum
+     */
+    public function setCoverUrl($coverUrl)
+    {
+    	$this->coverUrl = $coverUrl;
+
+    	return $this;
+    }
+
+    /**
+     * Get coverUrl
+     *
+     * @return string
+     */
+    public function getCoverUrl()
+    {
+    	return $this->coverUrl;
+    }
+
+    /**
      * Set cover size
      *
      * @param integer $size
@@ -151,5 +232,20 @@ abstract class MediaCoverAbstract
     public function setCoverSize($size)
     {
         $this->coverSize = $size;
+    }
+
+    /**
+     * Get coverThumbnail
+     *
+     * @return string
+     */
+    public function getThumbnail()
+    {
+        if (NULL === $this->coverThumbnail)
+        {
+            $extension = strrchr($this->cover, '.');
+            $this->coverThumbnail = substr($this->cover, 0, -mb_strlen($extension)) . '_thumb' . $extension;
+        }
+        return ($this->coverThumbnail);
     }
 }

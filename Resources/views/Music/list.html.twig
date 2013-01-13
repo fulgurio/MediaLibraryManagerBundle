@@ -27,7 +27,7 @@
 					<tbody>
 {% for album in albums %}
 						<tr>
-							<td><img src="{% if album.webpath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.webpath }}{% endif %}" class="img-polaroid" alt="<td>{{ album.artist }} - {{ album.title }}"></td>
+							<td><img src="{% if album.webpath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.thumbnailUrl}}{% endif %}" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}"></td>
 							<td>{{ album.artist }}</td>
 							<td>{{ album.title }}</td>
 							<td>
