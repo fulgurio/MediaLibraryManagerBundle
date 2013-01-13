@@ -1,10 +1,17 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
 {% block css %}
 <link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/mlm.css') }}" rel="stylesheet">
 {% endblock %}
 {% block javascript %}
 <script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
+{% if app.request.attributes.get('albumId') is null %}
+<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/amazonMusic.js') }}"></script>
+{% endif %}
 <script>
+{% if app.request.attributes.get('albumId') is null %}
+var amazonSearchUrl = '{{ path('FulgurioMLM_Amazon_Music_Search') }}';
+{% endif %}
 function addTagForm(discNb, trackNb) {
 	var prototype = $('#tracks').attr('data-prototype');
 	var newForm = prototype.replace(/{{ form.tracks.vars.prototype.get('name') }}/g, trackNb);
@@ -111,7 +118,7 @@ jQuery(document).ready(function() {
 				</fieldset>
 				<div class="pull-right" id="searchResult"></div>
 				<div class="clearfix"></div>
-				<div class="form-actions clearfix">
+				<div class="form-actions">
 					<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
 					<button type="submit" class="btn btn-primary" name="realSubmit" value="1" tabindex="1">{% trans %}fulgurio.medialibrarymanager.common.save{% endtrans %}</button>
 					<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans %}fulgurio.medialibrarymanager.common.cancel{% endtrans %}</a>

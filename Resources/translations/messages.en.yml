@@ -16,6 +16,7 @@ fulgurio:
       last_page:                Last page
       previous_page:            Previous page
       next_page:                Next page
+      no_result:                No result found
     music:
       music:                    Music
       no_album:                 No album

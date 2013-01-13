@@ -31,7 +31,7 @@ class MusicAlbumType extends AbstractType
             ->add('publication_year', 'number', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publication_year'))
             ->add('publisher', 'text', array('max_length' => 32, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publisher'))
             ->add('file', 'file', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_cover'))
-            ->add('cover_url', 'hidden', array('required' => FALSE, 'property_path' => FALSE))
+            ->add('cover_url', 'hidden', array('required' => FALSE))
             ->add('tracks', 'collection', array(
                     'type' => new MusicTrackType(),
                     'allow_add' => TRUE,

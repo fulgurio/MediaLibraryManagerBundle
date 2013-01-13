@@ -2,6 +2,10 @@ FulgurioMLM_Music:
     resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing/music.yml"
     prefix:   /music
 
+FulgurioMLM_Amazon:
+    resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing/amazon.yml"
+    prefix:   /amazon
+
 FulgurioMLMHomepage:
     pattern:  /
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Front:index }

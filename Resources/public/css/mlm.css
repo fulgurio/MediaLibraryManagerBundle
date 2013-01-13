@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+#searchResult ul {
+	list-style: none;
+}
+#searchResult a {
+	cursor: pointer;
+}
+#searchResult li {
+	padding: 10px 0;
+}
