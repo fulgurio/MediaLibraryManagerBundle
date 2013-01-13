@@ -1,15 +1,15 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
 {% block css %}
-<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
-<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/mlm.css') }}" rel="stylesheet">
+		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/mlm.css') }}" rel="stylesheet">
 {% endblock %}
 {% block javascript %}
-<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
-{% if app.request.attributes.get('albumId') is null %}
-<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/amazonMusic.js') }}"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
+{% if app.request.attributes.get('albumId') is null and useAmazon() %}
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/amazonMusic.js') }}"></script>
 {% endif %}
-<script>
-{% if app.request.attributes.get('albumId') is null %}
+		<script>
+{% if app.request.attributes.get('albumId') is null and useAmazon() %}
 var amazonSearchUrl = '{{ path('FulgurioMLM_Amazon_Music_Search') }}';
 {% endif %}
 function addTagForm(discNb, trackNb) {
@@ -24,7 +24,7 @@ jQuery(document).ready(function() {
 		addTagForm(1, $('#tracks').find('li').length + 1);
 	});
 });
-</script>
+		</script>
 {% endblock %}
 {% block content %}
 {% if app.request.attributes.get('albumId') is null %}
