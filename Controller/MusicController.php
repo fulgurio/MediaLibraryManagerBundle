@@ -23,11 +23,11 @@ class MusicController extends Controller
 
         $albums = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')->findAllWithPaginator($paginator, $this->get('request')->get('page', 1), $this->get('request')->get('q'));
         return $this->render(
-                'FulgurioMediaLibraryManagerBundle:Music:list.html.twig',
-                array(
-                        'albums' => $albums
-                )
-               );
+            'FulgurioMediaLibraryManagerBundle:Music:list.html.twig',
+            array(
+                'albums' => $albums
+            )
+        );
     }
 
     /**
@@ -86,7 +86,7 @@ class MusicController extends Controller
         $templateName = $request->isXmlHttpRequest() ? 'FulgurioMediaLibraryManagerBundle::confirmAjax.html.twig' : 'FulgurioMediaLibraryManagerBundle::confirm.html.twig';
         return $this->render($templateName, array(
                 'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
-                'confirmationMessage' => $this->get('translator')->trans('fulgurio.medialibrarymanager.music.delete_confirm_message', array('%ALBUM_NAME%' => $album->getTitle())),
+                'confirmationMessage' => $this->get('translator')->trans('fulgurio.medialibrarymanager.music.delete_confirm_message', array('%TITLE%' => $album->getTitle())),
         ));
         return $this->render('FulgurioMediaLibraryManagerBundle:Music:list.html.twig');
     }

@@ -5,33 +5,29 @@
 {% block javascript %}
 <script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
 <script>
-var collectionHolder = $('#tracks');
-
-function addTagForm(collectionHolder) {
-    var prototype = collectionHolder.attr('data-prototype');
-    var newIndex = collectionHolder.find('li').length + 1;
-    var newForm = prototype.replace(/{{ form.tracks.vars.prototype.get('name') }}/g, newIndex);
-
-    collectionHolder.append(newForm);
+function addTagForm(discNb, trackNb) {
+	var prototype = $('#tracks').attr('data-prototype');
+	var newForm = prototype.replace(/{{ form.tracks.vars.prototype.get('name') }}/g, trackNb);
+	newForm = newForm.replace(/VOLUME_NB/g, discNb);
+	return $('#tracks').append(newForm);
 }
 jQuery(document).ready(function() {
-    $('#addTrack').on('click', function(e) {
-        e.preventDefault();
-        addTagForm(collectionHolder);
-    });
+	$('#addTrack').on('click', function(e) {
+		e.preventDefault();
+		addTagForm(1, $('#tracks').find('li').length + 1);
+	});
 });
-
 </script>
 {% endblock %}
 {% block content %}
 {% if app.request.attributes.get('albumId') is null %}
 			<h1>{% trans %}fulgurio.medialibrarymanager.music.add_new_album{% endtrans %}</h1>
-			<form class="form-horizontal" method="post" action="{{ path('FulgurioMLM_Music_Add') }}" enctype="multipart/form-data">
+			<form class="form-horizontal pull-left" method="post" action="{{ path('FulgurioMLM_Music_Add') }}" enctype="multipart/form-data">
 {% else %}
-			<h1>{% trans with {'%ALBUM_NAME%': album.title} %}fulgurio.medialibrarymanager.music.edit_album{% endtrans %}</h1>
+			<h1>{% trans with {'%TITLE%': album.title} %}fulgurio.medialibrarymanager.music.edit_album{% endtrans %}</h1>
 			<form class="form-horizontal" method="post" action="{{ path('FulgurioMLM_Music_Edit', {albumId: app.request.attributes.get('albumId')}) }}" enctype="multipart/form-data">
 {% endif %}
-				<fieldset>
+				<fieldset class="pull-left">
 {{ form_errors(form) }}
 					<div class="control-group{% if form.getChild('artist').get('errors') %} error{% endif %}">
 						<label class="control-label" for="inputArtist">{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}</label>
@@ -41,10 +37,17 @@ jQuery(document).ready(function() {
 						</div>
 					</div>
 					<div class="control-group{% if form.getChild('title').get('errors') %} error{% endif %}">
-						<label class="control-label" for="inputAlbum">{% trans %}fulgurio.medialibrarymanager.music.album_name{% endtrans %}</label>
+						<label class="control-label" for="inputTitle">{% trans %}fulgurio.medialibrarymanager.music.title{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputAlbum" maxlength="{{ form.getChild('title').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.album_name{% endtrans %}" name="{{ form.getChild('title').get('full_name') }}" value="{{ form.getChild('title').get('value') }}" />
+							<input type="text" id="inputTitle" maxlength="{{ form.getChild('title').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.title{% endtrans %}" name="{{ form.getChild('title').get('full_name') }}" value="{{ form.getChild('title').get('value') }}" />
 {% if form.getChild('title').get('errors') %}{% for error in form.getChild('title').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+						</div>
+					</div>
+					<div class="control-group{% if form.getChild('ean').get('errors') %} error{% endif %}">
+						<label class="control-label" for="inputEan">{% trans %}fulgurio.medialibrarymanager.music.ean{% endtrans %}</label>
+						<div class="controls">
+							<input type="text" id="inputEan" maxlength="{{ form.getChild('ean').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.ean{% endtrans %}" name="{{ form.getChild('ean').get('full_name') }}" value="{{ form.getChild('ean').get('value') }}" />
+{% if form.getChild('ean').get('errors') %}{% for error in form.getChild('ean').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.getChild('media_type').get('errors') %} error{% endif %}">
@@ -75,6 +78,7 @@ jQuery(document).ready(function() {
 					<div class="control-group{% if form.getChild('file').get('errors') %} error{% endif %}">
 						<label class="control-label" for="inputCover">{% trans %}fulgurio.medialibrarymanager.music.cover{% endtrans %}</label>
 						<div class="controls">
+							<input type="hidden" id="inputCoverUrl" name="{{ form.getChild('cover_url').get('full_name') }}" value="{{ form.getChild('cover_url').get('value') }}" />
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 								<div class="fileupload-new thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('albumId') is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{% if album.webpath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.webpath }}{% endif %}{% endif %}" alt="" /></div>
 								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px;"></div>
@@ -86,12 +90,10 @@ jQuery(document).ready(function() {
 					</div>
 {%   set volumeNb = 1 %}
 {%   set trackNb = form.tracks.vars.prototype.get('name') %}
-{%     set track = form.tracks.vars.prototype %}
+{%	 set track = form.tracks.vars.prototype %}
 {#{{ form_widget(form.tracks.vars.prototype)|e }}#}
 					<div>
-						<ol id="tracks" data-prototype="{{ '<li><span>' ~ 'fulgurio.medialibrarymanager.music.track_n'|trans({'%TRACK_NB%': trackNb}) ~ '</span><div class="control-group"><label class="control-label" for="inputTrackTitle_' ~ volumeNb ~ '_' ~ trackNb ~ '">' ~ 'fulgurio.medialibrarymanager.music.track.title'|trans ~ '</label><div class="controls"><input type="text" id="inputTrackTitle_' ~ volumeNb ~ '_' ~ trackNb ~ '" maxlength="' ~ track.getChild('title').get('max_length') ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.title'|trans ~ '" name="' ~ track.getChild('title').get('full_name') ~ '" value="' ~ track.getChild('title').get('value') ~ '"></div></div><div class="control-group"><label class="control-label" for="inputTrackDuration_' ~ volumeNb ~ '_' ~ trackNb ~ '">' }}{{ 'fulgurio.medialibrarymanager.music.track.duration'|trans ~ '</label><div class="controls"><input type="text" class="input-mini" id="inputTrackDuration_' ~ volumeNb ~ '_' ~ trackNb ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.duration'|trans ~ '" name="' ~ track.getChild('duration').get('full_name') ~ '" value="' ~ track.getChild('duration').get('value') ~ '" /></div></div><div class="control-group"><label class="control-label" for="inputTrackLyrics_' ~ volumeNb ~ '_' ~ trackNb ~ '">' ~ 'fulgurio.medialibrarymanager.music.track.lyrics'|trans ~ '</label><div class="controls"><textarea id="inputTrackLyrics_' ~ volumeNb ~ '_' ~ trackNb ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.lyrics'|trans ~ '" name="' ~ track.getChild('lyrics').get('full_name') ~ '">' ~ track.getChild('lyrics').get('value') ~ '</textarea></div></div></li>' }}
-
-						">
+						<ol id="tracks" data-prototype="{{ '<li><span>' ~ 'fulgurio.medialibrarymanager.music.track_n'|trans({'%TRACK_NB%': trackNb}) ~ '</span><div class="control-group"><label class="control-label" for="inputTrackTitle_VOLUME_NB_' ~ trackNb ~ '">' ~ 'fulgurio.medialibrarymanager.music.track.title'|trans ~ '</label><div class="controls"><input type="text" id="inputTrackTitle_VOLUME_NB_' ~ trackNb ~ '" maxlength="' ~ track.getChild('title').get('max_length') ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.title'|trans ~ '" name="' ~ track.getChild('title').get('full_name') ~ '" value="' ~ track.getChild('title').get('value') ~ '"></div></div><div class="control-group"><label class="control-label" for="inputTrackDuration_VOLUME_NB_' ~ trackNb ~ '">' }}{{ 'fulgurio.medialibrarymanager.music.track.duration'|trans ~ '</label><div class="controls"><input type="text" class="input-mini" id="inputTrackDuration_VOLUME_NB_' ~ trackNb ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.duration'|trans ~ '" name="' ~ track.getChild('duration').get('full_name') ~ '" value="' ~ track.getChild('duration').get('value') ~ '" /></div></div><div class="control-group"><label class="control-label" for="inputTrackLyrics_VOLUME_NB_' ~ trackNb ~ '">' ~ 'fulgurio.medialibrarymanager.music.track.lyrics'|trans ~ '</label><div class="controls"><textarea id="inputTrackLyrics_VOLUME_NB_' ~ trackNb ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.lyrics'|trans ~ '" name="' ~ track.getChild('lyrics').get('full_name') ~ '">' ~ track.getChild('lyrics').get('value') ~ '</textarea></div></div></li>' }}">
 {% if form.getChild('tracks').getChildren()|length > 0 %}
 {%   for trackNb, track in form.getChild('tracks').getChildren() %}
 {%     set trackNb = trackNb + 1 %}
@@ -106,12 +108,14 @@ jQuery(document).ready(function() {
 						</ol>
 						<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.getChild('tracks').getChildren()|length }}" tabindex="2">{% trans %}fulgurio.medialibrarymanager.music.add_track{% endtrans %}</button>
 					</div>
-					<div class="clearfix"></div>
-					<div class="form-actions">
-						<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
-						<button type="submit" class="btn btn-primary" name="realSubmit" value="1" tabindex="1">{% trans %}fulgurio.medialibrarymanager.common.save{% endtrans %}</button>
-						<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans %}fulgurio.medialibrarymanager.common.cancel{% endtrans %}</a>
-					</div>
 				</fieldset>
+				<div class="pull-right" id="searchResult"></div>
+				<div class="clearfix"></div>
+				<div class="form-actions clearfix">
+					<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
+					<button type="submit" class="btn btn-primary" name="realSubmit" value="1" tabindex="1">{% trans %}fulgurio.medialibrarymanager.common.save{% endtrans %}</button>
+					<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans %}fulgurio.medialibrarymanager.common.cancel{% endtrans %}</a>
+				</div>
 			</form>
+{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
 {% endblock %}

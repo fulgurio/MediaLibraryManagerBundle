@@ -20,6 +20,7 @@ class MusicAlbumType extends AbstractType
         $builder
             ->add('artist', 'text', array('max_length' => 128, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_artist'))
             ->add('title', 'text', array('max_length' => 128, 'required' => TRUE, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_title'))
+            ->add('ean', 'text', array('max_length' => 13, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_ean'))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
                 'choices'   => array('cd', 'mp3', 'vinyl'),
@@ -30,6 +31,7 @@ class MusicAlbumType extends AbstractType
             ->add('publication_year', 'number', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publication_year'))
             ->add('publisher', 'text', array('max_length' => 32, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publisher'))
             ->add('file', 'file', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_cover'))
+            ->add('cover_url', 'hidden', array('required' => FALSE, 'property_path' => FALSE))
             ->add('tracks', 'collection', array(
                     'type' => new MusicTrackType(),
                     'allow_add' => TRUE,

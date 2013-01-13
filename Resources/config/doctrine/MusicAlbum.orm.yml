@@ -17,6 +17,10 @@ Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
         title:
             type: string
             length: '128'
+        ean:
+            type: string
+            length: 13
+            nullable: true
         publication_year:
             type: smallint
             nullable: true

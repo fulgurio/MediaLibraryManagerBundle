@@ -34,6 +34,11 @@ class MusicAlbum extends MediaCoverAbstract
     private $title;
 
     /**
+     * @var string
+     */
+    private $ean;
+
+    /**
      * @var integer
      */
     private $publication_year;
@@ -139,6 +144,30 @@ class MusicAlbum extends MediaCoverAbstract
     {
         return $this->title;
     }
+
+    /**
+     * Set ean
+     *
+     * @param string $ean
+     * @return MusicAlbum
+     */
+    public function setEan($ean)
+    {
+    	$this->ean = $ean;
+
+    	return $this;
+    }
+
+    /**
+     * Get ean
+     *
+     * @return string
+     */
+    public function getEan()
+    {
+    	return $this->ean;
+    }
+
 
     /**
      * Set publication_year
