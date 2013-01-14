@@ -8,6 +8,8 @@ use Fulgurio\MediaLibraryManagerBundle\Form\MusicAlbumType;
 use Fulgurio\MediaLibraryManagerBundle\Form\MusicAlbumHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class MusicController extends Controller
 {
@@ -85,6 +87,32 @@ class MusicController extends Controller
                 'confirmationMessage' => $this->get('translator')->trans('fulgurio.medialibrarymanager.music.delete_confirm_message', array('%TITLE%' => $album->getTitle())),
         ));
         return $this->render('FulgurioMediaLibraryManagerBundle:Music:list.html.twig');
+    }
+
+    /**
+     * Retrieve album info from external webservice
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function retrieveAlbumInfosAction()
+    {
+        if (!$this->has('nass600_media_info.music_info.manager'))
+        {
+            throw new AccessDeniedException();
+        }
+        $request = $this->container->get('request');
+        $musicManager  = $this->get('nass600_media_info.music_info.manager');
+        $data = $musicManager->getAlbumInfo(
+            array(
+//                 'mbid' => '61bf0388-b8a9-48f4-81d1-7eb02706dfb0',
+                'artist' => $request->get('artist'),
+                'album' => $request->get('title')
+            )
+        );
+//         $lyrics = $this->get('nass600_media_info.lyrics_info.manager');
+        $response = new Response(json_encode($data));
+        $response->headers->set('Content-Type', 'application/json');
+        return ($response);
     }
 
     /**

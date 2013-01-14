@@ -19,7 +19,8 @@ class AmazonTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'useAmazon' => new \Twig_Function_Method($this, 'useAmazon')//, array('is_safe' => array('html'))),
+            'useAmazon' => new \Twig_Function_Method($this, 'useAmazon'),
+            'hasMediaInfo' => new \Twig_Function_Method($this, 'hasMediaInfo')
         );
     }
 
@@ -31,6 +32,14 @@ class AmazonTwigExtension extends \Twig_Extension
             return ($this->container->hasParameter('fulgurio_media_library_manager.amazon.secret_key')
                     && $this->container->hasParameter('fulgurio_media_library_manager.amazon.access_key_id')
                     && $this->container->hasParameter('fulgurio_media_library_manager.amazon.associate_tag'));
+    }
+
+    /**
+     * Check if amazon confi is set, so we active it
+     */
+    public function hasMediaInfo()
+    {
+        return ($this->container->hasParameter('nass600_media_info.provider.music'));
     }
 
     /**

@@ -1,3 +1,7 @@
+FulgurioMLM_Music_Retrieve_Album_Infos:
+    pattern:  /retrieve_album_infos
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:retrieveAlbumInfos }
+
 FulgurioMLM_Music_Add:
     pattern:  /add
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:add }

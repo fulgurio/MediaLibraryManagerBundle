@@ -8,3 +8,6 @@
 #searchResult li {
 	padding: 10px 0;
 }
+#retrieveBtn {
+	margin: 0 0 0 10px;
+}
