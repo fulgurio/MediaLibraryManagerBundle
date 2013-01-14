@@ -9,7 +9,7 @@ function getAlbumInfos(e)
 		{
 			if (d.error)
 			{
-
+				$("#retrieveBtn").attr('disabled', false);
 				return;
 			}
 			$('#inputArtist').attr('value', d.artist);
@@ -18,6 +18,10 @@ function getAlbumInfos(e)
 			$('#inputPublicationDate').attr('value', d.releaseYear);
 			$('#inputPublisher').attr('value', d.publisher);
 			$('#inputCoverUrl').attr('value', d.image);
+			if (d.thumbnail != '')
+			{
+				$('#thumbnail img:first').attr('src', d.thumbnail);
+			}
 			if (d.tracks)
 			{
 				for(var i = 0; i < d.tracks.length; i++)

@@ -50,6 +50,8 @@ class LastFMAdapter extends Adapter
         );
         $image = (array) $album->image[4]; //'mega'
         $formatedData['image'] = $image['#text'];
+        $image = (array) $album->image[1]; //'mega'
+        $formatedData['thumbnail'] = $image['#text'];
         if (isset($album->tracks->track))
         {
             foreach ($album->tracks->track as $track)
