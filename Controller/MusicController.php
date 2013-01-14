@@ -106,7 +106,9 @@ class MusicController extends Controller
             array(
 //                 'mbid' => '61bf0388-b8a9-48f4-81d1-7eb02706dfb0',
                 'artist' => $request->get('artist'),
-                'album' => $request->get('title')
+                'album' => $request->get('title'),
+                'ASIN' => $request->get('asin'),
+                'EAN' => $request->get('ean')
             )
         );
 //         $lyrics = $this->get('nass600_media_info.lyrics_info.manager');
