@@ -123,7 +123,14 @@ abstract class MediaCoverAbstract
     private function getUploadRootDir()
     {
         //@todo : add owner
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        if (is_dir(__DIR__ . '/../../../../web/'))
+        {
+            return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+        }
+        else
+        {
+            return __DIR__ . '/../../../../../../web/' . $this->getUploadDir();
+        }
     }
 
     /**
