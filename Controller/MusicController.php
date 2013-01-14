@@ -70,10 +70,6 @@ class MusicController extends Controller
         if ($request->get('confirm') === 'yes')
         {
             $em = $this->getDoctrine()->getEntityManager();
-            foreach ($album->getTracks() as $track)
-            {
-                $em->remove($track);
-            }
             $em->remove($album);
             $em->flush();
             return new RedirectResponse($this->generateUrl('FulgurioMLM_Music_List'));

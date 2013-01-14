@@ -43,3 +43,4 @@ Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
             targetEntity: MusicTrack
             mappedBy: music_album
             orderBy: { track_number : ASC }
+            cascade: [ remove ]
