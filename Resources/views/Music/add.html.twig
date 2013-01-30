@@ -11,7 +11,7 @@
 var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
 jQuery(document).ready(function() {
 	$('#inputTitle').on('keyup', function(e) {
-		if ($(this).attr('value').length > 3)
+		if ($(this).attr('value').length > 1)
 		{
 			if (!$(this).hasClass('span2'))
 			{
