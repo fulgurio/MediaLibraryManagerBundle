@@ -29,7 +29,7 @@
 {%     else %}
 						<li class="disabled"><a>&laquo;</a></li>
 {%     endif %}
-						<li class="active"><a>Page <strong>{{ current }}</strong> / {{pagesInRange|length}}</a></li>
+						<li class="active"><a>Page <strong>{{ current }}</strong> / {{ last }}</a></li>
 {%     if next is defined %}
 						<li><a href="{{ path(route, query|merge({'page': next})) }}" title="{% trans %}fulgurio.medialibrarymanager.common.next_page{% endtrans %}">&raquo;</a></li>
 {%     else %}
