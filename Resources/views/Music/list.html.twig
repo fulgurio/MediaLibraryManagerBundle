@@ -27,7 +27,13 @@
 					<tbody>
 {% for album in albums %}
 						<tr>
-							<td><img src="{% if album.webpath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.thumbnailUrl}}{% endif %}" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}"></td>
+							<td>
+{% if album.webpath is null %}
+<img src="http://www.placehold.it/75x75/EFEFEF/AAAAAA" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}">
+{% else %}
+<a data-target="#lightbox" data-toggle="lightbox" data-image="/{{ album.webPath}}" href="/{{ album.webPath }}"><img src="/{{ album.thumbnailUrl}}" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}"></a>
+{% endif %}
+							</td>
 							<td>{{ album.artist }}</td>
 							<td>{{ album.title }}</td>
 							<td>
@@ -41,5 +47,13 @@
 {{ knp_pagination_render(albums, 'FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}
 			</form>
 {% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
+{% include 'FulgurioMediaLibraryManagerBundle::lightbox.html.twig' %}
 {% endif %}
+{% endblock %}
+
+{% block css %}
+<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-lightbox.min.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascript %}
+<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-lightbox.min.js') }}"></script>
 {% endblock %}
