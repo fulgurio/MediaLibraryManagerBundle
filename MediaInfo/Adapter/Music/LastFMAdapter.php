@@ -32,11 +32,11 @@ class LastFMAdapter extends Adapter
             //@todo : use translation ?
             return (object) array('error' => $data->error, 'message' => $data->message);
         }
-        else if ($data->album->mbid === '')
-        {
-            //@todo : use translation ?
-            return (object) array('error' => 1, 'message' => '');
-        }
+//         else if ($data->album->mbid === '')
+//         {
+//             //@todo : use translation ?
+//             return (object) array('error' => 1, 'message' => '');
+//         }
         $album = $data->album;
         $formatedData = array(
             'artist' => trim($album->artist),
