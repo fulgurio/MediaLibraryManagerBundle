@@ -36,12 +36,6 @@ class MusicAlbumHandler
             if ($this->form->isValid())
             {
                 $em = $this->doctrine->getEntityManager();
-                if ($album->getId() == 0)
-                {
-                }
-                else
-                {
-                }
                 foreach ($album->getTracks() as $trackNb => $track)
                 {
                     $track->setVolumeNumber(1);//@todo

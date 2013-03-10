@@ -11,7 +11,6 @@ class MusicTrackType extends AbstractType
      * (non-PHPdoc)
      * @see Symfony\Component\Form.AbstractType::buildForm()
      */
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -25,9 +24,9 @@ class MusicTrackType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-    	$resolver->setDefaults(array(
-    			'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack',
-    	));
+        $resolver->setDefaults(array(
+            'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack',
+        ));
     }
 
     /**

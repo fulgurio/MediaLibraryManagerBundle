@@ -118,6 +118,19 @@ class MusicController extends Controller
     }
 
     /**
+     * Get track lyrics from external webservice
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function retrieveLyricsTrackAction() {
+        $request = $this->container->get('request');
+        $artist = $request->get('artist');
+        $data = '';
+        //@todo
+        return new Response($data);
+    }
+
+    /**
      * Get album
      * @param integer $albumId
      * @return Album

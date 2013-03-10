@@ -76,3 +76,18 @@ function setAlbumInfo(d)
 		}
 	}
 }
+function getTrackLyrics()
+{
+	var trackId = $(this).attr('data-track');
+	$.ajax({
+		url: lyricsUrl,
+		data: {
+			artist: $('#inputArtist').val(),
+			trackLabel: $("#inputTrackTitle_" + trackId).val()
+		},
+		success: function(d)
+		{
+			$("#inputTrackLyrics_" + trackId).val(d);
+		}
+	});
+}

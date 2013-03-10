@@ -28,8 +28,12 @@ jQuery(document).ready(function() {
 	});
 });
 		</script>
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
 {%   endif %}
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
+		<script>
+var lyricsUrl  = '{{ path('FulgurioMLM_Music_Retrieve_Track_Lyrics') }}';
+$(".btn.btn-lyrics-track").click(getTrackLyrics);
+		</script>
 {% endif %}
 {% if useAmazon() %}
 {%   if app.request.attributes.get('albumId') is null %}

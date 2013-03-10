@@ -20,6 +20,7 @@
 									<label class="control-label" for="inputTrackLyrics_{{ volumeNb }}_{{ trackNb }}">{% trans %}fulgurio.medialibrarymanager.music.track.lyrics{% endtrans %}</label>
 									<div class="controls">
 									<textarea id="inputTrackLyrics_{{ volumeNb }}_{{ trackNb }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.track.lyrics{% endtrans %}" name="{{ track.getChild('lyrics').get('full_name') }}">{{ track.getChild('lyrics').get('value') }}</textarea>
+									<button id="retrieveLyricsTrackBtn_{{ volumeNb }}_{{ trackNb }}" data-track="{{ volumeNb }}_{{ trackNb }}" type="button" class="btn btn-lyrics-track"><i class="icon-refresh"></i></button>
 {% if track.getChild('lyrics').get('errors') %}{% for error in track.getChild('lyrics').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 									</div>
 								</div>
