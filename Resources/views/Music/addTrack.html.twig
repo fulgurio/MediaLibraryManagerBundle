@@ -1,5 +1,6 @@
-							<li>
+							<li data-track="{{ volumeNb }}_{{ trackNb }}">
 								<span>{% trans with {'%TRACK_NB%': trackNb} %}fulgurio.medialibrarymanager.music.track_n{% endtrans %}</span>
+								<button type="button" class="btn btn-remove-track"><i class="icon icon-remove"></i></button>
 {#}								<input type="hidden" name="{{ track.getChild('volume_number').get('full_name') }}" value="{{ volumeNb }}" />
 								<input type="hidden" name="{{ track.getChild('track_number').get('full_name') }}" value="{{ trackNb }}" />
 #}								<div class="control-group{% if track.getChild('title').get('errors') %} error{% endif %}">
@@ -20,7 +21,7 @@
 									<label class="control-label" for="inputTrackLyrics_{{ volumeNb }}_{{ trackNb }}">{% trans %}fulgurio.medialibrarymanager.music.track.lyrics{% endtrans %}</label>
 									<div class="controls">
 									<textarea id="inputTrackLyrics_{{ volumeNb }}_{{ trackNb }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.track.lyrics{% endtrans %}" name="{{ track.getChild('lyrics').get('full_name') }}">{{ track.getChild('lyrics').get('value') }}</textarea>
-									<button id="retrieveLyricsTrackBtn_{{ volumeNb }}_{{ trackNb }}" data-track="{{ volumeNb }}_{{ trackNb }}" type="button" class="btn btn-lyrics-track"><i class="icon-refresh"></i></button>
+									<button type="button" class="btn btn-lyrics-track"><i class="icon-refresh"></i></button>
 {% if track.getChild('lyrics').get('errors') %}{% for error in track.getChild('lyrics').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 									</div>
 								</div>

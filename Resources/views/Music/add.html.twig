@@ -1,63 +1,4 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
-{% block css %}
-		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
-		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/mlm.css') }}" rel="stylesheet">
-{% endblock %}
-{% block javascript %}
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
-{% if hasMediaInfo() %}
-{%   if app.request.attributes.get('albumId') is null %}
-		<script>
-var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
-jQuery(document).ready(function() {
-	$('#inputTitle').on('keyup', function(e) {
-		if ($(this).attr('value').length > 1)
-		{
-			if (!$(this).hasClass('span2'))
-			{
-				$(this).addClass('span2');
-				var elt = $('<button id="retrieveBtn" type="button" class="btn"><i class="icon-refresh"></i></button>');
-				$(elt).click(getAlbumsList);
-				$(this).after(elt);
-			}
-			else
-			{
-				$("#retrieveBtn").attr('disabled', false);
-			}
-		}
-	});
-});
-		</script>
-{%   endif %}
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
-		<script>
-var lyricsUrl  = '{{ path('FulgurioMLM_Music_Retrieve_Track_Lyrics') }}';
-$(".btn.btn-lyrics-track").click(getTrackLyrics);
-		</script>
-{% endif %}
-{% if useAmazon() %}
-{%   if app.request.attributes.get('albumId') is null %}
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/amazonMusic.js') }}"></script>
-		<script>
-var amazonSearchUrl = '{{ path('FulgurioMLM_Amazon_Music_Search') }}';
-		</script>
-{%   endif %}
-{% endif %}
-		<script>
-function addTagForm(discNb, trackNb) {
-	var prototype = $('#tracks').attr('data-prototype');
-	var newForm = prototype.replace(/{{ form.tracks.vars.prototype.get('name') }}/g, trackNb);
-	newForm = newForm.replace(/VOLUME_NB/g, discNb);
-	return $('#tracks').append(newForm);
-}
-jQuery(document).ready(function() {
-	$('#addTrack').on('click', function(e) {
-		e.preventDefault();
-		addTagForm(1, $('#tracks').find('li').length + 1);
-	});
-});
-		</script>
-{% endblock %}
 {% block content %}
 {% if app.request.attributes.get('albumId') is null %}
 			<h1>{% trans %}fulgurio.medialibrarymanager.music.add_new_album{% endtrans %}</h1>
@@ -131,7 +72,7 @@ jQuery(document).ready(function() {
 {%   set trackNb = form.tracks.vars.prototype.get('name') %}
 {%	 set track = form.tracks.vars.prototype %}
 					<div>
-						<ol id="tracks" data-prototype="{{ '<li><span>' ~ 'fulgurio.medialibrarymanager.music.track_n'|trans({'%TRACK_NB%': trackNb}) ~ '</span><div class="control-group"><label class="control-label" for="inputTrackTitle_VOLUME_NB_' ~ trackNb ~ '">' ~ 'fulgurio.medialibrarymanager.music.track.title'|trans ~ '</label><div class="controls"><input type="text" id="inputTrackTitle_VOLUME_NB_' ~ trackNb ~ '" maxlength="' ~ track.getChild('title').get('max_length') ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.title'|trans ~ '" name="' ~ track.getChild('title').get('full_name') ~ '" value="' ~ track.getChild('title').get('value') ~ '"></div></div><div class="control-group"><label class="control-label" for="inputTrackDuration_VOLUME_NB_' ~ trackNb ~ '">' }}{{ 'fulgurio.medialibrarymanager.music.track.duration'|trans ~ '</label><div class="controls"><input type="text" class="input-mini" id="inputTrackDuration_VOLUME_NB_' ~ trackNb ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.duration'|trans ~ '" name="' ~ track.getChild('duration').get('full_name') ~ '" value="' ~ track.getChild('duration').get('value') ~ '" /></div></div><div class="control-group"><label class="control-label" for="inputTrackLyrics_VOLUME_NB_' ~ trackNb ~ '">' ~ 'fulgurio.medialibrarymanager.music.track.lyrics'|trans ~ '</label><div class="controls"><textarea id="inputTrackLyrics_VOLUME_NB_' ~ trackNb ~ '" placeholder="' ~ 'fulgurio.medialibrarymanager.music.track.lyrics'|trans ~ '" name="' ~ track.getChild('lyrics').get('full_name') ~ '">' ~ track.getChild('lyrics').get('value') ~ '</textarea></div></div></li>' }}">
+						<ol id="tracks">
 {% if form.getChild('tracks').getChildren()|length > 0 %}
 {%   for trackNb, track in form.getChild('tracks').getChildren() %}
 {%     set trackNb = trackNb + 1 %}
@@ -156,4 +97,28 @@ jQuery(document).ready(function() {
 				</div>
 			</form>
 {% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
+{% endblock %}
+
+{% block css %}
+		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+<script type="text/x-tmpl" id="tmpl-track">
+{%	 set track = form.tracks.vars.prototype %}
+{%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' %}
+</script>
+{% if hasMediaInfo() %}
+		<script>
+{%   if app.request.attributes.get('albumId') is null %}
+var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
+{% else %}
+var searchUrl;
+{%   endif %}
+var lyricsUrl  = '{{ path('FulgurioMLM_Music_Retrieve_Track_Lyrics') }}';
+		</script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/tmpl.min.js') }}"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
+{% endif %}
 {% endblock %}

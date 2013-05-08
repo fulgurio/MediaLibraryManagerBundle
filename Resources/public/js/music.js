@@ -78,9 +78,10 @@ function setAlbumInfo(d)
 }
 function getTrackLyrics()
 {
-	var trackId = $(this).attr('data-track');
+	var trackId = $(this).parent().parent().parent().attr('data-track');
 	$.ajax({
 		url: lyricsUrl,
+		type: "post",
 		data: {
 			artist: $('#inputArtist').val(),
 			trackLabel: $("#inputTrackTitle_" + trackId).val()
@@ -91,3 +92,64 @@ function getTrackLyrics()
 		}
 	});
 }
+function removeTrack()
+{
+	initNextTrack($(this).parent().attr("data-track"));
+	$(this).parent().remove();
+}
+function initNextTrack(newId)
+{
+	var n = newId.split("_");
+	var i = new Number(n[1]);
+	var currentTrack = n[0] + "_" + (i + 1);
+	var elt = $("li[data-track=" + currentTrack + "]");
+	if (elt.length > 0)
+	{
+		var title = elt.find('> span');
+		var titleHtml = $(title).html();
+		$(title).html(titleHtml.replace(i + 1, i));
+		elt.find("label,input,select,textarea,button").each(function() {
+			if (this.id) {
+				this.id = this.id.replace(currentTrack, newId);
+			}
+			if (this.name) {
+				this.name = this.name.replace(/\[[0-9]+\]/, "[" + (i - 1) + "]");
+			}
+			if ($(this).attr("for")) {
+				$(this).attr("for", $(this).attr("for").replace(currentTrack, newId));
+			}
+		});
+		elt.attr("data-track", newId);
+		initNextTrack(currentTrack);
+	}
+}
+jQuery(document).ready(function() {
+	$("form").on('click', ".btn.btn-lyrics-track", getTrackLyrics);
+	$("form").on('click', ".btn.btn-remove-track", removeTrack);
+	$('#addTrack').click(function(e) {
+		e.preventDefault();
+		var discNb = 1;
+		var trackNb = $('#tracks').find('li').length + 1;
+		var newTrack = tmpl("tmpl-track", {"discNb": discNb, "trackNb": trackNb});
+		newTrack = newTrack.replace(/%TRACK_NB%/g, trackNb);
+		newTrack = newTrack.replace(/__name__/g, trackNb - 1);
+		$('#tracks').append(newTrack);
+	});
+	$('#inputTitle').on('keyup', function(e) {
+		if ($(this).attr('value').length > 1)
+		{
+			if (!$(this).hasClass('span2'))
+			{
+				$(this).addClass('span2');
+				var elt = $('<button id="retrieveBtn" type="button" class="btn"><i class="icon-refresh"></i></button>');
+				$(elt).click(getAlbumsList);
+				$(this).after(elt);
+			}
+			else
+			{
+				$("#retrieveBtn").attr('disabled', false);
+			}
+		}
+	});
+});
+tmpl.regexp = /([\s'\\])(?![^%]*%\])|(?:\[%(=|#)([\s\S]+?)%\])|(\[%)|(%\])/g;

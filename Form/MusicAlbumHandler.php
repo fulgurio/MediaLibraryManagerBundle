@@ -28,6 +28,10 @@ class MusicAlbumHandler
     {
         if ($this->request->getMethod() == 'POST')
         {
+            $originalTracks = array();
+            foreach ($album->getTracks() as $track) {
+                $originalTracks[] = $track;
+            }
             $this->form->bindRequest($this->request);
             if ($this->request->get('realSubmit') !== '1')
             {
@@ -38,12 +42,28 @@ class MusicAlbumHandler
                 $em = $this->doctrine->getEntityManager();
                 foreach ($album->getTracks() as $trackNb => $track)
                 {
-                    $track->setVolumeNumber(1);//@todo
-                    $track->setTrackNumber($trackNb + 1);
-                    $track->setMusicAlbum($album);
-                    $em->persist($track);
+                    foreach ($originalTracks as $key => $originalTrack) {
+                        if ($originalTrack->getId() == $track->getId()) {
+                            unset($originalTracks[$key]);
+                        }
+                    }
+                    if (trim($track->getTitle()) == '')
+                    {
+                        $album->removeTrack($track);
+                    }
+                    else
+                    {
+                        $track->setVolumeNumber(1);//@todo
+                        $track->setTrackNumber($trackNb + 1);
+                        $track->setMusicAlbum($album);
+                        $em->persist($track);
+                    }
                 }
-//                 $album->setOwner($this->currentUser);
+                foreach ($originalTracks as $originalTrack) {
+                	$album->removeTrack($originalTrack);
+                	$em->remove($originalTrack);
+                }
+//                 $album->setOwner($this->currentUser); //@todo
                 $em->persist($album);
                 $em->flush();
                 return (TRUE);
