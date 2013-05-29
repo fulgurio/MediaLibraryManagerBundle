@@ -19,24 +19,12 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('fulgurio_media_library_manager');
-
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('cover_size')->defaultValue(50)->end()
             ->end()
-            ->children()
-                ->arrayNode('amazon')
-                    ->children()
-                        ->scalarNode('secret_key')->end()
-                        ->scalarNode('access_key_id')->end()
-                        ->scalarNode('associate_tag')->end()
-                        ->scalarNode('aws_url')->defaultValue('http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl')->end()
-                        ->scalarNode('aws_security_url')->defaultValue('http://security.amazonaws.com/doc/2007-01-01/')->end()
-                    ->end()
-            ->end()
         ;
-
         return $treeBuilder;
     }
 }

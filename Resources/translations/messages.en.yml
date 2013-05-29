@@ -47,3 +47,4 @@ fulgurio:
           title:                Title
           duration:             Duration
           lyrics:               Lyrics
+          not_blank:            Title is required

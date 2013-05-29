@@ -23,20 +23,6 @@ class FulgurioMediaLibraryManagerExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-       	$container->setParameter('fulgurio_media_library_manager.cover_size', $config['cover_size']);
-       	if (isset($config['amazon']))
-       	{
-       	    $container->setParameter('fulgurio_media_library_manager.amazon.aws_url', $config['amazon']['aws_url']);
-       	    $container->setParameter('fulgurio_media_library_manager.amazon.aws_security_url', $config['amazon']['aws_security_url']);
-       	    if (isset($config['amazon']['secret_key'])
-       	        && isset($config['amazon']['access_key_id'])
-       	        && isset($config['amazon']['secret_key'])
-       	    )
-       	    {
-       	        $container->setParameter('fulgurio_media_library_manager.amazon.secret_key', $config['amazon']['secret_key']);
-       	        $container->setParameter('fulgurio_media_library_manager.amazon.access_key_id', $config['amazon']['access_key_id']);
-       	        $container->setParameter('fulgurio_media_library_manager.amazon.associate_tag', $config['amazon']['associate_tag']);
-       	    }
-       	}
+        $container->setParameter('fulgurio_media_library_manager.cover_size', $config['cover_size']);
     }
 }

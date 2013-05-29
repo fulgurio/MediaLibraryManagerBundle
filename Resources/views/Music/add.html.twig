@@ -108,17 +108,15 @@
 {%	 set track = form.tracks.vars.prototype %}
 {%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' %}
 </script>
-{% if hasMediaInfo() %}
 		<script>
-{%   if app.request.attributes.get('albumId') is null %}
+{% if app.request.attributes.get('albumId') is null %}
 var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
 {% else %}
 var searchUrl;
-{%   endif %}
+{% endif %}
 var lyricsUrl  = '{{ path('FulgurioMLM_Music_Retrieve_Track_Lyrics') }}';
 		</script>
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/tmpl.min.js') }}"></script>
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
-{% endif %}
 {% endblock %}

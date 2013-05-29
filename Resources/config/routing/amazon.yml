@@ -1,7 +1,0 @@
-FulgurioMLM_Amazon_Music_Search:
-    pattern:  /music/
-    defaults: { _controller: FulgurioMediaLibraryManagerBundle:MusicAmazon:search }
-#    requirements:
-#        title:  \s+
-#        artist: \s+
-
