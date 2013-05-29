@@ -86,7 +86,6 @@ class MusicController extends Controller
                 'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
                 'confirmationMessage' => $this->get('translator')->trans('fulgurio.medialibrarymanager.music.delete_confirm_message', array('%TITLE%' => $album->getTitle())),
         ));
-        return $this->render('FulgurioMediaLibraryManagerBundle:Music:list.html.twig');
     }
 
     /**
@@ -101,7 +100,7 @@ class MusicController extends Controller
             throw new AccessDeniedException();
         }
         $request = $this->container->get('request');
-        $musicManager  = $this->get('nass600_media_info.music_info.manager');
+        $musicManager = $this->get('nass600_media_info.music_info.manager');
         $data = $musicManager->getAlbumInfo(
             array(
 //                 'mbid' => '61bf0388-b8a9-48f4-81d1-7eb02706dfb0',
