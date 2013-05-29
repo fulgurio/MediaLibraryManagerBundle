@@ -68,7 +68,7 @@ function setAlbumInfo(d)
 		{
 			for(var j = 0; j < d.tracks[i].length; j++)
 			{
-				var elt = addTagForm(1, j + 1);
+				var elt = addTrackForm(1, j + 1);
 				elt.find('input#inputTrackTitle_' + (i+1) + '_' + (j+1)).attr('value', d.tracks[i][j].title);
 				elt.find('input#inputTrackDuration_' + (i+1) + '_' + (j+1)).attr('value', d.tracks[i][j].duration);
 				elt.find('input#inputTrackLyrics_' + (i+1) + '_' + (j+1)).attr('value', d.tracks[i][j].lyrics);
@@ -129,7 +129,7 @@ function addTrackForm(discNb, trackNb) {
 	newTrack = newTrack.replace(/__name__/g, trackNb - 1);
 	return $('#tracks').append(newTrack);
 }
-jQuery(document).ready(function() {
+$(document).ready(function() {
 	$('form').on('click', '.btn.btn-lyrics-track', getTrackLyrics);
 	$('form').on('click', '.btn.btn-remove-track', removeTrack);
 	$('#addTrack').click(function(e) {
