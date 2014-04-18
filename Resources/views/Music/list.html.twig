@@ -1,7 +1,9 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
 {% block content %}
 			<h1>{% trans %}fulgurio.medialibrarymanager.music.music{% endtrans %}</h1>
-{% if app.session.hasFlash('notice') %}			<div class="alert alert-success">{{ app.session.flash('notice')|trans }}</div>{% endif %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+			<div class="alert alert-success">{{ flashMessage|trans }}<br /></div>
+{% endfor %}
 {% if albums is not empty %}
 			<form method="post" action="{{ path('FulgurioMLM_Music_List') }}">
 				<div class="input-append pull-left">

@@ -9,89 +9,89 @@
 {% endif %}
 				<fieldset class="pull-left">
 {{ form_errors(form) }}
-					<div class="control-group{% if form.getChild('artist').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.artist.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputArtist">{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputArtist" maxlength="{{ form.getChild('artist').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}" name="{{ form.getChild('artist').get('full_name') }}" value="{{ form.getChild('artist').get('value') }}" />
-{% if form.getChild('artist').get('errors') %}{% for error in form.getChild('artist').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputArtist" maxlength="{{ form.artist.vars.max_length }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.artist{% endtrans %}" name="{{ form.artist.vars.full_name }}" value="{{ form.artist.vars.value }}" />
+{% if form.artist.vars.errors is not empty %}{% for error in form.artist.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.getChild('title').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.title.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputTitle">{% trans %}fulgurio.medialibrarymanager.music.title{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputTitle" maxlength="{{ form.getChild('title').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.title{% endtrans %}" name="{{ form.getChild('title').get('full_name') }}" value="{{ form.getChild('title').get('value') }}" />
-{% if form.getChild('title').get('errors') %}{% for error in form.getChild('title').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputTitle" maxlength="{{ form.title.vars.max_length }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.title{% endtrans %}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" />
+{% if form.title.vars.errors is not empty %}{% for error in form.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.getChild('ean').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.ean.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputEan">{% trans %}fulgurio.medialibrarymanager.music.ean{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputEan" maxlength="{{ form.getChild('ean').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.ean{% endtrans %}" name="{{ form.getChild('ean').get('full_name') }}" value="{{ form.getChild('ean').get('value') }}" />
-{% if form.getChild('ean').get('errors') %}{% for error in form.getChild('ean').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputEan" maxlength="{{ form.ean.vars.max_length }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.ean{% endtrans %}" name="{{ form.ean.vars.full_name }}" value="{{ form.ean.vars.value }}" />
+{% if form.ean.vars.errors is not empty %}{% for error in form.ean.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.getChild('media_type').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.media_type.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputMediaType">{% trans %}fulgurio.medialibrarymanager.music.media_type{% endtrans %}</label>
 						<div class="controls">
-							<select id="inputMediaType" class="input-mini" name="{{ form.getChild('media_type').get('full_name') }}">
-{% for media_type in form.getChild('media_type').get('choices') %}
-							<option value="{{ media_type.value }}"{% if media_type.value == form.getChild('media_type').get('value') %} selected="selected"{% endif %}>{{ media_type.label }}</option>
+							<select id="inputMediaType" class="input-mini" name="{{ form.media_type.vars.full_name }}">
+{% for media_type in form.media_type.vars.choices %}
+							<option value="{{ media_type.value }}"{% if media_type.value == form.media_type.vars.value %} selected="selected"{% endif %}>{{ media_type.label }}</option>
 {% endfor %}
 							</select>
-{% if form.getChild('media_type').get('errors') %}{% for error in form.getChild('media_type').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+{% if form.media_type.vars.errors is not empty %}{% for error in form.media_type.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.getChild('publication_year').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.publication_year.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputPublicationDate">{% trans %}fulgurio.medialibrarymanager.music.publication_year{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" class="input-mini" id="inputPublicationDate" placeholder="{% trans %}fulgurio.medialibrarymanager.music.publication_year{% endtrans %}" name="{{ form.getChild('publication_year').get('full_name') }}" value="{{ form.getChild('publication_year').get('value') }}" />
-{% if form.getChild('publication_year').get('errors') %}{% for error in form.getChild('publication_year').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+							<input type="text" class="input-mini" id="inputPublicationDate" placeholder="{% trans %}fulgurio.medialibrarymanager.music.publication_year{% endtrans %}" name="{{ form.publication_year.vars.full_name }}" value="{{ form.publication_year.vars.value }}" />
+{% if form.publication_year.vars.errors is not empty %}{% for error in form.publication_year.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.getChild('publisher').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.publisher.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputPublisher">{% trans %}fulgurio.medialibrarymanager.music.publisher{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputPublisher" maxlength="{{ form.getChild('publisher').get('max_length') }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.publisher{% endtrans %}" name="{{ form.getChild('publisher').get('full_name') }}" value="{{ form.getChild('publisher').get('value') }}" />
-{% if form.getChild('publisher').get('errors') %}{% for error in form.getChild('publisher').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputPublisher" maxlength="{{ form.publisher.vars.max_length }}" placeholder="{% trans %}fulgurio.medialibrarymanager.music.publisher{% endtrans %}" name="{{ form.publisher.vars.full_name }}" value="{{ form.publisher.vars.value }}" />
+{% if form.publisher.vars.errors is not empty %}{% for error in form.publisher.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.getChild('file').get('errors') %} error{% endif %}">
+					<div class="control-group{% if form.file.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputCover">{% trans %}fulgurio.medialibrarymanager.music.cover{% endtrans %}</label>
 						<div class="controls">
-							<input type="hidden" id="inputCoverUrl" name="{{ form.getChild('cover_url').get('full_name') }}" value="{{ form.getChild('cover_url').get('value') }}" />
+							<input type="hidden" id="inputCoverUrl" name="{{ form.cover_url.vars.full_name }}" value="{{ form.cover_url.vars.value }}" />
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 								<div class="fileupload-new thumbnail" id="thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('albumId') is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{% if album.webpath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.webpath }}{% endif %}{% endif %}" alt="" /></div>
 								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px;"></div>
-								<span class="btn btn-file"><span class="fileupload-new">{% trans %}fulgurio.medialibrarymanager.common.select_image{% endtrans %}</span><span class="fileupload-exists">{% trans %}fulgurio.medialibrarymanager.common.change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.getChild('file').get('full_name') }}" /></span>
+								<span class="btn btn-file"><span class="fileupload-new">{% trans %}fulgurio.medialibrarymanager.common.select_image{% endtrans %}</span><span class="fileupload-exists">{% trans %}fulgurio.medialibrarymanager.common.change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.file.vars.full_name }}" /></span>
 								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans %}fulgurio.medialibrarymanager.common.remove_image{% endtrans %}</a>
 							</div>
-{% if form.getChild('file').get('errors') %}{% for error in form.getChild('file').get('errors') %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
+{% if form.file.vars.errors is not empty %}{% for error in form.file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 {%   set volumeNb = 1 %}
-{%   set trackNb = form.tracks.vars.prototype.get('name') %}
-{%	 set track = form.tracks.vars.prototype %}
-					<div>
+{#{%   set trackNb = form.tracks|length %}
+{%	 set track = form.tracks[0] %}
+#}					<div>
 						<ol id="tracks">
-{% if form.getChild('tracks').getChildren()|length > 0 %}
-{%   for trackNb, track in form.getChild('tracks').getChildren() %}
+{% if form.tracks.vars is not empty %}
+{%   for trackNb, track in form.tracks %}
 {%     set trackNb = trackNb + 1 %}
 {%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' %}
 {%   endfor %}
 {% endif %}
 {% if app.request.request.get('addTrack') %}
-{%     set trackNb = app.request.request.get('addTrack')[volumeNb] + 1 %}
-{%     set track = form.tracks.vars.prototype %}
-{% include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' %}
+{%   set trackNb = app.request.request.get('addTrack')[volumeNb] + 1 %}
+{%   set track = form.tracks.vars.prototype %}
+{%   include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' %}
 {% endif %}
 						</ol>
-						<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.getChild('tracks').getChildren()|length }}" tabindex="2">{% trans %}fulgurio.medialibrarymanager.music.add_track{% endtrans %}</button>
+						<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.tracks is not empty }}" tabindex="2">{% trans %}fulgurio.medialibrarymanager.music.add_track{% endtrans %}</button>
 					</div>
 				</fieldset>
 				<div class="pull-right" id="searchResult"></div>
 				<div class="clearfix"></div>
 				<div class="form-actions">
-					<input type="hidden" name="{{ form.getChild('_token').get('full_name') }}" value="{{ form.getChild('_token').get('value') }}" />
+					<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
 					<button type="submit" class="btn btn-primary" name="realSubmit" value="1" tabindex="1">{% trans %}fulgurio.medialibrarymanager.common.save{% endtrans %}</button>
 					<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans %}fulgurio.medialibrarymanager.common.cancel{% endtrans %}</a>
 				</div>
@@ -105,8 +105,8 @@
 
 {% block javascript %}
 		<script type="text/x-tmpl" id="tmpl-track">
-{%	 set track = form.tracks.vars.prototype %}
-{%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' %}
+{% set track = form.tracks.vars.prototype %}
+{% include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' %}
 		</script>
 		<script>
 {% if app.request.attributes.get('albumId') is null %}

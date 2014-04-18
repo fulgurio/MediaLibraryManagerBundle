@@ -1,5 +1,4 @@
 <?php
-
 namespace Fulgurio\MediaLibraryManagerBundle\Controller;
 
 use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
@@ -15,14 +14,12 @@ class MusicController extends Controller
 {
     /**
      * Music album listing
-     *
      */
     public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
         // @todo : Filter by owner
         $paginator = $this->get('knp_paginator');
-
         $albums = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')->findAllWithPaginator($paginator, $this->get('request')->get('page', 1), $this->get('request')->get('q'));
         return $this->render(
             'FulgurioMediaLibraryManagerBundle:Music:list.html.twig',
@@ -44,7 +41,7 @@ class MusicController extends Controller
         $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $this->get('request'));
         if ($formHandler->process($album))
         {
-            $this->get('session')->setFlash(
+            $this->get('session')->getFlashBag()->add(
                 'notice',
                 $this->get('translator')->trans('fulgurio.medialibrarymanager.music.' . (is_null($albumId) ? 'adding' : 'editing') . '_music_success')
             );

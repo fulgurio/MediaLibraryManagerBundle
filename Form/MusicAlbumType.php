@@ -3,7 +3,6 @@ namespace Fulgurio\MediaLibraryManagerBundle\Form;
 
 use Fulgurio\MediaLibraryManagerBundle\Form\MusicTrackType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\CallbackValidator;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
@@ -37,15 +36,7 @@ class MusicAlbumType extends AbstractType
                     'allow_add' => TRUE,
                     'allow_delete' => TRUE,
                     'by_reference' => FALSE
-            ))
-            ->addValidator(new CallbackValidator(function(FormInterface $form) {
-                $yearField = $form->get('publication_year');
-                if (strval(intval($yearField->getData())) == $yearField->getData() && ($yearField->getData() > date('Y') + 1 || $yearField->getData() < 1900))
-                {
-                    $yearField->addError(new FormError('fulgurio.medialibrarymanager.music.invalid_publication_year'));
-                }
-            }));
-        ;
+            ));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -5,6 +5,7 @@ namespace Fulgurio\MediaLibraryManagerBundle\Entity;
 use Fulgurio\MediaLibraryManagerBundle\Entity\MediaCoverAbstract;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * MusicAlbum
@@ -57,6 +58,7 @@ class MusicAlbum extends MediaCoverAbstract
      * @var \Doctrine\Common\Collections\Collection
      */
     private $tracks;
+
 
     /**
      * Constructor
@@ -153,9 +155,9 @@ class MusicAlbum extends MediaCoverAbstract
      */
     public function setEan($ean)
     {
-    	$this->ean = $ean;
+        $this->ean = $ean;
 
-    	return $this;
+        return $this;
     }
 
     /**
@@ -165,9 +167,8 @@ class MusicAlbum extends MediaCoverAbstract
      */
     public function getEan()
     {
-    	return $this->ean;
+        return $this->ean;
     }
-
 
     /**
      * Set publication_year
@@ -270,27 +271,20 @@ class MusicAlbum extends MediaCoverAbstract
     {
         return $this->tracks;
     }
-//     /**
-//      * @ORM\PrePersist
-//      */
-//     public function preUpload()
-//     {
-//         // Add your code here
-//     }
 
-//     /**
-//      * @ORM\PostPersist
-//      */
-//     public function upload()
-//     {
-//         // Add your code here
-//     }
-
-//     /**
-//      * @ORM\PostRemove
-//      */
-//     public function removeUpload()
-//     {
-//         // Add your code here
-//     }
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->publication_year < 1900 || $this->publication_year > date('Y') + 1)
+        {
+            $context->addViolationAt(
+                    'publication_year',
+                    'fulgurio.medialibrarymanager.music.invalid_publication_year',
+                    array(),
+                    null
+                    );
+        }
+    }
 }
