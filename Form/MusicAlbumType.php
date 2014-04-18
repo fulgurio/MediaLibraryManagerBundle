@@ -25,19 +25,19 @@ class MusicAlbumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('artist', 'text', array('max_length' => 128, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_artist'))
-            ->add('title', 'text', array('max_length' => 128, 'required' => TRUE, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_title'))
-            ->add('ean', 'text', array('max_length' => 13, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_ean'))
+            ->add('artist', 'text', array('max_length' => 128, 'invalid_message' => 'validator.invalid.artist'))
+            ->add('title', 'text', array('max_length' => 128, 'required' => TRUE, 'invalid_message' => 'validator.invalid.title'))
+            ->add('ean', 'text', array('max_length' => 13, 'invalid_message' => 'validator.invalid.ean'))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
                 'choices'   => array('cd', 'mp3', 'vinyl'),
                 'required' => TRUE,
-                'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_artist'
+                'invalid_message' => 'validator.invalid.artist'
                 )
             )
-            ->add('publication_year', 'number', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publication_year'))
-            ->add('publisher', 'text', array('max_length' => 32, 'invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_publisher'))
-            ->add('file', 'file', array('invalid_message' => 'fulgurio.medialibrarymanager.music.invalid_cover'))
+            ->add('publication_year', 'number', array('invalid_message' => 'validator.invalid.publication_year'))
+            ->add('publisher', 'text', array('max_length' => 32, 'invalid_message' => 'validator.invalid.publisher'))
+            ->add('file', 'file', array('invalid_message' => 'validator.invalid.cover'))
             ->add('cover_url', 'hidden', array('required' => FALSE))
             ->add('tracks', 'collection', array(
                     'type' => new MusicTrackType(),

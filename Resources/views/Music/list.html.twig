@@ -1,28 +1,28 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
 {% block content %}
-			<h1>{% trans %}fulgurio.medialibrarymanager.music.music{% endtrans %}</h1>
+			<h1>{% trans from 'music' %}music.title{% endtrans %}</h1>
 {% for flashMessage in app.session.flashbag.get('notice') %}
-			<div class="alert alert-success">{{ flashMessage|trans }}<br /></div>
+			<div class="alert alert-success">{{ flashMessage|trans({}, 'music') }}<br /></div>
 {% endfor %}
 {% if albums is not empty %}
 			<form method="post" action="{{ path('FulgurioMLM_Music_List') }}">
 				<div class="input-append pull-left">
 					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
-					<button type="submit" class="btn">{% trans %}fulgurio.medialibrarymanager.common.search{% endtrans %}</button>
+					<button type="submit" class="btn">{% trans from 'common' %}search{% endtrans %}</button>
 				</div>
 {% endif %}
 			<div class="clearfix">
-				<a class="btn pull-right" href="{{ path('FulgurioMLM_Music_Add') }}">{% trans %}fulgurio.medialibrarymanager.music.add_new_album{% endtrans %}</a>
+				<a class="btn pull-right" href="{{ path('FulgurioMLM_Music_Add') }}">{% trans from 'music' %}add_new_album{% endtrans %}</a>
 			</div>
 {% if albums is empty %}
-			<p>{% trans %}fulgurio.medialibrarymanager.music.no_album{% endtrans %}</p>
+			<p>{% trans from 'music' %}no_album{% endtrans %}</p>
 {% else %}
 				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>{#Cover#}</th>
-							<th>{{ knp_pagination_sortable(albums, 'fulgurio.medialibrarymanager.music.artist'|trans, 'ma.artist')|raw }}</th>
-							<th>{{ knp_pagination_sortable(albums, 'fulgurio.medialibrarymanager.music.title'|trans, 'ma.title')|raw }}</th>
+							<th>{{ knp_pagination_sortable(albums, 'artist'|trans({}, 'music'), 'ma.artist')|raw }}</th>
+							<th>{{ knp_pagination_sortable(albums, 'title'|trans({}, 'music'), 'ma.title')|raw }}</th>
 							<th>{#Options#}</th>
 						</tr>
 					</thead>
@@ -39,8 +39,8 @@
 							<td>{{ album.artist }}</td>
 							<td>{{ album.title }}</td>
 							<td>
-								<a href="{{ path('FulgurioMLM_Music_Edit', {albumId: album.id}) }}" class="icon-edit"></a>
-								<a href="{{ path('FulgurioMLM_Music_Remove', {albumId: album.id}) }}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+								<a href="{{ path('FulgurioMLM_Music_Edit', {albumId: album.id}) }}" title="{% trans from 'common' %}edit{% endtrans %}" class="icon-edit"></a>
+								<a href="{{ path('FulgurioMLM_Music_Remove', {albumId: album.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
 							</td>
 						</tr>
 {% endfor %}

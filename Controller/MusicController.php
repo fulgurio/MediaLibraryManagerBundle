@@ -51,7 +51,7 @@ class MusicController extends Controller
         {
             $this->get('session')->getFlashBag()->add(
                 'notice',
-                $this->get('translator')->trans('fulgurio.medialibrarymanager.music.' . (is_null($albumId) ? 'adding' : 'editing') . '_music_success')
+                $this->get('translator')->trans((is_null($albumId) ? 'adding' : 'editing') . '_music_success', array(), 'music')
             );
             return new RedirectResponse($this->generateUrl('FulgurioMLM_Music_List'));
         }
@@ -89,7 +89,7 @@ class MusicController extends Controller
         $templateName = $request->isXmlHttpRequest() ? 'FulgurioMediaLibraryManagerBundle::confirmAjax.html.twig' : 'FulgurioMediaLibraryManagerBundle::confirm.html.twig';
         return $this->render($templateName, array(
                 'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
-                'confirmationMessage' => $this->get('translator')->trans('fulgurio.medialibrarymanager.music.delete_confirm_message', array('%TITLE%' => $album->getTitle())),
+                'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $album->getTitle()), 'music'),
         ));
     }
 
@@ -126,7 +126,8 @@ class MusicController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function retrieveLyricsTrackAction() {
+    public function retrieveLyricsTrackAction()
+    {
         $request = $this->container->get('request');
         $artist = $request->get('artist');
         $data = '';
@@ -142,7 +143,7 @@ class MusicController extends Controller
     private function getAlbum($albumId)
     {
         //@todo : check owner
-//         if ($this->get('security.context')->getToken()->getUser() != $album->getOwner())
+//         if ($this->getUser() != $album->getOwner())
 //         {
 //             throw new AccessDeniedException();
 //         }

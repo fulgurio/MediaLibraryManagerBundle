@@ -1,0 +1,20 @@
+project:
+    title:                Media Library Manager
+    author:               Fulgurio
+homepage:                 Accueil
+save:                     Enregistrer
+search:                   Rechercher
+cancel:                   Annuler
+popup_confirmation:       Popup de confirmation
+yes:                      Oui
+no:                       Non
+select_image:             Sélectionner une image
+change_image:             Changer
+remove_image:             Effacer
+first_page:               Première page
+last_page:                Dernière page
+previous_page:            Page précédente
+next_page:                Page suivante
+no_result:                Aucun résultat trouvé
+edit:                     Modifier
+delete:                   Supprimer

@@ -2,10 +2,10 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>{% block title %}{% trans %}fulgurio.medialibrarymanager.common.title{% endtrans %}{% endblock %}</title>
+		<title>{% block title %}{% trans from 'common' %}project.title{% endtrans %}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
-		<meta name="author" content="">
+		<meta name="author" content="{% trans from 'common' %}project.author{% endtrans %}">
 		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
 		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/mlm.css') }}" rel="stylesheet">
 {% block css %}{% endblock %}
@@ -24,11 +24,11 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">{% trans %}fulgurio.medialibrarymanager.common.title{% endtrans %}</a>
+					<a class="brand" href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}project.title{% endtrans %}</a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li{% if app.request.attributes.get('_route') == 'FulgurioMLMHomepage' %} class="active"{% endif %}><a href="{{ path('FulgurioMLMHomepage') }}">{% trans %}fulgurio.medialibrarymanager.common.homepage{% endtrans %}</a></li>
-							<li{% if app.request.attributes.get('_route')|slice(0, 18) == 'FulgurioMLM_Music_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Music_List') }}">{% trans %}fulgurio.medialibrarymanager.music.music{% endtrans %}</a></li>
+							<li{% if app.request.attributes.get('_route') == 'FulgurioMLMHomepage' %} class="active"{% endif %}><a href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}homepage{% endtrans %}</a></li>
+							<li{% if app.request.attributes.get('_route')|slice(0, 18) == 'FulgurioMLM_Music_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Music_List') }}">{% trans from 'music' %}music.title{% endtrans %}</a></li>
 						</ul>
 					</div>
 				</div>

@@ -37,7 +37,7 @@ class MusicAlbum extends MediaCoverAbstract
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="validator.blank.title")
      */
     private $title;
 
@@ -289,9 +289,9 @@ class MusicAlbum extends MediaCoverAbstract
         {
             $context->addViolationAt(
                     'publication_year',
-                    'fulgurio.medialibrarymanager.music.invalid_publication_year',
+                    'validator.invalid.publication_year',
                     array(),
-                    null
+                    'music'
                     );
         }
     }
