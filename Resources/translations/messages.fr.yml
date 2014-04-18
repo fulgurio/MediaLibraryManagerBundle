@@ -1,7 +1,50 @@
 fulgurio:
   medialibrarymanager:
     common:
-      title:               Fulgurio - Media Library Manager
-      homepage:            Accueil
+      title:                    Media Library Manager
+      homepage:                 Accueil
+      save:                     Enregistrer
+      search:                   Rechercher
+      cancel:                   Annuler
+      popup_confirmation:       Popup de confirmation
+      yes:                      Oui
+      no:                       Non
+      select_image:             Sélectionner une image
+      change_image:             Changer
+      remove_image:             Effacer
+      first_page:               Première page
+      last_page:                Dernière page
+      previous_page:            Page précédente
+      next_page:                Page suivante
+      no_result:                Aucun résultat trouvé
     music:
-      music:               Musique
+      music:                    Musique
+      no_album:                 Aucun album
+      title:                    Nom de l'album
+      artist:                   Artiste
+      ean:                      EAN
+      media_type:               Type de média
+      publication_year:         Année de publication
+      publisher:                Editeur
+      cover:                    Pochette
+      add_new_album:            Ajouter un nouvel album
+      edit_album:               Editer l'album "%TITLE%"
+      adding_music_success:     Album ajouté avec succès !
+      editing_music_success:    Album modifié avec succès !
+      delete_confirm_message:   Etes-vous sûre de vouloir supprimer "%TITLE%" ?
+      invalid_artist:           Donnée incorrecte
+      invalid_title:            Donnée incorrecte
+      invalid_ean:              Donnée incorrecte
+      invalid_publication_year: Donnée incorrecte
+      invalid_publisher:        Donnée incorrecte
+      invalid_media_type:       Donnée incorrecte
+      invalid_cover:            Format du fichier non supporté (format png ou jpg uniquement)
+      tracks:                   Pistes
+      track_n:                  Piste n°%TRACK_NB%
+      add_track:                Ajouter une piste
+      remove_track:             Supprimer une piste
+      track:
+          title:                Titre
+          duration:             Durée
+          lyrics:               Paroles
+          not_blank:            Titre obligatoire
