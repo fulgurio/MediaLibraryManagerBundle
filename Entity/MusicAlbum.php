@@ -284,7 +284,8 @@ class MusicAlbum extends MediaCoverAbstract
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if ($this->publication_year < 1900 || $this->publication_year > date('Y') + 1)
+        if ($this->publication_year != NULL
+            && ($this->publication_year < 1900 || $this->publication_year > date('Y') + 1))
         {
             $context->addViolationAt(
                     'publication_year',
