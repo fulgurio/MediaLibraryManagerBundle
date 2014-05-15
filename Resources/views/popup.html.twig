@@ -5,3 +5,10 @@
 	</div>
 	<div class="modal-body"></div>
 </div>
+<script>
+$(document).ready(function() {
+	$('#myModal').on('hidden.bs.modal', function () {
+		$(this).removeData('modal');
+	});
+});
+</script>

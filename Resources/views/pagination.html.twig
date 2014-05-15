@@ -3,14 +3,14 @@
 					<ul>
 {%   if app.request.method == 'POST' %}
 {%     if first is defined and current != first %}
-						<li><button class="btn btn-link" name="page" value="{{ first }}" class="page_first" title="{% trans from 'common' %}first_page{% endtrans %}">|&laquo;</button></li>
+						<li><button class="btn btn-link page_first" name="page" value="{{ first }}" title="{% trans from 'common' %}first_page{% endtrans %}">|&laquo;</button></li>
 {%     endif %}
 {%     if previous is defined %}
 						<li><button class="btn btn-link" name="page" value="{{ previous }}" title="{% trans from 'common' %}previous_page{% endtrans %}">&laquo;</button></li>
 {%     else %}
 						<li class="disabled"><a>&laquo;</a></li>
 {%     endif %}
-						<li class="active"><a>Page <strong>{{ current }}</strong> / {{pagesInRange|length}}</a></li>
+						<li class="active"><a>Page <strong>{{ current }}</strong> / {{ last }}</a></li>
 {%     if next is defined %}
 						<li><button class="btn btn-link" name="page" value="{{ next }}" title="{% trans from 'common' %}next_page{% endtrans %}">&raquo;</button></li>
 {%     else %}
@@ -18,7 +18,7 @@
 {%     endif %}
 {%     if last is defined and current != last %}
 
-						<li><button class="btn btn-link" name="page" value="{{ last }}" class="page_last" title="{% trans from 'common' %}last_page{% endtrans %}">&raquo;|</button></li>
+						<li><button class="btn btn-link page_last" name="page" value="{{ last }}" title="{% trans from 'common' %}last_page{% endtrans %}">&raquo;|</button></li>
 {%     endif %}
 {%   else %}
 {%     if first is defined and current != first %}
