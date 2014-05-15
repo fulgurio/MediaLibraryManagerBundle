@@ -60,7 +60,7 @@ public function registerBundles()
     );
 }
 ```
-*note: the bundle use KnpPaginatorBundle, it's automatically imported, you just need to add into AppKerner.php like previously
+*note: the bundle use KnpPaginatorBundle, it's automatically imported, you just need to add into AppKernel.php like previously
 
 ### Import routing file
 
