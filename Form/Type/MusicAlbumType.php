@@ -7,9 +7,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Fulgurio\MediaLibraryManagerBundle\Form;
+namespace Fulgurio\MediaLibraryManagerBundle\Form\Type;
 
-use Fulgurio\MediaLibraryManagerBundle\Form\MusicTrackType;
+use Fulgurio\MediaLibraryManagerBundle\Form\Type\MusicTrackType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

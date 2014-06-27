@@ -1,7 +1,6 @@
 Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack:
     type: entity
     table: music_track
-    repositoryClass: Fulgurio\MediaLibraryManagerBundle\Repository\MusicTrackRepository
     fields:
         id:
             type: integer

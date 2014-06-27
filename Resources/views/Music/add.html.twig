@@ -20,7 +20,7 @@
 					<div class="control-group{% if form.title.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputTitle">{% trans from 'music' %}title{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputTitle" maxlength="{{ form.title.vars.max_length }}" placeholder="{% trans from 'music' %}title{% endtrans %}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" />
+							<input type="text" id="inputTitle" maxlength="{{ form.title.vars.max_length }}" placeholder="{% trans from 'music' %}title{% endtrans %}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" required="required" />
 {% if form.title.vars.errors is not empty %}{% for error in form.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>

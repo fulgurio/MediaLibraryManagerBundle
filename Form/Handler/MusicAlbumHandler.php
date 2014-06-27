@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace Fulgurio\MediaLibraryManagerBundle\Form;
+namespace Fulgurio\MediaLibraryManagerBundle\Form\Handler;
 
 use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -79,9 +79,9 @@ class MusicAlbumHandler
 //                 $album->setOwner($this->currentUser); //@todo
                 $em->persist($album);
                 $em->flush();
-                return (TRUE);
+                return TRUE;
             }
-            return (FALSE);
+            return FALSE;
         }
     }
 }

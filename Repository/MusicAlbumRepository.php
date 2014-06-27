@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the MediaLibraryManagerBundle package.
+ *
+ * (c) Fulgurio <http://fulgurio.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace Fulgurio\MediaLibraryManagerBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -38,6 +45,6 @@ class MusicAlbumRepository extends EntityRepository
         {
             $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma ORDER BY ma.artist ASC, ma.title ASC');
         }
-        return ($paginator->paginate($query, $page, self::NB_PER_PAGE));
+        return $paginator->paginate($query, $page, self::NB_PER_PAGE);
     }
 }
