@@ -1,3 +1,7 @@
+FulgurioMLM_Book:
+    resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing/book.yml"
+    prefix:   /book
+
 FulgurioMLM_Music:
     resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing/music.yml"
     prefix:   /music

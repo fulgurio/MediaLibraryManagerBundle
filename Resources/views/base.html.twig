@@ -29,6 +29,7 @@
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<li{% if app.request.attributes.get('_route') == 'FulgurioMLMHomepage' %} class="active"{% endif %}><a href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}homepage{% endtrans %}</a></li>
+							<li{% if app.request.attributes.get('_route')|slice(0, 17) == 'FulgurioMLM_Book_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Book_List') }}">{% trans from 'book' %}book.title{% endtrans %}</a></li>
 							<li{% if app.request.attributes.get('_route')|slice(0, 18) == 'FulgurioMLM_Music_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Music_List') }}">{% trans from 'music' %}music.title{% endtrans %}</a></li>
 						</ul>
 					</div>

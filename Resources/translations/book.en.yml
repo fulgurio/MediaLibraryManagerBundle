@@ -1,0 +1,29 @@
+book.title:               Books
+no_book:                  No book
+title:                    Book name
+author:                   Author
+ean:                      EAN
+media_type:
+    media_type:           Media type
+    book:                 Book
+    ebook:                Ebook
+publication_year:         Publication year
+publisher:                Publisher
+cover:                    Cover
+add_new_book:             Add new book
+edit_book:                Edit "%TITLE%" book
+adding_success:           New book added successfully !
+editing_success:          Book edited successfully !
+delete_confirm_message:   Do you really want to remove "%TITLE%" ?
+validator:
+    invalid:
+        author:           Data is invalid
+        title:            Data is invalid
+        ean:              Data is invalid
+        publication_year: Data is invalid
+        publisher:        Data is invalid
+        media_type:       Data is invalid
+        cover:            File format not support (please upload a png or jpg format)
+    blank:
+        author:           This value should not be blank.
+        title:            This value should not be blank.

@@ -1,0 +1,29 @@
+book.title:               Livres
+no_book:                  Aucun livre
+title:                    Nom du livre
+author:                   Auteur
+ean:                      EAN
+media_type:
+    media_type:           Type de média
+    book:                 Livre
+    ebook:                Livre électronique
+publication_year:         Année de publication
+publisher:                Editeur
+cover:                    Pochette
+add_new_book:             Ajouter un nouveau livre
+edit_book:                Editer le livre "%TITLE%"
+adding_success:           Livre ajouté avec succès !
+editing_success:          Livre modifié avec succès !
+delete_confirm_message:   Etes-vous sûr de vouloir supprimer "%TITLE%" ?
+validator:
+    invalid:
+        author:           Donnée incorrecte
+        title:            Donnée incorrecte
+        ean:              Donnée incorrecte
+        publication_year: Donnée incorrecte
+        publisher:        Donnée incorrecte
+        media_type:       Donnée incorrecte
+        cover:            Format du fichier non supporté (format png ou jpg uniquement)
+    blank:
+        author:           Cette valeur ne peut être vide.
+        title:            Cette valeur ne peut être vide.

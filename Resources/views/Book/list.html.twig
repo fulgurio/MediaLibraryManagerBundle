@@ -1,0 +1,62 @@
+{% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+{% block content %}
+			<h1>{% trans from 'book' %}book.title{% endtrans %}</h1>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+			<div class="alert alert-success">{{ flashMessage|trans({}, 'book') }}<br /></div>
+{% endfor %}
+			<form method="post" action="{{ path('FulgurioMLM_Book_List') }}">
+{% if books is not empty or app.request.get('q') is not null %}
+				<div class="input-append pull-left">
+					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
+					<button type="submit" class="btn">{% trans from 'common' %}search{% endtrans %}</button>
+				</div>
+{% endif %}
+			<div class="clearfix">
+				<a class="btn pull-right" href="{{ path('FulgurioMLM_Book_Add') }}">{% trans from 'book' %}add_new_book{% endtrans %}</a>
+			</div>
+{% if books is empty %}
+			<p>{% trans from 'book' %}no_book{% endtrans %}</p>
+{% else %}
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>{#Cover#}</th>
+							<th>{{ knp_pagination_sortable(books, 'author'|trans({}, 'book'), 'b.author')|raw }}</th>
+							<th>{{ knp_pagination_sortable(books, 'title'|trans({}, 'book'), 'b.title')|raw }}</th>
+							<th>{#Options#}</th>
+						</tr>
+					</thead>
+					<tbody>
+{% for book in books %}
+						<tr>
+							<td>
+{% if book.cover is null %}
+<img src="http://www.placehold.it/75x75/EFEFEF/AAAAAA" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}">
+{% else %}
+<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ vich_uploader_asset(book, 'coverFile') }}" href="{{ vich_uploader_asset(book, 'coverFile') }}"><img src="{{ vich_uploader_asset(book, 'coverFile') }}" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}"></a>
+{% endif %}
+							</td>
+							<td>{{ book.author }}</td>
+							<td>{{ book.title }}</td>
+							<td>
+								<a href="{{ path('FulgurioMLM_Book_Edit', {bookId: book.id}) }}" title="{% trans from 'common' %}edit{% endtrans %}" class="icon-edit"></a>
+								<a href="{{ path('FulgurioMLM_Book_Remove', {bookId: book.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+							</td>
+						</tr>
+{% endfor %}
+					</tbody>
+				</table>
+{{ knp_pagination_render(books, 'FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}
+			</form>
+{% endif %}
+{% endblock %}
+
+{% block css %}
+<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-lightbox.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-lightbox.min.js') }}"></script>
+{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
+{% include 'FulgurioMediaLibraryManagerBundle::lightbox.html.twig' %}
+{% endblock %}

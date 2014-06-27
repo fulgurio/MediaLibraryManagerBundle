@@ -1,0 +1,15 @@
+FulgurioMLM_Book_Add:
+    pattern:  /add
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Book:add }
+
+FulgurioMLM_Book_Edit:
+    pattern:  /{bookId}/edit
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Book:add }
+
+FulgurioMLM_Book_Remove:
+    pattern:  /{bookId}/remove
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Book:remove }
+
+FulgurioMLM_Book_List:
+    pattern:  /
+    defaults: { _controller: FulgurioMediaLibraryManagerBundle:Book:list }
