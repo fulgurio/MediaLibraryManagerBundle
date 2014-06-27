@@ -32,12 +32,6 @@ Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
             type: string
             length: '64'
             nullable: true
-    lifecycleCallbacks:
-        prePersist: [ preUpload ]
-        preUpdate: [ preUpload ]
-        postPersist: [ upload ]
-        postUpdate: [ upload ]
-        postRemove: [ removeUpload ]
     oneToMany:
         tracks:
             targetEntity: MusicTrack

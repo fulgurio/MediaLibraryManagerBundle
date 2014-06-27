@@ -56,17 +56,17 @@
 {% if form.publisher.vars.errors is not empty %}{% for error in form.publisher.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
-					<div class="control-group{% if form.file.vars.errors is not empty %} error{% endif %}">
+					<div class="control-group{% if form.cover_file.vars.errors is not empty %} error{% endif %}">
 						<label class="control-label" for="inputCover">{% trans from 'music' %}cover{% endtrans %}</label>
 						<div class="controls">
 							<input type="hidden" id="inputCoverUrl" name="{{ form.cover_url.vars.full_name }}" value="{{ form.cover_url.vars.value }}" />
 							<div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="fileupload-new thumbnail" id="thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('albumId') is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{% if album.webpath is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}/{{ album.webpath }}{% endif %}{% endif %}" alt="" /></div>
+								<div class="fileupload-new thumbnail" id="thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('albumId') is null or album.cover is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{{ vich_uploader_asset(album, 'coverFile') }}{% endif %}" alt="" /></div>
 								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px;"></div>
-								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.file.vars.full_name }}" /></span>
+								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.cover_file.vars.full_name }}" /></span>
 								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans from 'common' %}remove_image{% endtrans %}</a>
 							</div>
-{% if form.file.vars.errors is not empty %}{% for error in form.file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+{% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 {%   set volumeNb = 1 %}
@@ -97,7 +97,6 @@
 					<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans from 'common' %}cancel{% endtrans %}</a>
 				</div>
 			</form>
-{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
 {% endblock %}
 
 {% block css %}

@@ -9,19 +9,22 @@
  */
 namespace Fulgurio\MediaLibraryManagerBundle\Entity;
 
-use Fulgurio\MediaLibraryManagerBundle\Entity\MediaCoverAbstract;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\ExecutionContextInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Fulgurio\ImageHandlerBundle\Annotation as ImageAnnotation;
 
 /**
  * MusicAlbum
+ *
+ * @Vich\Uploadable
  */
-class MusicAlbum extends MediaCoverAbstract
+class MusicAlbum
 {
     /**
      * @var integer
-     *
      */
     private $id;
 
@@ -56,10 +59,12 @@ class MusicAlbum extends MediaCoverAbstract
      */
     private $publisher;
 
-//     /**
-//      * @var string
-//      */
-//     private $cover;
+    /**
+     * @var string
+     *
+     * @ImageAnnotation\ImageHandle(action="crop", width=100, height=100)
+     */
+    private $cover;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -223,28 +228,94 @@ class MusicAlbum extends MediaCoverAbstract
         return $this->publisher;
     }
 
-//     /**
-//      * Set cover
-//      *
-//      * @param string $cover
-//      * @return MusicAlbum
-//      */
-//     public function setCover($cover)
-//     {
-//         $this->cover = $cover;
+    /**
+     * Set cover
+     *
+     * @param string $cover
+     * @return MusicAlbum
+     */
+    public function setCover($cover)
+    {
+        $this->cover = $cover;
 
-//         return $this;
-//     }
+        return $this;
+    }
 
-//     /**
-//      * Get cover
-//      *
-//      * @return string
-//      */
-//     public function getCover()
-//     {
-//         return $this->cover;
-//     }
+    /**
+     * Get cover
+     *
+     * @return string
+     */
+    public function getCover()
+    {
+        return $this->cover;
+    }
+
+    /**
+     * @var Symfony\Component\HttpFoundation\File\UploadedFile
+     * @Vich\UploadableField(mapping="cover_image", fileNameProperty="cover")
+     * @Assert\File(
+     *     maxSize="1M",
+     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
+     * )
+     */
+    private $coverFile;
+
+    /**
+     * @var string
+     */
+    private $coverUrl;
+
+    /**
+     * Set coverFile
+     *
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile|\Symfony\Component\HttpFoundation\File\File $coverFile
+     */
+    public function setCoverFile($coverFile)
+    {
+        $this->coverFile = $coverFile;
+        // Because we need an update of entity object when form submit a file,
+        // we make a fake update of $cover
+        if ($coverFile instanceof UploadedFile && $coverFile)
+        {
+           $this->setCover(time());
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get coverFile
+     *
+     * @return Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    public function getCoverFile()
+    {
+        return $this->coverFile;
+    }
+
+    /**
+     * Set coverUrl
+     *
+     * @param string $coverUrl
+     * @return MusicAlbum
+     */
+    public function setCoverUrl($coverUrl)
+    {
+        $this->coverUrl = $coverUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get coverUrl
+     *
+     * @return string
+     */
+    public function getCoverUrl()
+    {
+        return $this->coverUrl;
+    }
 
     /**
      * Add tracks
