@@ -3,7 +3,11 @@ no_album:                 No album
 title:                    Album name
 artist:                   Artist
 ean:                      EAN
-media_type:               Media type
+media_type:
+    media_type:           Media type
+    cd:                   Cd
+    mp3:                  MP3
+    vinyl:                Vinyl
 publication_year:         Publication year
 publisher:                Publisher
 cover:                    Cover

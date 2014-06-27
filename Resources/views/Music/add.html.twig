@@ -32,11 +32,11 @@
 						</div>
 					</div>
 					<div class="control-group{% if form.media_type.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputMediaType">{% trans from 'music' %}media_type{% endtrans %}</label>
+						<label class="control-label" for="inputMediaType">{% trans from 'music' %}media_type.media_type{% endtrans %}</label>
 						<div class="controls">
 							<select id="inputMediaType" class="input-mini" name="{{ form.media_type.vars.full_name }}">
 {% for media_type in form.media_type.vars.choices %}
-							<option value="{{ media_type.value }}"{% if media_type.value == form.media_type.vars.value %} selected="selected"{% endif %}>{{ media_type.label }}</option>
+							<option value="{{ media_type.value }}"{% if media_type.value == form.media_type.vars.value %} selected="selected"{% endif %}>{{ ('media_type.' ~ media_type.label)|trans({}, 'music') }}</option>
 {% endfor %}
 							</select>
 {% if form.media_type.vars.errors is not empty %}{% for error in form.media_type.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
