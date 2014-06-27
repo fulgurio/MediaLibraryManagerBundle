@@ -30,7 +30,7 @@ class MusicAlbumType extends AbstractType
             ->add('media_type', 'choice', array(
                 'choices'   => array('cd', 'mp3', 'vinyl'),
                 'required' => TRUE,
-                'invalid_message' => 'validator.invalid.artist'
+                'invalid_message' => 'validator.invalid.media_type'
                 )
             )
             ->add('publication_year', 'number', array('invalid_message' => 'validator.invalid.publication_year'))
