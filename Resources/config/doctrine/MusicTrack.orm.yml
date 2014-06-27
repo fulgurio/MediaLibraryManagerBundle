@@ -21,7 +21,14 @@ Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack:
         lyrics:
             type: text
             nullable: true
-    lifecycleCallbacks: {  }
+        created_at:
+          type: datetime
+        updated_at:
+          type: datetime
+          nullable: true
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
     manyToOne:
         music_album:
             targetEntity: MusicAlbum

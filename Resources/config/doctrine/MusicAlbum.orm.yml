@@ -32,6 +32,14 @@ Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
             type: string
             length: '64'
             nullable: true
+        created_at:
+          type: datetime
+        updated_at:
+          type: datetime
+          nullable: true
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]
     oneToMany:
         tracks:
             targetEntity: MusicTrack

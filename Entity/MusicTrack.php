@@ -34,7 +34,6 @@ class MusicTrack
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
     private $title;
 
@@ -47,6 +46,16 @@ class MusicTrack
      * @var string
      */
     private $lyrics;
+
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
 
     /**
      * @var \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum
@@ -180,6 +189,52 @@ class MusicTrack
     }
 
     /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return MusicTrack
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param \DateTime $updatedAt
+     * @return MusicTrack
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
      * Set music_album
      *
      * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum $musicAlbum
@@ -200,5 +255,23 @@ class MusicTrack
     public function getMusicAlbum()
     {
         return $this->music_album;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+            $this->created_at = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updated_at = new \DateTime();
     }
 }
