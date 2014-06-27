@@ -4,8 +4,8 @@
 {% for flashMessage in app.session.flashbag.get('notice') %}
 			<div class="alert alert-success">{{ flashMessage|trans({}, 'music') }}<br /></div>
 {% endfor %}
-{% if albums is not empty %}
 			<form method="post" action="{{ path('FulgurioMLM_Music_List') }}">
+{% if albums is not empty or app.request.get('q') is not null %}
 				<div class="input-append pull-left">
 					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
 					<button type="submit" class="btn">{% trans from 'common' %}search{% endtrans %}</button>
