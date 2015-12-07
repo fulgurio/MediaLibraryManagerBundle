@@ -37,13 +37,22 @@ class BookRepository extends EntityRepository
     {
         if (!is_null($filter) && trim($filter) != '')
         {
-            $query = $this->getEntityManager()->createQuery('SELECT b FROM FulgurioMediaLibraryManagerBundle:Book b WHERE b.author LIKE :author OR b.title LIKE :title ORDER BY b.author ASC, b.title ASC');
+            $query = $this->getEntityManager()->createQuery('
+                    SELECT b
+                    FROM FulgurioMediaLibraryManagerBundle:Book b
+                    WHERE b.author LIKE :author
+                      OR b.title LIKE :title
+                    ORDER BY b.author ASC, b.title ASC');
             $query->setParameter('author', $filter . '%');
             $query->setParameter('title', $filter . '%');
         }
         else
         {
-            $query = $this->getEntityManager()->createQuery('SELECT b FROM FulgurioMediaLibraryManagerBundle:Book b ORDER BY b.author ASC, b.title ASC');
+            $query = $this->getEntityManager()->createQuery('
+                    SELECT b
+                    FROM FulgurioMediaLibraryManagerBundle:Book b
+                    ORDER BY b.author ASC, b.title ASC
+            ');
         }
         return $paginator->paginate($query, $page, self::NB_PER_PAGE);
     }

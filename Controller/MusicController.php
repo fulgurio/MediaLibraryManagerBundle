@@ -13,6 +13,7 @@ use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Fulgurio\MediaLibraryManagerBundle\Form\Type\MusicAlbumType;
 use Fulgurio\MediaLibraryManagerBundle\Form\Handler\MusicAlbumHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -20,17 +21,23 @@ class MusicController extends Controller
 {
     /**
      * Music albums listing
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $paginator = $this->get('knp_paginator');
-        $albums = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')->findAllWithPaginator($paginator, $this->getRequest()->get('page', 1), $this->getRequest()->get('q'));
+        $albums = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')
+                ->findAllWithPaginator(
+                        $paginator,
+                        $request->get('page', 1),
+                        $request->get('q')
+        );
         return $this->render(
             'FulgurioMediaLibraryManagerBundle:Music:list.html.twig',
-            array(
-                'albums' => $albums
-            )
+            array('albums' => $albums)
         );
     }
 
@@ -38,19 +45,20 @@ class MusicController extends Controller
      * Add new album
      *
      * @param number $albumId
+     * @param Request $request
+     * @return Response
      */
-    public function addAction($albumId = NULL)
+    public function addAction($albumId = NULL, Request $request)
     {
         $album = is_null($albumId) ? new MusicAlbum() : $this->getAlbum($albumId);
         $form = $this->createForm(new MusicAlbumType(), $album);
-        $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $this->getRequest());
+        $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request);
         if ($formHandler->process($album))
         {
-            $this->get('session')->getFlashBag()->add(
-                'notice',
+            $this->addFlash('notice',
                 $this->get('translator')->trans((is_null($albumId) ? 'adding' : 'editing') . '_music_success', array(), 'music')
             );
-            return $this->redirect($this->generateUrl('FulgurioMLM_Music_List'));
+            return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
         return $this->render(
             'FulgurioMediaLibraryManagerBundle:Music:add.html.twig',
@@ -65,21 +73,22 @@ class MusicController extends Controller
      * Remove album
      *
      * @param number $albumId
+     * @param Request $request
+     * @return Response
      */
-    public function removeAction($albumId)
+    public function removeAction($albumId, Request $request)
     {
         $album = $this->getAlbum($albumId);
-        $request = $this->getRequest();
         if ($request->get('confirm') === 'yes')
         {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
             $em->remove($album);
             $em->flush();
-            return $this->redirect($this->generateUrl('FulgurioMLM_Music_List'));
+            return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
         else if ($request->get('confirm') === 'no')
         {
-            return $this->redirect($this->generateUrl('FulgurioMLM_Music_List'));
+            return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
         return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig',
             array(
@@ -91,15 +100,15 @@ class MusicController extends Controller
     /**
      * Retrieve album info from external webservice
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @return Response
      */
-    public function retrieveAlbumInfosAction()
+    public function retrieveAlbumInfosAction(Request $request)
     {
         if (!$this->has('nass600_media_info.music_info.manager'))
         {
             throw new AccessDeniedException();
         }
-        $request = $this->getRequest();
         $musicManager = $this->get('nass600_media_info.music_info.manager');
         $data = $musicManager->getAlbumInfo(
             array(
@@ -119,7 +128,7 @@ class MusicController extends Controller
     /**
      * Get track lyrics from external webservice
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function retrieveLyricsTrackAction()
     {

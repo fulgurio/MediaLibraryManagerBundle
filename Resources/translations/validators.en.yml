@@ -1,0 +1,22 @@
+book:
+    title:
+        not_blank:              Book name is required
+        max_length:             Book name can not be more than {{ limit }} characters
+    author:
+        not_blank:              Author is required
+        max_length:             Author can not be more than {{ limit }} characters
+    ean:
+        max_length:             Ean can not be more than {{ limit }} characters
+    publisher:
+        max_length:             Publisher can not be more than {{ limit }} characters
+
+music:
+    title:
+        not_blank:              Album title is required
+        max_length:             Album title can not be more than {{ limit }} characters
+    artist:
+        max_length:             Artist can not be more than {{ limit }} characters
+    ean:
+        max_length:             Ean can not be more than {{ limit }} characters
+    publisher:
+        max_length:             Publisher can not be more than {{ limit }} characters

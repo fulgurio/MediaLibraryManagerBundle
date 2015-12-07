@@ -1,38 +1,36 @@
-music.title:              Musique
-no_album:                 Aucun album
-title:                    Nom de l'album
-artist:                   Artiste
-ean:                      EAN
+music:
+    title:              Musique
+no_album:               Aucun album
+title:
+    label:              Nom de l'album
+artist:
+    label:              Artiste
+ean:
+    label:              EAN
 media_type:
-    media_type:           Type de média
-    cd:                   Cd
-    mp3:                  MP3
-    vinyl:                Vinyl
-publication_year:         Année de publication
-publisher:                Editeur
-cover:                    Pochette
-add_new_album:            Ajouter un nouvel album
-edit_album:               Editer l'album "%TITLE%"
-adding_music_success:     Album ajouté avec succès !
-editing_music_success:    Album modifié avec succès !
-delete_confirm_message:   Etes-vous sûr de vouloir supprimer "%TITLE%" ?
-tracks:                   Pistes
-track_n:                  Piste n°%TRACK_NB%
-add_track:                Ajouter une piste
-remove_track:             Supprimer une piste
+    label:              Type de média
+    cd:                 Cd
+    mp3:                MP3
+    vinyl:              Vinyl
+publication_year:
+    label:              Année de publication
+publisher:
+    label:              Editeur
+cover:
+    label:              Pochette
+add_new_album:          Ajouter un nouvel album
+edit_album:             Editer l'album "%TITLE%"
+adding_music_success:   Album ajouté avec succès !
+editing_music_success:  Album modifié avec succès !
+delete_confirm_message: Etes-vous sûr de vouloir supprimer "%TITLE%" ?
+tracks:                 Pistes
+track_n:                Piste n°%TRACK_NB%
+add_track:              Ajouter une piste
+remove_track:           Supprimer une piste
 track:
-    title:                Titre
-    duration:             Durée
-    lyrics:               Paroles
-    not_blank:            Titre obligatoire
-validator:
-    invalid:
-        artist:           Donnée incorrecte
-        title:            Donnée incorrecte
-        ean:              Donnée incorrecte
-        publication_year: Donnée incorrecte
-        publisher:        Donnée incorrecte
-        media_type:       Donnée incorrecte
-        cover:            Format du fichier non supporté (format png ou jpg uniquement)
-    blank:
-        title:            Cette valeur ne peut être vide.
+    title:
+        label:          Titre
+    duration:
+        label:          Durée
+    lyrics:
+        label:          Paroles

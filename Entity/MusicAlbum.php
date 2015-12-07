@@ -40,7 +40,6 @@ class MusicAlbum
 
     /**
      * @var string
-     * @Assert\NotBlank(message="validator.blank.title")
      */
     private $title;
 

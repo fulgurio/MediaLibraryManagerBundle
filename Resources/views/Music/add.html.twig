@@ -11,53 +11,53 @@
 				<fieldset class="pull-left">
 {{ form_errors(form) }}
 					<div class="control-group{% if form.artist.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputArtist">{% trans from 'music' %}artist{% endtrans %}</label>
+						<label class="control-label" for="inputArtist">{% trans from 'music' %}artist.label{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputArtist" maxlength="{{ form.artist.vars.max_length }}" placeholder="{% trans from 'music' %}artist{% endtrans %}" name="{{ form.artist.vars.full_name }}" value="{{ form.artist.vars.value }}" />
-{% if form.artist.vars.errors is not empty %}{% for error in form.artist.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputArtist" maxlength="{{ form.artist.vars.max_length }}" placeholder="{% trans from 'music' %}artist.label{% endtrans %}" name="{{ form.artist.vars.full_name }}" value="{{ form.artist.vars.value }}" />
+{% if form.artist.vars.errors is not empty %}{% for error in form.artist.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.title.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputTitle">{% trans from 'music' %}title{% endtrans %}</label>
+						<label class="control-label" for="inputTitle">{% trans from 'music' %}title.label{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputTitle" maxlength="{{ form.title.vars.max_length }}" placeholder="{% trans from 'music' %}title{% endtrans %}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" required="required" />
-{% if form.title.vars.errors is not empty %}{% for error in form.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputTitle" maxlength="{{ form.title.vars.max_length }}" placeholder="{% trans from 'music' %}title.label{% endtrans %}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}">
+{% if form.title.vars.errors is not empty %}{% for error in form.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.ean.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputEan">{% trans from 'music' %}ean{% endtrans %}</label>
+						<label class="control-label" for="inputEan">{% trans from 'music' %}ean.label{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputEan" maxlength="{{ form.ean.vars.max_length }}" placeholder="{% trans from 'music' %}ean{% endtrans %}" name="{{ form.ean.vars.full_name }}" value="{{ form.ean.vars.value }}" />
-{% if form.ean.vars.errors is not empty %}{% for error in form.ean.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputEan" maxlength="{{ form.ean.vars.max_length }}" placeholder="{% trans from 'music' %}ean.label{% endtrans %}" name="{{ form.ean.vars.full_name }}" value="{{ form.ean.vars.value }}" />
+{% if form.ean.vars.errors is not empty %}{% for error in form.ean.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.media_type.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputMediaType">{% trans from 'music' %}media_type.media_type{% endtrans %}</label>
+						<label class="control-label" for="inputMediaType">{% trans from 'music' %}media_type.label{% endtrans %}</label>
 						<div class="controls">
 							<select id="inputMediaType" class="input-mini" name="{{ form.media_type.vars.full_name }}">
 {% for media_type in form.media_type.vars.choices %}
 							<option value="{{ media_type.value }}"{% if media_type.value == form.media_type.vars.value %} selected="selected"{% endif %}>{{ ('media_type.' ~ media_type.label)|trans({}, 'music') }}</option>
 {% endfor %}
 							</select>
-{% if form.media_type.vars.errors is not empty %}{% for error in form.media_type.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+{% if form.media_type.vars.errors is not empty %}{% for error in form.media_type.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.publication_year.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputPublicationDate">{% trans from 'music' %}publication_year{% endtrans %}</label>
+						<label class="control-label" for="inputPublicationDate">{% trans from 'music' %}publication_year.label{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" class="input-mini" id="inputPublicationDate" placeholder="{% trans from 'music' %}publication_year{% endtrans %}" name="{{ form.publication_year.vars.full_name }}" value="{{ form.publication_year.vars.value }}" />
-{% if form.publication_year.vars.errors is not empty %}{% for error in form.publication_year.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+							<input type="text" class="input-mini" id="inputPublicationDate" placeholder="{% trans from 'music' %}publication_year.label{% endtrans %}" name="{{ form.publication_year.vars.full_name }}" value="{{ form.publication_year.vars.value }}" />
+{% if form.publication_year.vars.errors is not empty %}{% for error in form.publication_year.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.publisher.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputPublisher">{% trans from 'music' %}publisher{% endtrans %}</label>
+						<label class="control-label" for="inputPublisher">{% trans from 'music' %}publisher.label{% endtrans %}</label>
 						<div class="controls">
-							<input type="text" id="inputPublisher" maxlength="{{ form.publisher.vars.max_length }}" placeholder="{% trans from 'music' %}publisher{% endtrans %}" name="{{ form.publisher.vars.full_name }}" value="{{ form.publisher.vars.value }}" />
-{% if form.publisher.vars.errors is not empty %}{% for error in form.publisher.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+							<input type="text" id="inputPublisher" maxlength="{{ form.publisher.vars.max_length }}" placeholder="{% trans from 'music' %}publisher.label{% endtrans %}" name="{{ form.publisher.vars.full_name }}" value="{{ form.publisher.vars.value }}" />
+{% if form.publisher.vars.errors is not empty %}{% for error in form.publisher.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.cover_file.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputCover">{% trans from 'music' %}cover{% endtrans %}</label>
+						<label class="control-label" for="inputCover">{% trans from 'music' %}cover.label{% endtrans %}</label>
 						<div class="controls">
 							<input type="hidden" id="inputCoverUrl" name="{{ form.cover_url.vars.full_name }}" value="{{ form.cover_url.vars.value }}" />
 							<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -66,7 +66,7 @@
 								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.cover_file.vars.full_name }}" /></span>
 								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans from 'common' %}remove_image{% endtrans %}</a>
 							</div>
-{% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}
+{% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 {%   set volumeNb = 1 %}

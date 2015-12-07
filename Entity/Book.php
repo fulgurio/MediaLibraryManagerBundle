@@ -35,13 +35,11 @@ class Book
 
     /**
      * @var string
-     * @Assert\NotBlank(message="validator.blank.author")
      */
     private $author;
 
     /**
      * @var string
-     * @Assert\NotBlank(message="validator.blank.title")
      */
     private $title;
 

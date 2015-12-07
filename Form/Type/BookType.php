@@ -11,20 +11,20 @@ namespace Fulgurio\MediaLibraryManagerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BookType extends AbstractType
 {
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form.AbstractType::buildForm()
+     * @see Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', 'text', array('max_length' => 128, 'invalid_message' => 'validator.invalid.author'))
-            ->add('title', 'text', array('max_length' => 128, 'required' => TRUE, 'invalid_message' => 'validator.invalid.title'))
-            ->add('ean', 'text', array('max_length' => 13, 'invalid_message' => 'validator.invalid.ean'))
+            ->add('author', 'text')
+            ->add('title', 'text')
+            ->add('ean', 'text')
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
                 'choices'   => array('book', 'ebook'),
@@ -33,11 +33,15 @@ class BookType extends AbstractType
                 )
             )
             ->add('publication_year', 'number', array('invalid_message' => 'validator.invalid.publication_year'))
-            ->add('publisher', 'text', array('max_length' => 32, 'invalid_message' => 'validator.invalid.publisher'))
+            ->add('publisher', 'text')
             ->add('cover_file', 'file', array('invalid_message' => 'validator.invalid.cover'));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    /**
+     * (non-PHPdoc)
+     * @see Symfony\Component\Form\AbstractType::configureOptions()
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
                 'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\Book',
@@ -46,7 +50,7 @@ class BookType extends AbstractType
 
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form.FormTypeInterface::getName()
+     * @see Symfony\Component\Form\FormTypeInterface::getName()
      */
     public function getName()
     {

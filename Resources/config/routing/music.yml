@@ -1,24 +1,23 @@
 FulgurioMLM_Music_Retrieve_Album_Infos:
-    pattern:  /retrieve_album_infos
+    path:  /retrieve_album_infos
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:retrieveAlbumInfos }
 
 FulgurioMLM_Music_Retrieve_Track_Lyrics:
-    pattern:  /retrieve_lyrics_track
+    path:  /retrieve_lyrics_track
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:retrieveLyricsTrack }
 
-
 FulgurioMLM_Music_Add:
-    pattern:  /add
+    path:  /add
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:add }
 
 FulgurioMLM_Music_Edit:
-    pattern:  /{albumId}/edit
+    path:  /{albumId}/edit
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:add }
-    
+
 FulgurioMLM_Music_Remove:
-    pattern:  /{albumId}/remove
+    path:  /{albumId}/remove
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:remove }
 
 FulgurioMLM_Music_List:
-    pattern:  /
+    path:  /
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Music:list }

@@ -1,13 +1,13 @@
 MediaLibraryManagerBundle
 =========================
 
-This bundle allow user to have a owner media manager manager. 
+This bundle allow user to have a owner media manager manager.
 Actually, there's only music supported. Soon, we will add video, games ... just ask ;)
 
 Installation
 ------------
 
-This version of the bundle requires Symfony 2.1+.
+This version of the bundle requires Symfony 2.7+.
 
 ### Translations
 
@@ -23,29 +23,17 @@ framework:
 
 For more information about translations, check [Symfony documentation](http://symfony.com/doc/current/book/translation.html).
 
-### Download the bunble with composer
+### Download the bundle with composer
 
-Add MediaLibraryBundle in your composer.json:
+Pretty simple with [Composer](http://packagist.org), run:
 
-```js
-{
-    "require": {
-         "fulgurio/media-library-manager-bundle": "dev-master"
-    }
-}
+```sh
+composer require fulgurio/media-library-manager-bundle
 ```
-
-Now tell composer to download the bundle by running the command:
-
-``` bash
-$ php composer.phar update
-```
-
-Composer will install the bundle to your project's `vendor/fulgurio` directory.
 
 ### Enable the bundle
 
-Enable the bundle in the kernel:
+Enable the bundle in the kernel, with others required bundles:
 
 ``` php
 <?php
@@ -56,19 +44,16 @@ public function registerBundles()
     $bundles = array(
         // ...
         new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+        new Vich\UploaderBundle\VichUploaderBundle(),
         new Fulgurio\MediaLibraryManagerBundle\FulgurioMediaLibraryManagerBundle(),
     );
 }
 ```
-*note: the bundle use KnpPaginatorBundle, it's automatically imported, you just need to add into AppKernel.php like previously
 
 ### Import routing file
 
 Now that you have activated and configured the bundle, all that is left to do is
-import the FOSUserBundle routing files.
-
-By importing the routing files you will have ready made pages for things such as
-logging in, creating users, etc.
+import the routing files.
 
 In YAML:
 ``` yaml

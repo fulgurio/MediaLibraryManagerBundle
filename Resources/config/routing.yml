@@ -7,6 +7,5 @@ FulgurioMLM_Music:
     prefix:   /music
 
 FulgurioMLMHomepage:
-    pattern:  /
+    path:  /
     defaults: { _controller: FulgurioMediaLibraryManagerBundle:Front:index }
-

@@ -1,0 +1,22 @@
+Fulgurio\MediaLibraryManagerBundle\Entity\Book:
+    properties:
+        title:
+            - NotBlank:
+                message:    book.title.not_blank
+            - Length:
+                max:        128
+                maxMessage: book.title.max_length
+        author:
+            - NotBlank:
+                message:    book.author.not_blank
+            - Length:
+                max:        128
+                maxMessage: book.author.max_length
+        ean:
+            - Length:
+                max:        13
+                maxMessage: book.ean.max_length
+        publisher:
+            - Length:
+                max:        32
+                maxMessage: book.publisher.max_length

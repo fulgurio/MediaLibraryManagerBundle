@@ -1,38 +1,36 @@
-music.title:              Music
-no_album:                 No album
-title:                    Album name
-artist:                   Artist
-ean:                      EAN
+music:
+    title:              Music
+no_album:               No album
+title:
+    label:              Album name
+artist:
+    label:              Artist
+ean:
+    label:              EAN
 media_type:
-    media_type:           Media type
-    cd:                   Cd
-    mp3:                  MP3
-    vinyl:                Vinyl
-publication_year:         Publication year
-publisher:                Publisher
-cover:                    Cover
-add_new_album:            Add new album
-edit_album:               Edit "%TITLE%" album
-adding_music_success:     New album added successfully !
-editing_music_success:    Album edited successfully !
-delete_confirm_message:   Do you really want to remove "%TITLE%" ?
-tracks:                   Tracks
-track_n:                  Track n°%TRACK_NB%
-add_track:                Add track
-remove_track:             Remove track
+    label:              Media type
+    cd:                 Cd
+    mp3:                MP3
+    vinyl:              Vinyl
+publication_year:
+    label:              Publication year
+publisher:
+    label:              Publisher
+cover:
+    label:              Cover
+add_new_album:          Add new album
+edit_album:             Edit "%TITLE%" album
+adding_music_success:   New album added successfully !
+editing_music_success:  Album edited successfully !
+delete_confirm_message: Do you really want to remove "%TITLE%" ?
+tracks:                 Tracks
+track_n:                Track n°%TRACK_NB%
+add_track:              Add track
+remove_track:           Remove track
 track:
-    title:                Title
-    duration:             Duration
-    lyrics:               Lyrics
-    not_blank:            Title is required
-validator:
-    invalid:
-        artist:           Data is invalid
-        title:            Data is invalid
-        ean:              Data is invalid
-        publication_year: Data is invalid
-        publisher:        Data is invalid
-        media_type:       Data is invalid
-        cover:            File format not support (please upload a png or jpg format)
-    blank:
-        title:            This value should not be blank.
+    title:
+        label:          Title
+    duration:
+        label:          Duration
+    lyrics:
+        label:          Lyrics
