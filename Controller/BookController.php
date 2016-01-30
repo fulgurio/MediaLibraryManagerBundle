@@ -53,9 +53,7 @@ class BookController extends Controller
         $formHandler = new BookHandler($this->getDoctrine(), $form, $request);
         if ($formHandler->process($book))
         {
-            $this->addFlash('notice',
-                $this->get('translator')->trans((is_null($bookId) ? 'adding' : 'editing') . '_success', array(), 'book')
-            );
+            $this->addFlash('notice', (is_null($bookId) ? 'adding' : 'editing') . '_success');
             return $this->redirectToRoute('FulgurioMLM_Book_List');
         }
         return $this->render(

@@ -30,13 +30,17 @@ class MusicAlbumType extends AbstractType
             ->add('media_type', 'choice', array(
                 'choices'   => array('cd', 'mp3', 'vinyl'),
                 'required' => TRUE,
-                'invalid_message' => 'validator.invalid.media_type'
+                'invalid_message' => 'music.media_type.invalid'
                 )
             )
-            ->add('publication_year', 'number', array('invalid_message' => 'validator.invalid.publication_year'))
+            ->add('publication_year', 'number', array('invalid_message' => 'music.publication_year.invalid'))
             ->add('publisher', 'text')
-            ->add('cover_file', 'file', array('invalid_message' => 'validator.invalid.cover'))
-            ->add('cover_url', 'hidden', array('required' => FALSE))
+            ->add('cover_file', 'file', array(
+                'invalid_message' => 'music.cover.invalid'
+            ))
+            ->add('cover_url', 'hidden', array(
+                'required' => FALSE
+            ))
             ->add('tracks', 'collection', array(
                     'type' => new MusicTrackType(),
                     'allow_add' => TRUE,

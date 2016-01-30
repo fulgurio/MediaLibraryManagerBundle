@@ -32,7 +32,7 @@ class BookType extends AbstractType
                 'invalid_message' => 'validator.invalid.media_type'
                 )
             )
-            ->add('publication_year', 'number', array('invalid_message' => 'validator.invalid.publication_year'))
+            ->add('publication_year', 'number', array('invalid_message' => 'book.publication_year.invalid'))
             ->add('publisher', 'text')
             ->add('cover_file', 'file', array('invalid_message' => 'validator.invalid.cover'));
     }

@@ -21,20 +21,20 @@
 					<thead>
 						<tr>
 							<th>{#Cover#}</th>
-							<th>{{ knp_pagination_sortable(books, 'author'|trans({}, 'book'), 'b.author')|raw }}</th>
-							<th>{{ knp_pagination_sortable(books, 'title'|trans({}, 'book'), 'b.title')|raw }}</th>
+							<th>{{ knp_pagination_sortable(books, 'author.label'|trans({}, 'book'), 'b.author')|raw }}</th>
+							<th>{{ knp_pagination_sortable(books, 'title.label'|trans({}, 'book'), 'b.title')|raw }}</th>
 							<th>{#Options#}</th>
 						</tr>
 					</thead>
 					<tbody>
-{% for book in books %}
+{%   for book in books %}
 						<tr>
 							<td>
-{% if book.cover is null %}
+{%     if book.cover is null %}
 <img src="http://www.placehold.it/75x75/EFEFEF/AAAAAA" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}">
-{% else %}
+{%     else %}
 <a data-target="#lightbox" data-toggle="lightbox" data-image="{{ vich_uploader_asset(book, 'coverFile') }}" href="{{ vich_uploader_asset(book, 'coverFile') }}"><img src="{{ vich_uploader_asset(book, 'coverFile') }}" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}"></a>
-{% endif %}
+{%     endif %}
 							</td>
 							<td>{{ book.author }}</td>
 							<td>{{ book.title }}</td>
@@ -43,7 +43,7 @@
 								<a href="{{ path('FulgurioMLM_Book_Remove', {bookId: book.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
 							</td>
 						</tr>
-{% endfor %}
+{%   endfor %}
 					</tbody>
 				</table>
 {{ knp_pagination_render(books, 'FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}
@@ -52,11 +52,11 @@
 {% endblock %}
 
 {% block css %}
-<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-lightbox.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-lightbox.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-lightbox.min.js') }}"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-lightbox.min.js') }}"></script>
 {% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
 {% include 'FulgurioMediaLibraryManagerBundle::lightbox.html.twig' %}
 {% endblock %}

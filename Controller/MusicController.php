@@ -55,9 +55,7 @@ class MusicController extends Controller
         $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request);
         if ($formHandler->process($album))
         {
-            $this->addFlash('notice',
-                $this->get('translator')->trans((is_null($albumId) ? 'adding' : 'editing') . '_music_success', array(), 'music')
-            );
+            $this->addFlash('notice', (is_null($albumId) ? 'adding' : 'editing') . '_music_success');
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
         return $this->render(

@@ -7,6 +7,8 @@ book:
         max_length:             Le nom de l'auteur ne doit pas faire plus de {{ limit }} caractères
     ean:
         max_length:             L'ean ne doit pas faire plus de {{ limit }} caractères
+    publication_year:
+        invalid:                La date de publication est invalide
     publisher:
         max_length:             Le nom de l'éditeur ne doit pas faire plus de {{ limit }} caractères
 
@@ -16,7 +18,11 @@ music:
         max_length:             Le nom de l'album ne doit pas faire plus de {{ limit }} caractères
     artist:
         max_length:             Le nom de l'artiste ne doit pas faire plus de {{ limit }} caractères
+    media_type:
+        invalid:                Le type de support du média est invalide
     ean:
         max_length:             L'ean ne doit pas faire plus de {{ limit }} caractères
+    publication_year:
+        invalid:                La date de publication est invalide
     publisher:
         max_length:             Le nom de l'éditeur ne doit pas faire plus de {{ limit }} caractères
