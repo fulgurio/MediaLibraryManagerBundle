@@ -1,4 +1,6 @@
 Fulgurio\MediaLibraryManagerBundle\Entity\Book:
+    constraints:
+        - Callback:         [validate]
     properties:
         title:
             - NotBlank:

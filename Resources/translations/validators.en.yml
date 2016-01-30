@@ -11,6 +11,9 @@ book:
         invalid:                Publication date is invalid
     publisher:
         max_length:             Publisher can not be more than {{ limit }} characters
+    cover:
+        not_a_image:            Cover must be a JPG or PNG format
+        max_file_size:          The cover size must be less than {{ limit }} {{ suffix }}
 
 music:
     title:
@@ -26,3 +29,6 @@ music:
         invalid:                Publication date is invalid
     publisher:
         max_length:             Publisher can not be more than {{ limit }} characters
+    cover:
+        not_a_image:            Cover must be a JPG or PNG format
+        max_file_size:          The cover size must be less than {{ limit }} {{ suffix }}

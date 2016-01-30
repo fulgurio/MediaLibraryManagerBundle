@@ -1,44 +1,48 @@
 Fulgurio\MediaLibraryManagerBundle\Entity\Book:
-    type: entity
-    table: book
-    repositoryClass: Fulgurio\MediaLibraryManagerBundle\Repository\BookRepository
+    type:                       entity
+    table:                      book
+    repositoryClass:            Fulgurio\MediaLibraryManagerBundle\Repository\BookRepository
     fields:
         id:
-            type: integer
-            id: true
+            type:               integer
+            id:                 true
             generator:
-                strategy: AUTO
+                strategy:       AUTO
         media_type:
-            type:       smallint
+            type:               smallint
         author:
-            type:       string
-            length:     128
+            type:               string
+            length:             128
         title:
-            type:       string
-            length:     128
+            type:               string
+            length:             128
         ean:
-            type:       string
-            length:     13
-            nullable:   true
+            type:               string
+            length:             13
+            nullable:           true
         publication_year:
-            type:       smallint
-            nullable:   true
+            type:               smallint
+            nullable:           true
         publisher:
-            type:       string
-            length:     32
-            nullable:   true
+            type:               string
+            length:             32
+            nullable:           true
         cover:
-            type:       string
-            length:     64
-            nullable:   true
+            type:               string
+            length:             64
+            nullable:           true
         excerpt:
-            type:       text
-            nullable:   true
-        created_at:
-          type:         datetime
-        updated_at:
-          type:         datetime
-          nullable:     true
-    lifecycleCallbacks:
-        prePersist: [ setCreatedAtValue ]
-        preUpdate: [ setUpdatedAtValue ]
+            type:               text
+            nullable:           true
+        createdAt:
+            type:               datetime
+            column:             created_at
+            gedmo:
+                timestampable:
+                    on:         create
+        updatedAt:
+            type:               datetime
+            column:             updated_at
+            gedmo:
+                timestampable:
+                    on:         update

@@ -17,6 +17,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class MusicTrack
 {
+    /***************************************************************************
+     *                             GENERATED CODE                              *
+     **************************************************************************/
+
     /**
      * @var integer
      */
@@ -50,12 +54,12 @@ class MusicTrack
     /**
      * @var \DateTime
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @var \DateTime
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @var \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum
@@ -74,9 +78,10 @@ class MusicTrack
     }
 
     /**
-     * Set volume_number
+     * Set volumeNumber
      *
      * @param integer $volumeNumber
+     *
      * @return MusicTrack
      */
     public function setVolumeNumber($volumeNumber)
@@ -87,7 +92,7 @@ class MusicTrack
     }
 
     /**
-     * Get volume_number
+     * Get volumeNumber
      *
      * @return integer
      */
@@ -97,9 +102,10 @@ class MusicTrack
     }
 
     /**
-     * Set track_number
+     * Set trackNumber
      *
      * @param integer $trackNumber
+     *
      * @return MusicTrack
      */
     public function setTrackNumber($trackNumber)
@@ -110,7 +116,7 @@ class MusicTrack
     }
 
     /**
-     * Get track_number
+     * Get trackNumber
      *
      * @return integer
      */
@@ -123,6 +129,7 @@ class MusicTrack
      * Set title
      *
      * @param string $title
+     *
      * @return MusicTrack
      */
     public function setTitle($title)
@@ -146,6 +153,7 @@ class MusicTrack
      * Set duration
      *
      * @param integer $duration
+     *
      * @return MusicTrack
      */
     public function setDuration($duration)
@@ -169,6 +177,7 @@ class MusicTrack
      * Set lyrics
      *
      * @param string $lyrics
+     *
      * @return MusicTrack
      */
     public function setLyrics($lyrics)
@@ -189,55 +198,58 @@ class MusicTrack
     }
 
     /**
-     * Set created_at
+     * Set createdAt
      *
      * @param \DateTime $createdAt
+     *
      * @return MusicTrack
      */
     public function setCreatedAt($createdAt)
     {
-        $this->created_at = $createdAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get created_at
+     * Get createdAt
      *
      * @return \DateTime
      */
     public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * Set updated_at
+     * Set updatedAt
      *
      * @param \DateTime $updatedAt
+     *
      * @return MusicTrack
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updated_at = $updatedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get updated_at
+     * Get updatedAt
      *
      * @return \DateTime
      */
     public function getUpdatedAt()
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
     /**
-     * Set music_album
+     * Set musicAlbum
      *
      * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum $musicAlbum
+     *
      * @return MusicTrack
      */
     public function setMusicAlbum(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum $musicAlbum = null)
@@ -248,30 +260,12 @@ class MusicTrack
     }
 
     /**
-     * Get music_album
+     * Get musicAlbum
      *
      * @return \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum
      */
     public function getMusicAlbum()
     {
         return $this->music_album;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        if(!$this->getCreatedAt())
-        {
-            $this->created_at = new \DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-        $this->updated_at = new \DateTime();
     }
 }

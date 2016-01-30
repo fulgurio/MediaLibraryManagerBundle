@@ -13,6 +13,7 @@ use Fulgurio\MediaLibraryManagerBundle\Form\Type\MusicTrackType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class MusicAlbumType extends AbstractType
 {
@@ -36,10 +37,20 @@ class MusicAlbumType extends AbstractType
             ->add('publication_year', 'number', array('invalid_message' => 'music.publication_year.invalid'))
             ->add('publisher', 'text')
             ->add('cover_file', 'file', array(
-                'invalid_message' => 'music.cover.invalid'
+                'required' => FALSE,
+                'invalid_message' => 'music.cover.invalid',
+                'constraints' => array(
+                    new File(array(
+                        'mimeTypes' => array('image/png', 'image/jpeg', 'image/jpg'),
+                        'mimeTypesMessage' => 'music.cover.not_a_image',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'music.cover.max_file_size'
+                    ))
+                )
             ))
             ->add('cover_url', 'hidden', array(
-                'required' => FALSE
+                'required' => FALSE,
+                'mapped' => FALSE
             ))
             ->add('tracks', 'collection', array(
                     'type' => new MusicTrackType(),

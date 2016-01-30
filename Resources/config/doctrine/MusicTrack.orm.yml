@@ -1,37 +1,41 @@
 Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack:
-    type: entity
-    table: music_track
+    type:                       entity
+    table:                      music_track
     fields:
         id:
-            type: integer
-            id: true
+            type:               integer
+            id:                 true
             generator:
-                strategy: AUTO
+                strategy:       AUTO
         volume_number:
-            type: smallint
+            type:               smallint
         track_number:
-            type: smallint
+            type:               smallint
         title:
-            type: string
-            length: 128
+            type:               string
+            length:             128
         duration:
-            type: smallint
-            nullable: true
+            type:               smallint
+            nullable:           true
         lyrics:
-            type: text
-            nullable: true
-        created_at:
-          type: datetime
-        updated_at:
-          type: datetime
-          nullable: true
-    lifecycleCallbacks:
-        prePersist: [ setCreatedAtValue ]
-        preUpdate: [ setUpdatedAtValue ]
+            type:               text
+            nullable:           true
+        createdAt:
+            type:               datetime
+            column:             created_at
+            gedmo:
+                timestampable:
+                    on:         create
+        updatedAt:
+            type:               datetime
+            column:             updated_at
+            gedmo:
+                timestampable:
+                    on:         update
     manyToOne:
         music_album:
-            targetEntity: MusicAlbum
-            inversedBy: tracks
+            targetEntity:       MusicAlbum
+            inversedBy:         tracks
             joinColumn:
-                name: album_id
+                name:           album_id
                 referencedColumnName: id

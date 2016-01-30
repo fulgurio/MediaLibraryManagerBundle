@@ -14,9 +14,11 @@
     ],
 
     "require": {
-        "symfony/framework-bundle": "~2.7",
-        "knplabs/knp-paginator-bundle": "~2.5.1",
-        "fulgurio/image-handler-bundle": "dev-master"
+        "symfony/framework-bundle": "2.7.*",
+        "knplabs/knp-paginator-bundle": "2.5.1",
+        "vich/uploader-bundle": "0.14",
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "liip/imagine-bundle": "^1.4"
     },
 
     "autoload": {

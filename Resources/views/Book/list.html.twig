@@ -33,7 +33,7 @@
 {%     if book.cover is null %}
 <img src="http://www.placehold.it/75x75/EFEFEF/AAAAAA" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}">
 {%     else %}
-<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ vich_uploader_asset(book, 'coverFile') }}" href="{{ vich_uploader_asset(book, 'coverFile') }}"><img src="{{ vich_uploader_asset(book, 'coverFile') }}" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}"></a>
+<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ vich_uploader_asset(book, 'coverFile') }}" href="{{ vich_uploader_asset(book, 'coverFile') }}"><img src="{{ vich_uploader_asset(book, 'coverFile')|imagine_filter('book_cover_thumb') }}" class="img-polaroid" alt="{{ book.author }} - {{ book.title }}"></a>
 {%     endif %}
 							</td>
 							<td>{{ book.author }}</td>

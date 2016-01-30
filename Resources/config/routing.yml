@@ -1,3 +1,6 @@
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
 FulgurioMLM_Book:
     resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing/book.yml"
     prefix:   /book

@@ -33,7 +33,7 @@
 {%     if album.cover is null %}
 <img src="http://www.placehold.it/75x75/EFEFEF/AAAAAA" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}">
 {%     else %}
-<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ vich_uploader_asset(album, 'coverFile') }}" href="{{ vich_uploader_asset(album, 'coverFile') }}"><img src="{{ vich_uploader_asset(album, 'coverFile') }}" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}"></a>
+<a data-target="#lightbox" data-toggle="lightbox" data-image="{{ vich_uploader_asset(album, 'coverFile') }}" href="{{ vich_uploader_asset(album, 'coverFile') }}"><img src="{{ vich_uploader_asset(album, 'coverFile')|imagine_filter('music_cover_thumb') }}" class="img-polaroid" alt="{{ album.artist }} - {{ album.title }}"></a>
 {%     endif %}
 							</td>
 							<td>{{ album.artist }}</td>

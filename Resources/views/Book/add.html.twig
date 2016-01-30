@@ -65,7 +65,7 @@
 								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.cover_file.vars.full_name }}" /></span>
 								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans from 'common' %}remove_image{% endtrans %}</a>
 							</div>
-{% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
+{% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 				</fieldset>

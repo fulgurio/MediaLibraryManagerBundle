@@ -1,4 +1,6 @@
 Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
+    constraints:
+        - Callback:         [validate]
     properties:
         title:
             - NotBlank:

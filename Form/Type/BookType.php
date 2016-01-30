@@ -12,6 +12,7 @@ namespace Fulgurio\MediaLibraryManagerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class BookType extends AbstractType
 {
@@ -32,9 +33,21 @@ class BookType extends AbstractType
                 'invalid_message' => 'validator.invalid.media_type'
                 )
             )
-            ->add('publication_year', 'number', array('invalid_message' => 'book.publication_year.invalid'))
+            ->add('publication_year', 'number', array(
+                'invalid_message' => 'book.publication_year.invalid'
+            ))
             ->add('publisher', 'text')
-            ->add('cover_file', 'file', array('invalid_message' => 'validator.invalid.cover'));
+            ->add('cover_file', 'file', array(
+                'invalid_message' => 'validator.invalid.cover',
+                'constraints' => array(
+                    new File(array(
+                        'mimeTypes' => array('image/png', 'image/jpeg', 'image/jpg'),
+                        'mimeTypesMessage' => 'music.cover.not_a_image',
+                        'maxSize' => '2M',
+                        'maxSizeMessage' => 'music.cover.max_file_size'
+                    ))
+                )
+            ));
     }
 
     /**

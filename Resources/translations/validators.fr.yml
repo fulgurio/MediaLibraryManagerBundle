@@ -11,6 +11,9 @@ book:
         invalid:                La date de publication est invalide
     publisher:
         max_length:             Le nom de l'éditeur ne doit pas faire plus de {{ limit }} caractères
+    cover:
+        not_a_image:            La pochette doit être au format JPG ou PNG
+        max_file_size:           Le poids de la pochette ne doit pas dépasser {{ limit }} {{ suffix }}
 
 music:
     title:
@@ -26,3 +29,6 @@ music:
         invalid:                La date de publication est invalide
     publisher:
         max_length:             Le nom de l'éditeur ne doit pas faire plus de {{ limit }} caractères
+    cover:
+        not_a_image:            La pochette doit être au format JPG ou PNG
+        max_file_size:          Le poids de la pochette ne doit pas dépasser {{ limit }} {{ suffix }}
