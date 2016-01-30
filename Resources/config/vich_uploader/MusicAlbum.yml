@@ -1,0 +1,4 @@
+Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum:
+    coverFile:
+        mapping:           music_cover_mapping
+        filename_property: cover
