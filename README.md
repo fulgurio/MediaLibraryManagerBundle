@@ -56,7 +56,10 @@ public function registerBundles()
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:
-        music_cover:
+        book_cover_mapping:
+            uri_prefix:         /images/book
+            upload_destination: %kernel.root_dir%/uploads/book
+        music_cover_mapping:
             uri_prefix:         /images/music
             upload_destination: %kernel.root_dir%/uploads/music
 
