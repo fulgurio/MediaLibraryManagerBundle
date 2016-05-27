@@ -29,7 +29,8 @@ class MusicAlbumType extends AbstractType
             ))
             ->add('title', 'text')
             ->add('ean', 'text', array(
-                'required' => FALSE
+                'required'   => FALSE,
+                'max_length' => 13
             ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
@@ -40,7 +41,8 @@ class MusicAlbumType extends AbstractType
             )
             ->add('publication_year', 'number', array(
                 'required' => FALSE,
-                'invalid_message' => 'music.publication_year.invalid'
+                'invalid_message' => 'music.publication_year.invalid',
+                'max_length' => 4
             ))
             ->add('publisher', 'text', array(
                 'required' => FALSE
@@ -59,11 +61,11 @@ class MusicAlbumType extends AbstractType
             ))
             ->add('cover_url', 'hidden', array(
                 'required' => FALSE,
-                'mapped' => FALSE
+                'mapped'   => FALSE
             ))
             ->add('tracks', 'collection', array(
-                    'type' => new MusicTrackType(),
-                    'allow_add' => TRUE,
+                    'type'         => new MusicTrackType(),
+                    'allow_add'    => TRUE,
                     'allow_delete' => TRUE,
                     'by_reference' => FALSE
             ))

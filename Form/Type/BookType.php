@@ -25,18 +25,24 @@ class BookType extends AbstractType
         $builder
             ->add('author', 'text')
             ->add('title', 'text')
-            ->add('ean', 'text')
+            ->add('ean', 'text', array(
+                'required'   => FALSE,
+                'max_length' => 13
+            ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
-                'choices'   => array('book', 'ebook'),
+                'choices'  => array('book', 'ebook'),
                 'required' => TRUE,
                 'invalid_message' => 'validator.invalid.media_type'
                 )
             )
             ->add('publication_year', 'number', array(
-                'invalid_message' => 'book.publication_year.invalid'
+                'invalid_message' => 'book.publication_year.invalid',
+                'max_length' => 4
             ))
-            ->add('publisher', 'text')
+            ->add('publisher', 'text', array(
+                'required' => FALSE
+            ))
             ->add('cover_file', 'file', array(
                 'invalid_message' => 'validator.invalid.cover',
                 'constraints' => array(
