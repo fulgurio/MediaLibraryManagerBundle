@@ -66,7 +66,8 @@ class MusicAlbumType extends AbstractType
                     'allow_add' => TRUE,
                     'allow_delete' => TRUE,
                     'by_reference' => FALSE
-            ));
+            ))
+            ->add('submit', 'submit');
     }
 
     /**

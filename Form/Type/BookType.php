@@ -47,7 +47,8 @@ class BookType extends AbstractType
                         'maxSizeMessage' => 'music.cover.max_file_size'
                     ))
                 )
-            ));
+            ))
+            ->add('submit', 'submit');
     }
 
     /**

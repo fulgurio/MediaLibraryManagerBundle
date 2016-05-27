@@ -43,11 +43,8 @@ class MusicAlbumHandler
                 $originalTracks[] = $track;
             }
             $this->form->handleRequest($this->request);
-            if ($this->request->get('realSubmit') !== '1')
-            {
-                return FALSE;
-            }
-            if ($this->form->isValid())
+            if ($this->form->isValid()
+                    && $this->form->get('submit')->isClicked())
             {
                 $em = $this->doctrine->getEntityManager();
                 foreach ($album->getTracks() as $trackNb => $track)
