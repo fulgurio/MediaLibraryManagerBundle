@@ -48,7 +48,7 @@ public function registerBundles()
             new Fulgurio\MediaLibraryManagerBundle\FulgurioMediaLibraryManagerBundle(),
     );
 }
-
+```
 ### Set the configuration of bundles
 
 ``` yaml
