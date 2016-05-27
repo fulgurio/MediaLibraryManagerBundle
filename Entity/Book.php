@@ -70,8 +70,8 @@ class Book
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if ($this->publication_year != NULL
-            && ($this->publication_year < 1900 || $this->publication_year > date('Y') + 1))
+        if ($this->publicationYear != NULL
+            && ($this->publicationYear < 1900 || $this->publicationYear > date('Y') + 1))
         {
             $context->buildViolation('book.publication_year.invalid')
                     ->setTranslationDomain('book')
