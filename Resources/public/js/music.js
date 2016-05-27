@@ -1,9 +1,10 @@
 function getAlbumsList(e)
 {
+	console.log('ici');
 	e.preventDefault();
 	e.currentTarget.disabled = true;
 	$('#searchResult').empty();
-	getAlbumInfo({ artist: $('#inputArtist').val(), title: $('#inputTitle').val() });
+	getAlbumInfo({ artist: $('#music_album_artist').val(), title: $('#music_album_title').val() });
 }
 function getAlbumInfo(data)
 {
@@ -51,12 +52,12 @@ function getAlbumInfo(data)
 }
 function setAlbumInfo(d)
 {
-	$('#inputArtist').attr('value', d.artist);
-	$('#inputTitle').attr('value', d.title);
-	$('#inputEan').attr('value', d.ean);
-	$('#inputPublicationDate').attr('value', d.releaseYear);
-	$('#inputPublisher').attr('value', d.publisher);
-	$('#inputCoverUrl').attr('value', d.image);
+	$('#music_album_artist').attr('value', d.artist);
+	$('#music_album_title').attr('value', d.title);
+	$('#music_album_ean').attr('value', d.ean);
+	$('#music_album_publication_date').attr('value', d.releaseYear);
+	$('#music_album_publisher').attr('value', d.publisher);
+	$('#music_album_cover_file_url').attr('value', d.image);
 	if (d.thumbnail != '')
 	{
 		$('#thumbnail img:first').attr('src', d.thumbnail);
@@ -83,7 +84,7 @@ function getTrackLyrics()
 		url: lyricsUrl,
 		type: 'post',
 		data: {
-			artist: $('#inputArtist').val(),
+			artist: $('#music_album_artist').val(),
 			trackLabel: $('#inputTrackTitle_' + trackId).val()
 		},
 		success: function(d)
@@ -138,7 +139,7 @@ $(document).ready(function() {
 		var trackNb = $('#tracks').find('li').length + 1;
 		addTrackForm(discNb, trackNb);
 	});
-	$('#inputTitle').on('keyup', function(e) {
+	$('#music_album_title').on('keyup', function(e) {
 		if ($(this).val().length > 1)
 		{
 			if (!$(this).hasClass('span2'))

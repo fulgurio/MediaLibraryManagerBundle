@@ -1,40 +1,42 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
 
+{% trans_default_domain 'music' %}
+
 {% block content %}
 {% if app.request.attributes.get('albumId') is null %}
-			<h1>{% trans from 'music' %}add_new_album{% endtrans %}</h1>
+			<h1>{% trans %}add_new_album{% endtrans %}</h1>
 			<form class="form-horizontal pull-left" method="post" action="{{ path('FulgurioMLM_Music_Add') }}" enctype="multipart/form-data">
 {% else %}
-			<h1>{% trans with {'%TITLE%': album.title} from 'music' %}edit_album{% endtrans %}</h1>
+			<h1>{% trans with {'%TITLE%': album.title} %}edit_album{% endtrans %}</h1>
 			<form class="form-horizontal" method="post" action="{{ path('FulgurioMLM_Music_Edit', {albumId: app.request.attributes.get('albumId')}) }}" enctype="multipart/form-data">
 {% endif %}
 				<fieldset class="pull-left">
 {{ form_errors(form) }}
 					<div class="control-group{% if form.artist.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputArtist">{% trans from 'music' %}artist.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.artist.vars.id }}">{{ form.artist.vars.label|trans }}</label>
 						<div class="controls">
-							<input type="text" id="inputArtist" maxlength="{{ form.artist.vars.max_length }}" placeholder="{% trans from 'music' %}artist.label{% endtrans %}" name="{{ form.artist.vars.full_name }}" value="{{ form.artist.vars.value }}" />
+							<input type="text" id="{{ form.artist.vars.id }}" maxlength="{{ form.artist.vars.max_length }}" placeholder="{{ form.artist.vars.label|trans }}" name="{{ form.artist.vars.full_name }}" value="{{ form.artist.vars.value }}" />
 {% if form.artist.vars.errors is not empty %}{% for error in form.artist.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.title.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputTitle">{% trans from 'music' %}title.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.title.vars.id }}">{{ form.title.vars.label|trans }}</label>
 						<div class="controls">
-							<input type="text" id="inputTitle" maxlength="{{ form.title.vars.max_length }}" placeholder="{% trans from 'music' %}title.label{% endtrans %}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}">
+							<input type="text" id="{{ form.title.vars.id }}" maxlength="{{ form.title.vars.max_length }}" placeholder="{{ form.title.vars.label|trans }}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}">
 {% if form.title.vars.errors is not empty %}{% for error in form.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.ean.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputEan">{% trans from 'music' %}ean.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.ean.vars.id }}">{{ form.ean.vars.label|trans }}</label>
 						<div class="controls">
-							<input type="text" id="inputEan" maxlength="{{ form.ean.vars.max_length }}" placeholder="{% trans from 'music' %}ean.label{% endtrans %}" name="{{ form.ean.vars.full_name }}" value="{{ form.ean.vars.value }}" />
+							<input type="text" id="{{ form.ean.vars.id }}" maxlength="{{ form.ean.vars.max_length }}" placeholder="{{ form.ean.vars.label|trans }}" name="{{ form.ean.vars.full_name }}" value="{{ form.ean.vars.value }}" />
 {% if form.ean.vars.errors is not empty %}{% for error in form.ean.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.media_type.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputMediaType">{% trans from 'music' %}media_type.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.media_type.vars.id }}">{{ form.media_type.vars.label|trans }}</label>
 						<div class="controls">
-							<select id="inputMediaType" class="input-mini" name="{{ form.media_type.vars.full_name }}">
+							<select id="{{ form.media_type.vars.id }}" class="input-mini" name="{{ form.media_type.vars.full_name }}">
 {% for media_type in form.media_type.vars.choices %}
 							<option value="{{ media_type.value }}"{% if media_type.value == form.media_type.vars.value %} selected="selected"{% endif %}>{{ ('media_type.' ~ media_type.label)|trans({}, 'music') }}</option>
 {% endfor %}
@@ -43,27 +45,27 @@
 						</div>
 					</div>
 					<div class="control-group{% if form.publication_year.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputPublicationDate">{% trans from 'music' %}publication_year.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.publication_year.vars.id }}">{{ form.publication_year.vars.label|trans }}</label>
 						<div class="controls">
-							<input type="text" class="input-mini" id="inputPublicationDate" placeholder="{% trans from 'music' %}publication_year.label{% endtrans %}" name="{{ form.publication_year.vars.full_name }}" value="{{ form.publication_year.vars.value }}" />
+							<input type="text" class="input-mini" id="{{ form.publication_year.vars.id }}" placeholder="{{ form.publication_year.vars.label|trans }}" name="{{ form.publication_year.vars.full_name }}" value="{{ form.publication_year.vars.value }}" />
 {% if form.publication_year.vars.errors is not empty %}{% for error in form.publication_year.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.publisher.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputPublisher">{% trans from 'music' %}publisher.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.publisher.vars.id }}">{{ form.publisher.vars.label|trans }}</label>
 						<div class="controls">
-							<input type="text" id="inputPublisher" maxlength="{{ form.publisher.vars.max_length }}" placeholder="{% trans from 'music' %}publisher.label{% endtrans %}" name="{{ form.publisher.vars.full_name }}" value="{{ form.publisher.vars.value }}" />
+							<input type="text" id="{{ form.publisher.vars.id }}" maxlength="{{ form.publisher.vars.max_length }}" placeholder="{{ form.publisher.vars.label|trans }}" name="{{ form.publisher.vars.full_name }}" value="{{ form.publisher.vars.value }}" />
 {% if form.publisher.vars.errors is not empty %}{% for error in form.publisher.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
 						</div>
 					</div>
 					<div class="control-group{% if form.cover_file.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="inputCover">{% trans from 'music' %}cover.label{% endtrans %}</label>
+						<label class="control-label" for="{{ form.cover_file.vars.id }}">{{ form.cover_file.vars.label|trans }}</label>
 						<div class="controls">
-							<input type="hidden" id="inputCoverUrl" name="{{ form.cover_url.vars.full_name }}" value="{{ form.cover_url.vars.value }}" />
+							<input type="hidden" id="{{ form.cover_file.vars.id }}_url" name="{{ form.cover_url.vars.full_name }}" value="{{ form.cover_url.vars.value }}" />
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 								<div class="fileupload-new thumbnail" id="thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('albumId') is null or album.cover is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{{ vich_uploader_asset(album, 'coverFile') }}{% endif %}" alt="" /></div>
 								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px;"></div>
-								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="inputCover" type="file" name="{{ form.cover_file.vars.full_name }}" /></span>
+								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="{{ form.cover_file.vars.id }}" type="file" name="{{ form.cover_file.vars.full_name }}" /></span>
 								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans from 'common' %}remove_image{% endtrans %}</a>
 							</div>
 {% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>{% endfor %}{% endif %}
@@ -86,7 +88,7 @@
 {%   include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' %}
 {% endif %}
 						</ol>
-						<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.tracks is not empty }}" tabindex="2">{% trans from 'music' %}add_track{% endtrans %}</button>
+						<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.tracks is not empty }}" tabindex="2">{% trans %}add_track{% endtrans %}</button>
 					</div>
 				</fieldset>
 				<div class="pull-right" id="searchResult"></div>

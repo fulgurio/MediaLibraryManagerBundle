@@ -25,30 +25,38 @@ class MusicAlbumType extends AbstractType
     {
         $builder
             ->add('artist', 'text', array(
+                'label'    => 'artist.label',
                 'required' => FALSE
             ))
-            ->add('title', 'text')
+            ->add('title', 'text', array(
+                'label' => 'title.label'
+            ))
             ->add('ean', 'text', array(
+                'label'      => 'ean.label',
                 'required'   => FALSE,
                 'max_length' => 13
             ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
-                'choices'  => array('cd', 'mp3', 'vinyl'),
-                'required' => TRUE,
+                'label'           => 'media_type.label',
+                'choices'         => array('cd', 'mp3', 'vinyl'),
+                'required'        => TRUE,
                 'invalid_message' => 'music.media_type.invalid'
                 )
             )
             ->add('publication_year', 'number', array(
-                'required' => FALSE,
+                'label'           => 'publication_year.label',
+                'required'        => FALSE,
                 'invalid_message' => 'music.publication_year.invalid',
-                'max_length' => 4
+                'max_length'      => 4
             ))
             ->add('publisher', 'text', array(
+                'label'    => 'publisher.label',
                 'required' => FALSE
             ))
             ->add('cover_file', 'file', array(
-                'required' => FALSE,
+                'label'           => 'cover.label',
+                'required'        => FALSE,
                 'invalid_message' => 'music.cover.invalid',
                 'constraints' => array(
                     new File(array(

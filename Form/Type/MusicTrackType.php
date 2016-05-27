@@ -24,10 +24,18 @@ class MusicTrackType extends AbstractType
         $builder
 //         ->add('volume_number', 'hidden', array('required' => TRUE))
 //         ->add('track_number', 'hidden', array('required' => TRUE))
-        ->add('title', 'text', array('max_length' => 128))
-        ->add('duration', 'number', array('required' => FALSE))
-        ->add('lyrics', 'text', array('required' => FALSE))
-        ;
+        ->add('title', 'text', array(
+            'label'      => 'track.title.label',
+            'max_length' => 128
+        ))
+        ->add('duration', 'number', array(
+            'label'    => 'track.duration.label',
+            'required' => FALSE
+        ))
+        ->add('lyrics', 'text', array(
+            'label'    => 'track.lyrics.label',
+            'required' => FALSE
+        ));
     }
 
     /**

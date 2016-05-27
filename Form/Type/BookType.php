@@ -23,27 +23,36 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', 'text')
-            ->add('title', 'text')
+            ->add('author', 'text', array(
+                'label' => 'author.label'
+            ))
+            ->add('title', 'text', array(
+                'label' => 'title.label'
+            ))
             ->add('ean', 'text', array(
+                'label'      => 'ean.label',
                 'required'   => FALSE,
                 'max_length' => 13
             ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
-                'choices'  => array('book', 'ebook'),
-                'required' => TRUE,
+                'label'           => 'media_type.label',
+                'choices'         => array('book', 'ebook'),
+                'required'        => TRUE,
                 'invalid_message' => 'validator.invalid.media_type'
                 )
             )
             ->add('publication_year', 'number', array(
+                'label'           => 'publication_year.label',
                 'invalid_message' => 'book.publication_year.invalid',
-                'max_length' => 4
+                'max_length'      => 4
             ))
             ->add('publisher', 'text', array(
+                'label'    => 'publisher.label',
                 'required' => FALSE
             ))
             ->add('cover_file', 'file', array(
+                'label'           => 'cover.label',
                 'invalid_message' => 'validator.invalid.cover',
                 'constraints' => array(
                     new File(array(
