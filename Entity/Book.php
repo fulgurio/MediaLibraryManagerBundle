@@ -10,16 +10,25 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Book
+ *
+ * @ORM\Table(name="book")
+ * @ORM\Entity(repositoryClass="Fulgurio\MediaLibraryManagerBundle\Repository\BookRepository")
+ * @Vich\Uploadable
  */
 class Book
 {
     /**
      * @var File $coverFile
+     *
+     * @Vich\UploadableField(mapping="book_cover", fileNameProperty="cover")
      */
     protected $coverFile;
 
@@ -37,7 +46,8 @@ class Book
     {
         $this->coverFile = $image;
 
-        if ($image) {
+        if ($image)
+        {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTime('now');
@@ -56,6 +66,7 @@ class Book
      * Validate entity data
      *
      * @param ExecutionContextInterface $context
+     * @Assert\Callback
      */
     public function validate(ExecutionContextInterface $context)
     {
@@ -69,65 +80,94 @@ class Book
         }
     }
 
-    /***************************************************************************
-     *                             GENERATED CODE                              *
-     **************************************************************************/
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="media_type", type="smallint", nullable=false)
      */
-    private $media_type;
+    private $mediaType;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank(message = "book.author.not_blank")
+     * @ORM\Column(name="author", type="string", length=128, nullable=false)
      */
     private $author;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank(message = "book.title.not_blank")
+     * @ORM\Column(name="title", type="string", length=128, nullable=false)
      */
     private $title;
 
     /**
      * @var string
+     *
+     * @Assert\Isbn()
+     * @ORM\Column(name="ean", type="string", length=13, nullable=true)
      */
     private $ean;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="publication_year", type="smallint", nullable=true)
      */
-    private $publication_year;
+    private $publicationYear;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="publisher", type="string", length=32, nullable=true)
      */
     private $publisher;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="cover", type="string", length=64, nullable=true)
      */
     private $cover;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="excerpt", type="text", nullable=true)
      */
     private $excerpt;
 
     /**
      * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
+    /***************************************************************************
+     *                             GENERATED CODE                              *
+     **************************************************************************/
 
     /**
      * Get id
@@ -143,12 +183,11 @@ class Book
      * Set mediaType
      *
      * @param integer $mediaType
-     *
      * @return Book
      */
     public function setMediaType($mediaType)
     {
-        $this->media_type = $mediaType;
+        $this->mediaType = $mediaType;
 
         return $this;
     }
@@ -160,14 +199,13 @@ class Book
      */
     public function getMediaType()
     {
-        return $this->media_type;
+        return $this->mediaType;
     }
 
     /**
      * Set author
      *
      * @param string $author
-     *
      * @return Book
      */
     public function setAuthor($author)
@@ -191,7 +229,6 @@ class Book
      * Set title
      *
      * @param string $title
-     *
      * @return Book
      */
     public function setTitle($title)
@@ -215,7 +252,6 @@ class Book
      * Set ean
      *
      * @param string $ean
-     *
      * @return Book
      */
     public function setEan($ean)
@@ -239,12 +275,11 @@ class Book
      * Set publicationYear
      *
      * @param integer $publicationYear
-     *
      * @return Book
      */
     public function setPublicationYear($publicationYear)
     {
-        $this->publication_year = $publicationYear;
+        $this->publicationYear = $publicationYear;
 
         return $this;
     }
@@ -256,14 +291,13 @@ class Book
      */
     public function getPublicationYear()
     {
-        return $this->publication_year;
+        return $this->publicationYear;
     }
 
     /**
      * Set publisher
      *
      * @param string $publisher
-     *
      * @return Book
      */
     public function setPublisher($publisher)
@@ -287,7 +321,6 @@ class Book
      * Set cover
      *
      * @param string $cover
-     *
      * @return Book
      */
     public function setCover($cover)
@@ -311,7 +344,6 @@ class Book
      * Set excerpt
      *
      * @param string $excerpt
-     *
      * @return Book
      */
     public function setExcerpt($excerpt)
@@ -335,7 +367,6 @@ class Book
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     *
      * @return Book
      */
     public function setCreatedAt($createdAt)
@@ -359,7 +390,6 @@ class Book
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     *
      * @return Book
      */
     public function setUpdatedAt($updatedAt)

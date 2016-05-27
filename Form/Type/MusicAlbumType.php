@@ -24,18 +24,27 @@ class MusicAlbumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('artist', 'text')
+            ->add('artist', 'text', array(
+                'required' => FALSE
+            ))
             ->add('title', 'text')
-            ->add('ean', 'text')
+            ->add('ean', 'text', array(
+                'required' => FALSE
+            ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
-                'choices'   => array('cd', 'mp3', 'vinyl'),
+                'choices'  => array('cd', 'mp3', 'vinyl'),
                 'required' => TRUE,
                 'invalid_message' => 'music.media_type.invalid'
                 )
             )
-            ->add('publication_year', 'number', array('invalid_message' => 'music.publication_year.invalid'))
-            ->add('publisher', 'text')
+            ->add('publication_year', 'number', array(
+                'required' => FALSE,
+                'invalid_message' => 'music.publication_year.invalid'
+            ))
+            ->add('publisher', 'text', array(
+                'required' => FALSE
+            ))
             ->add('cover_file', 'file', array(
                 'required' => FALSE,
                 'invalid_message' => 'music.cover.invalid',

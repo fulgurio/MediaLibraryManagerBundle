@@ -1,4 +1,0 @@
-Fulgurio\MediaLibraryManagerBundle\Entity\Book:
-    coverFile:
-        mapping:           book_cover_mapping
-        filename_property: cover

@@ -1,34 +1,21 @@
 book:
     title:
         not_blank:              Le nom du livre est obligatoire
-        max_length:             Le nom du livre ne doit pas faire plus de {{ limit }} caractères
     author:
         not_blank:              L'auteur est obligatoire
-        max_length:             Le nom de l'auteur ne doit pas faire plus de {{ limit }} caractères
-    ean:
-        max_length:             L'ean ne doit pas faire plus de {{ limit }} caractères
     publication_year:
         invalid:                La date de publication est invalide
-    publisher:
-        max_length:             Le nom de l'éditeur ne doit pas faire plus de {{ limit }} caractères
     cover:
         not_a_image:            La pochette doit être au format JPG ou PNG
-        max_file_size:           Le poids de la pochette ne doit pas dépasser {{ limit }} {{ suffix }}
+        max_file_size:          Le poids de la pochette ne doit pas dépasser {{ limit }} {{ suffix }}
 
 music:
     title:
         not_blank:              Le nom de l'album est obligatoire
-        max_length:             Le nom de l'album ne doit pas faire plus de {{ limit }} caractères
-    artist:
-        max_length:             Le nom de l'artiste ne doit pas faire plus de {{ limit }} caractères
     media_type:
         invalid:                Le type de support du média est invalide
-    ean:
-        max_length:             L'ean ne doit pas faire plus de {{ limit }} caractères
     publication_year:
         invalid:                La date de publication est invalide
-    publisher:
-        max_length:             Le nom de l'éditeur ne doit pas faire plus de {{ limit }} caractères
     cover:
         not_a_image:            La pochette doit être au format JPG ou PNG
         max_file_size:          Le poids de la pochette ne doit pas dépasser {{ limit }} {{ suffix }}

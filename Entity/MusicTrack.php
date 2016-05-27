@@ -10,62 +10,89 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MusicTrack
+ *
+ * @ORM\Table(name="music_track")
+ * @ORM\Entity()
  */
 class MusicTrack
 {
-    /***************************************************************************
-     *                             GENERATED CODE                              *
-     **************************************************************************/
-
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="volume_number", type="smallint", nullable=false)
      */
-    private $volume_number;
+    private $volumeNumber;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="track_number", type="smallint", nullable=false)
      */
-    private $track_number;
+    private $trackNumber;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=128, nullable=false)
      */
     private $title;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="duration", type="smallint", nullable=true)
      */
     private $duration;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="lyrics", type="text", nullable=true)
      */
     private $lyrics;
 
     /**
      * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
     /**
      * @var \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum
+     *
+     * @ORM\ManyToOne(targetEntity="Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum", inversedBy="tracks")
+     * @ORM\JoinColumn(name="album_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
-    private $music_album;
+    private $musicAlbum;
 
+    /***************************************************************************
+     *                             GENERATED CODE                              *
+     **************************************************************************/
 
     /**
      * Get id
@@ -81,12 +108,11 @@ class MusicTrack
      * Set volumeNumber
      *
      * @param integer $volumeNumber
-     *
      * @return MusicTrack
      */
     public function setVolumeNumber($volumeNumber)
     {
-        $this->volume_number = $volumeNumber;
+        $this->volumeNumber = $volumeNumber;
 
         return $this;
     }
@@ -98,19 +124,18 @@ class MusicTrack
      */
     public function getVolumeNumber()
     {
-        return $this->volume_number;
+        return $this->volumeNumber;
     }
 
     /**
      * Set trackNumber
      *
      * @param integer $trackNumber
-     *
      * @return MusicTrack
      */
     public function setTrackNumber($trackNumber)
     {
-        $this->track_number = $trackNumber;
+        $this->trackNumber = $trackNumber;
 
         return $this;
     }
@@ -122,14 +147,13 @@ class MusicTrack
      */
     public function getTrackNumber()
     {
-        return $this->track_number;
+        return $this->trackNumber;
     }
 
     /**
      * Set title
      *
      * @param string $title
-     *
      * @return MusicTrack
      */
     public function setTitle($title)
@@ -153,7 +177,6 @@ class MusicTrack
      * Set duration
      *
      * @param integer $duration
-     *
      * @return MusicTrack
      */
     public function setDuration($duration)
@@ -177,7 +200,6 @@ class MusicTrack
      * Set lyrics
      *
      * @param string $lyrics
-     *
      * @return MusicTrack
      */
     public function setLyrics($lyrics)
@@ -201,7 +223,6 @@ class MusicTrack
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     *
      * @return MusicTrack
      */
     public function setCreatedAt($createdAt)
@@ -225,7 +246,6 @@ class MusicTrack
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     *
      * @return MusicTrack
      */
     public function setUpdatedAt($updatedAt)
@@ -249,12 +269,11 @@ class MusicTrack
      * Set musicAlbum
      *
      * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum $musicAlbum
-     *
      * @return MusicTrack
      */
-    public function setMusicAlbum(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum $musicAlbum = null)
+    public function setMusicAlbum(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum $musicAlbum)
     {
-        $this->music_album = $musicAlbum;
+        $this->musicAlbum = $musicAlbum;
 
         return $this;
     }
@@ -266,6 +285,6 @@ class MusicTrack
      */
     public function getMusicAlbum()
     {
-        return $this->music_album;
+        return $this->musicAlbum;
     }
 }

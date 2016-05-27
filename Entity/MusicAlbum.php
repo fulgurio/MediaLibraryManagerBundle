@@ -10,16 +10,25 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * MusicAlbum
+ *
+ * @ORM\Table(name="music_album")
+ * @ORM\Entity(repositoryClass="Fulgurio\MediaLibraryManagerBundle\Repository\MusicAlbumRepository")
+ * @Vich\Uploadable
  */
 class MusicAlbum
 {
     /**
      * @var File $coverFile
+     *
+     * @Vich\UploadableField(mapping="music_cover", fileNameProperty="cover")
      */
     protected $coverFile;
 
@@ -37,7 +46,8 @@ class MusicAlbum
     {
         $this->coverFile = $image;
 
-        if ($image) {
+        if ($image)
+        {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTime('now');
@@ -56,11 +66,12 @@ class MusicAlbum
      * Validate entity data
      *
      * @param ExecutionContextInterface $context
+     * @Assert\Callback
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if ($this->publication_year != NULL
-            && ($this->publication_year < 1900 || $this->publication_year > date('Y') + 1))
+        if ($this->publicationYear != NULL
+            && ($this->publicationYear < 1900 || $this->publicationYear > date('Y') + 1))
         {
             $context->buildViolation('music.publication_year.invalid')
                     ->setTranslationDomain('music')
@@ -69,64 +80,92 @@ class MusicAlbum
         }
     }
 
-    /***************************************************************************
-     *                             GENERATED CODE                              *
-     **************************************************************************/
-
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="media_type", type="smallint", nullable=false)
      */
-    private $media_type;
+    private $mediaType;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="artist", type="string", length=128, nullable=true)
      */
     private $artist;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank(message = "music.title.not_blank")
+     * @ORM\Column(name="title", type="string", length=128, nullable=false)
      */
     private $title;
 
     /**
      * @var string
+     *
+     * @Assert\Isbn()
+     * @ORM\Column(name="ean", type="string", length=13, nullable=true)
      */
     private $ean;
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="publication_year", type="smallint", nullable=true)
      */
-    private $publication_year;
+    private $publicationYear;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="publisher", type="string", length=32, nullable=true)
      */
     private $publisher;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="cover", type="string", length=64, nullable=true)
      */
     private $cover;
 
     /**
      * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack", mappedBy="musicAlbum")
      */
     private $tracks;
+
+    /***************************************************************************
+     *                             GENERATED CODE                              *
+     **************************************************************************/
 
     /**
      * Constructor
@@ -150,12 +189,11 @@ class MusicAlbum
      * Set mediaType
      *
      * @param integer $mediaType
-     *
      * @return MusicAlbum
      */
     public function setMediaType($mediaType)
     {
-        $this->media_type = $mediaType;
+        $this->mediaType = $mediaType;
 
         return $this;
     }
@@ -167,14 +205,13 @@ class MusicAlbum
      */
     public function getMediaType()
     {
-        return $this->media_type;
+        return $this->mediaType;
     }
 
     /**
      * Set artist
      *
      * @param string $artist
-     *
      * @return MusicAlbum
      */
     public function setArtist($artist)
@@ -198,7 +235,6 @@ class MusicAlbum
      * Set title
      *
      * @param string $title
-     *
      * @return MusicAlbum
      */
     public function setTitle($title)
@@ -222,7 +258,6 @@ class MusicAlbum
      * Set ean
      *
      * @param string $ean
-     *
      * @return MusicAlbum
      */
     public function setEan($ean)
@@ -246,12 +281,11 @@ class MusicAlbum
      * Set publicationYear
      *
      * @param integer $publicationYear
-     *
      * @return MusicAlbum
      */
     public function setPublicationYear($publicationYear)
     {
-        $this->publication_year = $publicationYear;
+        $this->publicationYear = $publicationYear;
 
         return $this;
     }
@@ -263,14 +297,13 @@ class MusicAlbum
      */
     public function getPublicationYear()
     {
-        return $this->publication_year;
+        return $this->publicationYear;
     }
 
     /**
      * Set publisher
      *
      * @param string $publisher
-     *
      * @return MusicAlbum
      */
     public function setPublisher($publisher)
@@ -294,7 +327,6 @@ class MusicAlbum
      * Set cover
      *
      * @param string $cover
-     *
      * @return MusicAlbum
      */
     public function setCover($cover)
@@ -318,7 +350,6 @@ class MusicAlbum
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     *
      * @return MusicAlbum
      */
     public function setCreatedAt($createdAt)
@@ -342,7 +373,6 @@ class MusicAlbum
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     *
      * @return MusicAlbum
      */
     public function setUpdatedAt($updatedAt)
@@ -363,27 +393,26 @@ class MusicAlbum
     }
 
     /**
-     * Add track
+     * Add tracks
      *
-     * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $track
-     *
+     * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks
      * @return MusicAlbum
      */
-    public function addTrack(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $track)
+    public function addTrack(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks)
     {
-        $this->tracks[] = $track;
+        $this->tracks[] = $tracks;
 
         return $this;
     }
 
     /**
-     * Remove track
+     * Remove tracks
      *
-     * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $track
+     * @param \Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks
      */
-    public function removeTrack(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $track)
+    public function removeTrack(\Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack $tracks)
     {
-        $this->tracks->removeElement($track);
+        $this->tracks->removeElement($tracks);
     }
 
     /**

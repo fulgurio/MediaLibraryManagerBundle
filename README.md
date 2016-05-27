@@ -18,7 +18,7 @@ sure you have translator enabled in your config.
 # app/config/config.yml
 
 framework:
-    translator: ~
+    translator:      { fallbacks: ["%locale%"] }
 ```
 
 ### Download the bundle with composer
@@ -56,12 +56,12 @@ public function registerBundles()
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:
-        book_cover_mapping:
-            uri_prefix:         /images/book
-            upload_destination: %kernel.root_dir%/uploads/book
-        music_cover_mapping:
-            uri_prefix:         /images/music
-            upload_destination: %kernel.root_dir%/uploads/music
+        book_cover:
+            uri_prefix:         /uploads/book
+            upload_destination: %kernel.root_dir%/../web/uploads/book
+        music_cover:
+            uri_prefix:         /uploads/music
+            upload_destination: %kernel.root_dir%/../web/uploads/music
 
 # Gedmo bundle
 stof_doctrine_extensions:
