@@ -1,7 +1,39 @@
-@CHARSET "UTF-8";
 body {
-	padding-top: 60px;
+	padding-top: 50px;
 }
+
+.no-result {
+	margin: 10px 0;
+
+	text-align: center;
+}
+
+.form-actions-fixed-bottom {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	margin: 0;
+	padding: 10px 0;
+
+	border: 1px solid #e7e7e7;
+	background: #f8f8f8;
+
+	text-align: center;
+}
+
+.form-music .lyrics-line {
+	display: none;
+}
+.form-music .lyrics-line td {
+	border: none;
+}
+
+.form-music .lyrics-line label {
+	text-align: left;
+}
+
+/*
 #searchResult ul {
 	list-style: none;
 }
@@ -13,4 +45,4 @@ body {
 }
 #retrieveBtn {
 	margin: 0 0 0 10px;
-}
+}*/

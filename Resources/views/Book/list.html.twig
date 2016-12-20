@@ -5,25 +5,33 @@
 			<div class="alert alert-success">{{ flashMessage|trans({}, 'book') }}<br /></div>
 {% endfor %}
 			<form method="post" action="{{ path('FulgurioMLM_Book_List') }}">
+				<div class="row">
 {% if books is not empty or app.request.get('q') is not null %}
-				<div class="input-append pull-left">
-					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
-					<button type="submit" class="btn">{% trans from 'common' %}search{% endtrans %}</button>
+						<div class="col-xs-12 col-sm-4">
+							<div class="input-group">
+								<input type="text" class="form-control" name="q" value="{{ app.request.get('q') }}">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-default">{% trans from 'common' %}search{% endtrans %}</button>
+								</span>
+							</div>
+						</div>
+{% 	endif %}
+					<div class="col-xs-12 col-sm-8{% if app.request.get('q') is null %} col-sm-offset-4{% endif %}">
+						<div class="input-group pull-right">
+							<a class="btn btn-primary" href="{{ path('FulgurioMLM_Book_Add') }}">{% trans from 'book' %}add_new_book{% endtrans %}</a>
+						</div>
+					</div>
 				</div>
-{% endif %}
-			<div class="clearfix">
-				<a class="btn pull-right" href="{{ path('FulgurioMLM_Book_Add') }}">{% trans from 'book' %}add_new_book{% endtrans %}</a>
-			</div>
 {% if books is empty %}
-			<p>{% trans from 'book' %}no_book{% endtrans %}</p>
+				<p class="no-result">{% trans from 'book' %}no_book{% endtrans %}</p>
 {% else %}
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>{#Cover#}</th>
-							<th>{{ knp_pagination_sortable(books, 'author.label'|trans({}, 'book'), 'b.author')|raw }}</th>
-							<th>{{ knp_pagination_sortable(books, 'title.label'|trans({}, 'book'), 'b.title')|raw }}</th>
-							<th>{#Options#}</th>
+							<th style="width: 10%">{#Cover#}</th>
+							<th style="width: 40%">{{ knp_pagination_sortable(books, 'author.label'|trans({}, 'book'), 'b.author')|raw }}</th>
+							<th style="width: 44%">{{ knp_pagination_sortable(books, 'title.label'|trans({}, 'book'), 'b.title')|raw }}</th>
+							<th style="width: 6%">{#Options#}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -39,8 +47,8 @@
 							<td>{{ book.author }}</td>
 							<td>{{ book.title }}</td>
 							<td>
-								<a href="{{ path('FulgurioMLM_Book_Edit', {bookId: book.id}) }}" title="{% trans from 'common' %}edit{% endtrans %}" class="icon-edit"></a>
-								<a href="{{ path('FulgurioMLM_Book_Remove', {bookId: book.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+								<a href="{{ path('FulgurioMLM_Book_Edit', {bookId: book.id}) }}" title="{% trans from 'common' %}edit{% endtrans %}" class="glyphicon glyphicon-pencil"></a>
+								<a href="{{ path('FulgurioMLM_Book_Remove', {bookId: book.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal"></a>
 							</td>
 						</tr>
 {%   endfor %}

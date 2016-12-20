@@ -1,0 +1,23 @@
+{
+  "name": "fulgurio/media-library-manager-bundle",
+  "homepage": "https://github.com/fulgurio/MediaLibraryManagerBundle",
+  "description": "Own media library manager online with Symfony2 framework",
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Fulgurio",
+      "homepage": "http://fulgurio.net"
+    }
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-fileinput": "^4.3.6",
+    "ekko-lightbox": "^5.0.0"
+  }
+}

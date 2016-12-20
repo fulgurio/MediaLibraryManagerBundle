@@ -1,0 +1,69 @@
+{% use 'bootstrap_3_horizontal_layout.html.twig' %}
+
+{% block vich_image_widget %}
+{% spaceless %}
+    <div class="vich-image">
+        {{ form_widget(form.file, { 'attr': { 'accept' : 'image/*', 'class': 'file-loading' }}) }}
+{#
+        {% if form.delete is defined %}{{ form_row(form.delete) }}{% endif %}
+
+        {% if download_uri is defined and download_uri %}
+         <a href="{{ download_uri }}"><img src="{{ download_uri }}" alt="" style="width:100px" /></a>
+        {% endif %}
+        {% if show_download_link and download_uri is defined and download_uri%}
+        <a href="{{ download_uri }}">{{ 'download'|trans({}, 'VichUploaderBundle') }}</a>
+        {% endif %}
+        #}
+{#        {% if form.delete is defined %}{{ form_row(form.delete) }}{% endif %}#}
+    </div>
+    <script>
+        $(document).ready(function() {
+            var $file{{ form.file.vars.id }} = $('#{{ form.file.vars.id }}');
+            $file{{ form.file.vars.id }}.fileinput({
+                previewFileType: "image",
+                browseClass: "btn btn-success",
+                browseLabel: "{% trans from 'common' %}browse{% endtrans %}",
+                browseIcon: "<i class=\"glyphicon glyphicon-picture\"></i> ",
+                removeClass: "btn btn-danger",
+                removeLabel: '{% trans from 'common' %}delete{% endtrans %}',
+                removeIcon: "<i class=\"glyphicon glyphicon-trash\"></i> ",
+                showUpload: false,
+//                defaultPreviewContent: '<img src="http://www.placehold.it/160x160/EFEFEF/AAAAAA">',
+                {% if download_uri is defined and download_uri %}
+                initialPreview: '{{ download_uri }}',
+                initialPreviewAsData: true,
+                {% endif %}
+                fileActionSettings: {
+                    showZoom: true,
+                    showDrag: false
+                },
+                layoutTemplates: {
+                    footer: ''
+                }
+            });
+            {% if form.delete is defined %}
+            $file{{ form.file.vars.id }}.on('fileclear', function (event) {
+                $(this).append('<input type="text" id="{{ form.delete.vars.id }}" name="{{ form.delete.vars.full_name }}" value="1">');
+                }
+            );
+            {% endif %}
+        });
+    </script>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block submit_row -%}
+    {% spaceless %}
+        {{ form_widget(form, { 'attr': { 'class': 'btn-primary' }}) }}
+    {% endspaceless %}
+{% endblock submit_row %}
+
+
+{% block form_label_class -%}
+col-sm-4
+{%- endblock form_label_class %}
+
+{% block form_group_class -%}
+{% if group_class is defined %}{{ group_class }}{% else %}col-sm-8{% endif %}
+{%- endblock form_group_class %}

@@ -1,28 +1,13 @@
-							<li data-track="[%=o.discNb%]_[%=o.trackNb%]">
-								<span>{% trans from 'music' %}track_n{% endtrans %}</span>
-								<button type="button" class="btn btn-remove-track"><i class="icon icon-remove"></i></button>
-{#								<input type="hidden" name="{{ track.volume_number.vars.full_name }}" value="[%=o.discNb%]" />
-								<input type="hidden" name="{{ track.track_number.vars.full_name }}" value="[%=o.trackNb%]" />
-#}								<div class="control-group{% if track.title.vars.errors is not empty %} error{% endif %}">
-									<label class="control-label" for="inputTrackTitle_[%=o.discNb%]_[%=o.trackNb%]">{% trans from 'music' %}track.title.label{% endtrans %}</label>
-									<div class="controls">
-									<input type="text" id="inputTrackTitle_[%=o.discNb%]_[%=o.trackNb%]" maxlength="{{ track.title.vars.max_length }}" placeholder="{% trans from 'music' %}track.title.label{% endtrans %}" name="{{ track.title.vars.full_name }}" value="{{ track.title.vars.value }}" />
-{#{% if track.title.vars.errors is not empty %}{% for error in track.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}#}
-									</div>
-								</div>
-								<div class="control-group{% if track.duration.vars.errors is not empty %} error{% endif %}">
-									<label class="control-label" for="inputTrackDuration_[%=o.discNb%]_[%=o.trackNb%]">{% trans from 'music' %}track.duration.label{% endtrans %}</label>
-									<div class="controls">
-									<input type="text" class="input-mini" id="inputTrackDuration_[%=o.discNb%]_[%=o.trackNb%]" placeholder="{% trans from 'music' %}track.duration.label{% endtrans %}" name="{{ track.duration.vars.full_name }}" value="{{ track.duration.vars.value }}" />
-{#{% if track.duration.vars.errors is not empty %}{% for error in track.duration.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}#}
-									</div>
-								</div>
-								<div class="control-group{% if track.lyrics.vars.errors is not empty %} error{% endif %}">
-									<label class="control-label" for="inputTrackLyrics_[%=o.discNb%]_[%=o.trackNb%]">{% trans from 'music' %}track.lyrics.label{% endtrans %}</label>
-									<div class="controls">
-									<textarea id="inputTrackLyrics_[%=o.discNb%]_[%=o.trackNb%]" placeholder="{% trans from 'music' %}track.lyrics.label{% endtrans %}" name="{{ track.lyrics.vars.full_name }}">{{ track.lyrics.vars.value }}</textarea>
-									<button type="button" class="btn btn-lyrics-track"><i class="icon-refresh"></i></button>
-{#{% if track.lyrics.vars.errors is not empty %}{% for error in track.lyrics.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'music') }}</span>{% endfor %}{% endif %}#}
-									</div>
-								</div>
-							</li>
+							<tr id="track_[%=o.trackNb%]">
+								<td>[%=o.trackNb%]</td>
+								<td>{{ form_widget(track.title) }}</td>
+								<td>{{ form_widget(track.duration) }}</td>
+								<td><button type="button" class="btn btn-remove-track"><i class="glyphicon glyphicon-trash"></i></button></td>
+							</tr>
+							<tr class="lyrics-line">
+								<td colspan="4">
+                                    {{ form_row(track.lyrics, { 'label_attr': { 'class': 'col-sm-12' }, 'group_class': 'col-sm-12' }) }}
+								</td>
+							</tr>
+                            {#{{ form_row(track.volumeNb) }}#}
+{#{{ form_row(track.trackNb) }}#}

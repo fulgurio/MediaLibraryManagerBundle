@@ -19,45 +19,51 @@ class MusicAlbumType extends AbstractType
 {
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form\AbstractType::buildForm()
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('artist', 'text', array(
                 'label'    => 'artist.label',
-                'required' => FALSE
+                'required' => false
             ))
             ->add('title', 'text', array(
                 'label' => 'title.label'
             ))
             ->add('ean', 'text', array(
                 'label'      => 'ean.label',
-                'required'   => FALSE,
+                'required'   => false,
                 'max_length' => 13
             ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
                 'label'           => 'media_type.label',
-                'choices'         => array('cd', 'mp3', 'vinyl'),
-                'required'        => TRUE,
+                'choices'         => array(
+                    '1'           => 'media_type.types.1',
+                    '2'           => 'media_type.types.2',
+                    '3'           => 'media_type.types.3'
+                ),
+                'required'        => true,
                 'invalid_message' => 'music.media_type.invalid'
                 )
             )
             ->add('publication_year', 'number', array(
                 'label'           => 'publication_year.label',
-                'required'        => FALSE,
+                'required'        => false,
                 'invalid_message' => 'music.publication_year.invalid',
                 'max_length'      => 4
             ))
             ->add('publisher', 'text', array(
                 'label'    => 'publisher.label',
-                'required' => FALSE
+                'required' => false
             ))
-            ->add('cover_file', 'file', array(
+            ->add('coverFile', 'vich_image', array(
                 'label'           => 'cover.label',
-                'required'        => FALSE,
+                'required'        => false,
                 'invalid_message' => 'music.cover.invalid',
+                'allow_delete'    => true,
+                'download_link'   => false,
                 'constraints' => array(
                     new File(array(
                         'mimeTypes' => array('image/png', 'image/jpeg', 'image/jpg'),
@@ -68,32 +74,37 @@ class MusicAlbumType extends AbstractType
                 )
             ))
             ->add('cover_url', 'hidden', array(
-                'required' => FALSE,
-                'mapped'   => FALSE
+                'required' => false,
+                'mapped'   => false
             ))
             ->add('tracks', 'collection', array(
-                    'type'         => new MusicTrackType(),
-                    'allow_add'    => TRUE,
-                    'allow_delete' => TRUE,
-                    'by_reference' => FALSE
+                'label'        => 'track.label',
+                'type'         => new MusicTrackType(),
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'by_reference' => false
             ))
-            ->add('submit', 'submit');
+            ->add('submit', 'submit', array(
+                'label'              => 'save',
+                'translation_domain' => 'common'
+            ));
     }
 
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form\AbstractType::configureOptions()
+     * @see \Symfony\Component\Form\AbstractType::configureOptions()
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-                'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum',
+            'translation_domain' => 'music',
+            'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum'
         ));
     }
 
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
+     * @see \Symfony\Component\Form\FormTypeInterface::getName()
      */
     public function getName()
     {

@@ -53,6 +53,12 @@ public function registerBundles()
 
 ``` yaml
 # app/config/config.yml
+twig:
+[...]
+    form_themes:
+        - 'VichUploaderBundle:Form:fields.html.twig'
+        - 'FulgurioMediaLibraryManagerBundle:Form:fields.html.twig'
+[...]
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:

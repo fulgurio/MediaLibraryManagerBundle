@@ -3,87 +3,33 @@
 {% trans_default_domain 'book' %}
 
 {% block content %}
-{% if app.request.attributes.get('bookId') is null %}
-			<h1>{% trans %}add_new_book{% endtrans %}</h1>
-			<form class="form-horizontal pull-left" method="post" action="{{ path('FulgurioMLM_Book_Add') }}" enctype="multipart/form-data">
-{% else %}
-			<h1>{% trans with {'%TITLE%': book.title} %}edit_book{% endtrans %}</h1>
-			<form class="form-horizontal" method="post" action="{{ path('FulgurioMLM_Book_Edit', {bookId: app.request.attributes.get('bookId')}) }}" enctype="multipart/form-data">
-{% endif %}
-				<fieldset class="pull-left">
+	<h1>{{ (book.id ? 'edit_book': 'add_new_book')|trans({ '%TITLE%': book.title }) }}</h1>
+{{ form_start(form, {'attr': { 'class': 'form-horizontal form-music' }}) }}
+	<div class="row">
+		<div class="col-md-6">
 {{ form_errors(form) }}
-					<div class="control-group{% if form.author.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.author.vars.id }}">{{ form.author.vars.label|trans }}</label>
-						<div class="controls">
-							<input type="text" id="{{ form.author.vars.id }}" maxlength="{{ form.author.vars.max_length }}" placeholder="{{ form.author.vars.label|trans }}" name="{{ form.author.vars.full_name }}" value="{{ form.author.vars.value }}" />
-{% if form.author.vars.errors is not empty %}{% for error in form.author.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-					<div class="control-group{% if form.title.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.title.vars.id }}">{{ form.title.vars.label|trans }}</label>
-						<div class="controls">
-							<input type="text" id="{{ form.title.vars.id }}" maxlength="{{ form.title.vars.max_length }}" placeholder="{{ form.title.vars.label|trans }}" name="{{ form.title.vars.full_name }}" value="{{ form.title.vars.value }}" />
-{% if form.title.vars.errors is not empty %}{% for error in form.title.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-					<div class="control-group{% if form.ean.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.ean.vars.id }}">{{ form.ean.vars.label|trans }}</label>
-						<div class="controls">
-							<input type="text" id="{{ form.ean.vars.id }}" maxlength="{{ form.ean.vars.max_length }}" placeholder="{{ form.ean.vars.label|trans }}" name="{{ form.ean.vars.full_name }}" value="{{ form.ean.vars.value }}" />
-{% if form.ean.vars.errors is not empty %}{% for error in form.ean.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-					<div class="control-group{% if form.media_type.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.media_type.vars.id }}">{{ form.media_type.vars.label|trans }}</label>
-						<div class="controls">
-							<select id="{{ form.media_type.vars.id }}" class="input-medium" name="{{ form.media_type.vars.full_name }}">
-{% for media_type in form.media_type.vars.choices %}
-							<option value="{{ media_type.value }}"{% if media_type.value == form.media_type.vars.value %} selected="selected"{% endif %}>{{ ('media_type.' ~ media_type.label)|trans({}, 'book') }}</option>
-{% endfor %}
-							</select>
-{% if form.media_type.vars.errors is not empty %}{% for error in form.media_type.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-					<div class="control-group{% if form.publication_year.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.publication_year.vars.id }}">{{ form.publication_year.vars.label|trans }}</label>
-						<div class="controls">
-							<input type="text" class="input-mini" id="{{ form.publication_year.vars.id }}" placeholder="{{ form.publication_year.vars.label|trans }}" name="{{ form.publication_year.vars.full_name }}" value="{{ form.publication_year.vars.value }}" />
-{% if form.publication_year.vars.errors is not empty %}{% for error in form.publication_year.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-					<div class="control-group{% if form.publisher.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.publisher.vars.id }}">{{ form.publisher.vars.label|trans }}</label>
-						<div class="controls">
-							<input type="text" id="{{ form.publisher.vars.id }}" maxlength="{{ form.publisher.vars.max_length }}" placeholder="{{ form.publisher.vars.label|trans }}" name="{{ form.publisher.vars.full_name }}" value="{{ form.publisher.vars.value }}" />
-{% if form.publisher.vars.errors is not empty %}{% for error in form.publisher.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans({}, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-					<div class="control-group{% if form.cover_file.vars.errors is not empty %} error{% endif %}">
-						<label class="control-label" for="{{ form.cover_file.vars.id }}">{{ form.cover_file.vars.label|trans }}</label>
-						<div class="controls">
-							<div class="fileupload fileupload-new" data-provides="fileupload">
-								<div class="fileupload-new thumbnail" id="thumbnail" style="width: 50px; height: 50px;"><img src="{% if app.request.attributes.get('bookId') is null or book.cover is null %}http://www.placehold.it/50x50/EFEFEF/AAAAAA{% else %}{{ vich_uploader_asset(book, 'coverFile') }}{% endif %}" alt="" /></div>
-								<div class="fileupload-preview fileupload-exists thumbnail" style="width: 50px; height: 50px;"></div>
-								<span class="btn btn-file"><span class="fileupload-new">{% trans from 'common' %}select_image{% endtrans %}</span><span class="fileupload-exists">{% trans from 'common' %}change_image{% endtrans %}</span><input id="{{ form.cover_file.vars.id }}" type="file" name="{{ form.cover_file.vars.full_name }}" /></span>
-								<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">{% trans from 'common' %}remove_image{% endtrans %}</a>
-							</div>
-{% if form.cover_file.vars.errors is not empty %}{% for error in form.cover_file.vars.errors %}							<span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>{% endfor %}{% endif %}
-						</div>
-					</div>
-				</fieldset>
-				<div class="clearfix"></div>
-				<div class="form-actions">
-					<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
-					<button type="submit" class="btn btn-primary" name="{{ form.submit.vars.full_name }}" value="{{ form.submit.vars.value}}" tabindex="1">{% trans from 'common' %}save{% endtrans %}</button>
-					<a href="{{ path('FulgurioMLM_Book_List') }}" class="btn">{% trans from 'common' %}cancel{% endtrans %}</a>
-				</div>
-			</form>
+{{ form_row(form.author) }}
+{{ form_row(form.title) }}
+{{ form_row(form.media_type, { 'group_class': 'col-sm-5' }) }}
+{{ form_row(form.ean, { 'group_class': 'col-sm-4' } ) }}
+{{ form_row(form.publication_year, { 'group_class': 'col-sm-3' }) }}
+{{ form_row(form.publisher) }}
+{{ form_row(form.coverFile) }}
+		</div>
+	</div>
+	<div class="form-actions form-actions-fixed-bottom">
+		<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
+        {{ form_row(form.submit) }}
+		<a href="{{ path('FulgurioMLM_Book_List') }}" class="btn">{% trans from 'common' %}cancel{% endtrans %}</a>
+	</div>
+{{ form_rest(form) }}
+{{ form_end(form) }}
 {% endblock %}
 
 {% block css %}
-		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-fileupload.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('bundles/fulguriomedialibrarymanager/bootstrap-fileinput/css/fileinput.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascript %}
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-fileupload.min.js') }}"></script>
+	<script src="{{ asset('bundles/fulguriomedialibrarymanager/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
 {% endblock %}

@@ -4,45 +4,41 @@
 	<head>
 		<meta charset="utf-8">
 		<title>{% block title %}{% trans from 'common' %}project.title{% endtrans %}{% endblock %}</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="author" content="{% trans from 'common' %}project.author{% endtrans %}">
-		<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="{{ asset('bundles/fulguriomedialibrarymanager/bootstrap/dist/css/bootstrap.min.css') }}">
 		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/mlm.css') }}" rel="stylesheet">
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/jquery/dist/jquery.min.js') }}"></script>
 {% block css %}{% endblock %}
-		<!--[if lt IE 9]>
-			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-{#
-		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ asset('bundles/fulguriomedialibrarymanager/ico/apple-touch-icon-144-precomposed.png') }}">
-		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('bundles/fulguriomedialibrarymanager/ico/apple-touch-icon-114-precomposed.png') }}">
-		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('bundles/fulguriomedialibrarymanager/ico/apple-touch-icon-72-precomposed.png') }}">
-		<link rel="apple-touch-icon-precomposed" href="{{ asset('bundles/fulguriomedialibrarymanager/ico/apple-touch-icon-57-precomposed.png') }}">
-		<link rel="shortcut icon" href="{{ asset('bundles/fulguriomedialibrarymanager/ico/favicon.png') }}">
-#}
 	</head>
 	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top">
-			<div class="navbar-inner">
-				<div class="container">
-					<a class="brand" href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}project.title{% endtrans %}</a>
-					<div class="nav-collapse collapse">
-						<ul class="nav">
-							<li{% if app.request.attributes.get('_route') == 'FulgurioMLMHomepage' %} class="active"{% endif %}><a href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}homepage{% endtrans %}</a></li>
-							<li{% if app.request.attributes.get('_route')|slice(0, 17) == 'FulgurioMLM_Book_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Book_List') }}">{% trans from 'book' %}book.title{% endtrans %}</a></li>
-							<li{% if app.request.attributes.get('_route')|slice(0, 18) == 'FulgurioMLM_Music_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Music_List') }}">{% trans from 'music' %}music.title{% endtrans %}</a></li>
-						</ul>
-					</div>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}project.title{% endtrans %}</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li{% if app.request.attributes.get('_route') == 'FulgurioMLMHomepage' %} class="active"{% endif %}><a href="{{ path('FulgurioMLMHomepage') }}">{% trans from 'common' %}homepage{% endtrans %}</a></li>
+						<li{% if app.request.attributes.get('_route')|slice(0, 17) == 'FulgurioMLM_Book_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Book_List') }}">{% trans from 'book' %}book.title{% endtrans %}</a></li>
+						<li{% if app.request.attributes.get('_route')|slice(0, 18) == 'FulgurioMLM_Music_' %} class="active"{% endif %}><a href="{{ path('FulgurioMLM_Music_List') }}">{% trans from 'music' %}music.title{% endtrans %}</a></li>
+					</ul>
 				</div>
 			</div>
-		</div>
+		</nav>
 		<div class="container">
 {% endif %}
 {% block content %}{% endblock %}
 {% if not app.request.isXmlHttpRequest() %}
 		</div>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 {% block javascript %}{% endblock %}
 	</body>
 </html>

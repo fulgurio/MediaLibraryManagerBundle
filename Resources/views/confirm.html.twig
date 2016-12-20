@@ -1,16 +1,49 @@
-{% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+{% extends 'FulgurioMediaLibraryManagerBundle::base' ~ (app.request.isXmlHttpRequest ? '-modal' : '') ~ '.html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
-<form action="{{ action }}" method="post">
-	<p>{{ confirmationMessage }}</p>
-	<p>
-		<button type="submit" name="confirm" class="btn btn-primary" value="yes">{% trans from 'common' %}yes{% endtrans %}</button>
-		<button type="submit" name="confirm" class="btn popupClose" value="no">{% trans from 'common' %}no{% endtrans %}</button>
-	</p>
-</form>
-<script>
-$('.popupClose').click(function(e) {
-	e.preventDefault();
-	$('#myModal').modal('hide');
-});
-</script>
+{% if app.request.isXmlHttpRequest == false %}
+		{#<header class="main-header">#}
+			{#<div class="container">#}
+				{#<h1><small>{{ title }}</small></h1>#}
+			{#</div>#}
+		{#</header>#}
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+{% endif %}
+					<form action="{{ action }}" method="post">
+						<p class="text-center">{{ confirmationMessage }}</p>
+						<p class="text-center">
+{% if url_referer is defined %}
+							<input type="hidden" name="referer" value="{{ url_referer }}" />
+{% endif %}
+							<button type="submit" name="confirm" class="btn btn-primary btn-large popupSubmit" value="yes">{% trans from 'common' %}yes{% endtrans %}</button>
+{% if url_referer is defined and url_referer %}
+							<a href="{{ url_referer }}" class="btn btn-large popupClose">{% trans %}merch.no{% endtrans %}</a>
+							<input type="hidden" name="referer" value="{{ url_referer }}">
+{% else %}
+							<button type="submit" name="confirm" class="btn btn-large popupClose" value="no">{% trans from 'common' %}no{% endtrans %}</button>
+{% endif %}
+{% if inputs is defined %}
+{%  for input in inputs %}
+							<input type="hidden" name="{{ input.name }}" value="{{ input.value }}">
+{%  endfor %}
+{% endif %}
+						</p>
+						<div class="clearfix"></div>
+					</form>
+{% if app.request.isXmlHttpRequest %}
+	<script>
+	$('.popupClose').click(function() {
+	$myModal.modal('hide');
+	return false;
+	});
+	</script>
+{% else %}
+				</div>
+			</div>
+		</div>
+{% endif %}
 {% endblock %}

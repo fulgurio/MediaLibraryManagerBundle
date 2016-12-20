@@ -9,9 +9,10 @@ ean:
     label:              EAN
 media_type:
     label:              Media type
-    cd:                 Cd
-    mp3:                MP3
-    vinyl:              Vinyl
+    types:
+        1:              Cd
+        2:              MP3
+        3:              Vinyl
 publication_year:
     label:              Publication year
 publisher:
@@ -28,6 +29,8 @@ track_n:                Track n°%TRACK_NB%
 add_track:              Add track
 remove_track:           Remove track
 track:
+    label:              Tracks
+    track_number:       Track %TRACK_NB%
     title:
         label:          Title
     duration:

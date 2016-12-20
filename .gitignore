@@ -1,1 +1,3 @@
-Entity/*.php~
+Resources/public/jquery
+Resources/public/bootstrap
+Resources/public/bootstrap-fileinput

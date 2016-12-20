@@ -9,8 +9,9 @@ ean:
     label:              EAN
 media_type:
     label:              Media type
-    book:               Book
-    ebook:              Ebook
+    type:
+        1:              Book
+        2:              Ebook
 publication_year:
     label:              Publication year
 publisher:

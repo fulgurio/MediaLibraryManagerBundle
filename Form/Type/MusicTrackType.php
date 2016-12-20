@@ -17,41 +17,42 @@ class MusicTrackType extends AbstractType
 {
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form\AbstractType::buildForm()
+     * @see \Symfony\Component\Form\AbstractType::buildForm()
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//         ->add('volume_number', 'hidden', array('required' => TRUE))
-//         ->add('track_number', 'hidden', array('required' => TRUE))
+//         ->add('volume_number', 'hidden', array('required' => true))
+//         ->add('track_number', 'hidden', array('required' => true))
         ->add('title', 'text', array(
-            'label'      => 'track.title.label',
+//            'label'      => 'track.title.label',
             'max_length' => 128
         ))
         ->add('duration', 'number', array(
-            'label'    => 'track.duration.label',
-            'required' => FALSE
+//            'label'    => 'track.duration.label',
+            'required' => false
         ))
-        ->add('lyrics', 'text', array(
+        ->add('lyrics', 'textarea', array(
             'label'    => 'track.lyrics.label',
-            'required' => FALSE
+            'required' => false
         ));
     }
 
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form\AbstractType::configureOptions()
+     * @see \Symfony\Component\Form\AbstractType::configureOptions()
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack',
+            'translation_domain' => 'music',
+            'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack'
         ));
     }
 
     /**
      * (non-PHPdoc)
-     * @see Symfony\Component\Form\FormTypeInterface::getName()
+     * @see \Symfony\Component\Form\FormTypeInterface::getName()
      */
     public function getName()
     {

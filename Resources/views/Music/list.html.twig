@@ -5,25 +5,33 @@
 			<div class="alert alert-success">{{ flashMessage|trans({}, 'music') }}<br /></div>
 {% endfor %}
 			<form method="post" action="{{ path('FulgurioMLM_Music_List') }}">
+				<div class="row">
 {% if albums is not empty or app.request.get('q') is not null %}
-				<div class="input-append pull-left">
-					<input type="text" class="span2" name="q" value="{{ app.request.get('q') }}">
-					<button type="submit" class="btn">{% trans from 'common' %}search{% endtrans %}</button>
-				</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="input-group">
+							<input type="text" class="form-control" name="q" value="{{ app.request.get('q') }}">
+							  <span class="input-group-btn">
+								  <button type="submit" class="btn btn-default">{% trans from 'common' %}search{% endtrans %}</button>
+							  </span>
+						</div>
+					</div>
 {% endif %}
-			<div class="clearfix">
-				<a class="btn pull-right" href="{{ path('FulgurioMLM_Music_Add') }}">{% trans from 'music' %}add_new_album{% endtrans %}</a>
-			</div>
+					<div class="col-xs-12 col-sm-8{% if app.request.get('q') is null %} col-sm-offset-4{% endif %}">
+						<div class="input-group pull-right">
+							<a class="btn btn-primary" href="{{ path('FulgurioMLM_Music_Add') }}">{% trans from 'music' %}add_new_album{% endtrans %}</a>
+						</div>
+					</div>
+				</div>
 {% if albums is empty %}
-			<p>{% trans from 'music' %}no_album{% endtrans %}</p>
+				<p class="no-result">{% trans from 'music' %}no_album{% endtrans %}</p>
 {% else %}
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th>{#Cover#}</th>
-							<th>{{ knp_pagination_sortable(albums, 'artist.label'|trans({}, 'music'), 'ma.artist')|raw }}</th>
-							<th>{{ knp_pagination_sortable(albums, 'title.label'|trans({}, 'music'), 'ma.title')|raw }}</th>
-							<th>{#Options#}</th>
+							<th style="width: 10%">{#Cover#}</th>
+							<th style="width: 40%">{{ knp_pagination_sortable(albums, 'artist.label'|trans({}, 'music'), 'ma.artist')|raw }}</th>
+							<th style="width: 44%">{{ knp_pagination_sortable(albums, 'title.label'|trans({}, 'music'), 'ma.title')|raw }}</th>
+							<th style="width: 6%">{#Options#}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -39,8 +47,8 @@
 							<td>{{ album.artist }}</td>
 							<td>{{ album.title }}</td>
 							<td>
-								<a href="{{ path('FulgurioMLM_Music_Edit', {albumId: album.id}) }}" title="{% trans from 'common' %}edit{% endtrans %}" class="icon-edit"></a>
-								<a href="{{ path('FulgurioMLM_Music_Remove', {albumId: album.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="icon-remove-circle" data-toggle="modal" data-target="#myModal"></a>
+								<a href="{{ path('FulgurioMLM_Music_Edit', {albumId: album.id}) }}" title="{% trans from 'common' %}edit{% endtrans %}" class="glyphicon glyphicon-pencil"></a>
+								<a href="{{ path('FulgurioMLM_Music_Remove', {albumId: album.id}) }}" title="{% trans from 'common' %}delete{% endtrans %}" class="glyphicon glyphicon-trash" data-toggle="modal" data-target="#myModal"></a>
 							</td>
 						</tr>
 {%   endfor %}

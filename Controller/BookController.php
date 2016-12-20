@@ -48,8 +48,17 @@ class BookController extends Controller
      */
     public function addAction($bookId = NULL, Request $request)
     {
-        $book = is_null($bookId) ? new Book() : $this->getBook($bookId);
-        $form = $this->createForm(new BookType(), $book);
+        if (is_null($bookId))
+        {
+            $book = new Book();
+            $action = $this->generateUrl('FulgurioMLM_Book_Add');
+        }
+        else
+        {
+            $book = $this->getBook($bookId);
+            $action = $this->generateUrl('FulgurioMLM_Book_Edit', array('bookId' => $bookId));
+        }
+        $form = $this->createForm(new BookType(), $book, array('action' => $action));
         $formHandler = new BookHandler($this->getDoctrine(), $form, $request);
         if ($formHandler->process($book))
         {
@@ -88,6 +97,7 @@ class BookController extends Controller
         }
         return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig',
             array(
+                'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
                 'action' => $this->generateUrl('FulgurioMLM_Book_Remove', array('bookId' => $bookId)),
                 'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $book->getTitle()), 'book'),
         ));

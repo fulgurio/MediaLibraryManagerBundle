@@ -1,6 +1,5 @@
 function getAlbumsList(e)
 {
-	console.log('ici');
 	e.preventDefault();
 	e.currentTarget.disabled = true;
 	$('#searchResult').empty();
@@ -93,67 +92,112 @@ function getTrackLyrics()
 		}
 	});
 }
-function removeTrack()
-{
-	initNextTrack($(this).parent().attr('data-track'));
-	$(this).parent().remove();
-}
-function initNextTrack(newId)
-{
-	var n = newId.split('_');
-	var i = new Number(n[1]);
-	var currentTrack = n[0] + '_' + (i + 1);
-	var elt = $('li[data-track=' + currentTrack + ']');
-	if (elt.length > 0)
-	{
-		var title = elt.find('> span');
-		var titleHtml = $(title).html();
-		$(title).html(titleHtml.replace(i + 1, i));
-		elt.find('label,input,select,textarea,button').each(function() {
-			if (this.id) {
-				this.id = this.id.replace(currentTrack, newId);
-			}
-			if (this.name) {
-				this.name = this.name.replace(/\[[0-9]+\]/, '[' + (i - 1) + ']');
-			}
-			if ($(this).attr('for')) {
-				$(this).attr('for', $(this).attr('for').replace(currentTrack, newId));
-			}
-		});
-		elt.attr('data-track', newId);
-		initNextTrack(currentTrack);
+
+
+
+var MusicAlbumManager = {
+    /**
+	 * Add new track line
+	 *
+     * @param {Element} elt
+     * @param {MouseEvent} e
+     */
+	addTrack: function(elt, e) {
+        e.preventDefault();
+        var trackNb = $('#tracks tbody tr').length / 2 + 1;
+
+        $('#tracks tbody').append(this.getTrackFormElement(trackNb));
+	},
+
+    /**
+     * Add a track line
+     *
+     * @param {Element} elt
+     * @param {MouseEvent} e
+     */
+    removeTrack: function (elt, e) {
+		var $parent = $(elt).closest('tr');
+    	this.initNextTrack(parseInt($parent.attr('id').substr(6)) + 1);
+    	// Removing lyrics before
+        $parent.next().remove();
+        $parent.remove();
+	},
+
+    /**
+	 * Generate dom form of a track from the template
+	 *
+     * @param {number} trackNb
+     * @returns string
+     */
+	getTrackFormElement: function (trackNb) {
+		var newTrack = tmpl('tmpl-track', {'trackNb': trackNb});
+
+		return newTrack
+            .replace(/track_n/g, trackNb)
+            .replace(/__name__/g, trackNb - 1);
+	},
+
+    /**
+	 * Init index and track number
+	 *
+     * @param {number} trackNb
+     */
+    initNextTrack: function (trackNb) {
+		var newTrackNb = trackNb - 1,
+			newTrackIndex = newTrackNb - 1,
+			$elt = $('#track_' + trackNb);
+		if ($elt.length > 0) {
+			this.replaceId($elt, trackNb, newTrackNb, newTrackIndex);
+        }
+	},
+
+	replaceId: function($elt, trackNb, newTrackNb, newTrackIndex) {
+        $elt.find('td:first-child').each(function() {
+            this.innerHTML = newTrackNb;
+        });
+        $elt.find('input,label,select,textarea,button').each(function() {
+            if (this.id) {
+                this.id = this.id.replace(/_[0-9]+_/, '_' + newTrackIndex + '_');
+            }
+            if (this.name) {
+                this.name = this.name.replace(/\[[0-9]+\]/, '[' + newTrackIndex + ']');
+            }
+            console.log(this);
+        });
+        $elt.attr('id', newTrackNb);
+        this.initNextTrack(trackNb + 1);
+	},
+
+	initForm: function() {
+		var self = this;
+
+        $('#addTrack').click(function(e) { self.addTrack(this, e); });
+        $('form').on('click', '.btn.btn-remove-track', function(e) { self.removeTrack(this, e); });
 	}
-}
-function addTrackForm(discNb, trackNb) {
-	var newTrack = tmpl('tmpl-track', {'discNb': discNb, 'trackNb': trackNb});
-	newTrack = newTrack.replace(/%TRACK_NB%/g, trackNb);
-	newTrack = newTrack.replace(/__name__/g, trackNb - 1);
-	return $('#tracks').append(newTrack);
-}
+};
 $(document).ready(function() {
-	$('form').on('click', '.btn.btn-lyrics-track', getTrackLyrics);
-	$('form').on('click', '.btn.btn-remove-track', removeTrack);
-	$('#addTrack').click(function(e) {
-		e.preventDefault();
-		var discNb = 1;
-		var trackNb = $('#tracks').find('li').length + 1;
-		addTrackForm(discNb, trackNb);
-	});
-	$('#music_album_title').on('keyup', function(e) {
-		if ($(this).val().length > 1)
-		{
-			if (!$(this).hasClass('span2'))
-			{
-				$(this).addClass('span2');
-				var elt = $('<button id="retrieveBtn" type="button" class="btn"><i class="icon-refresh"></i></button>');
-				$(elt).click(getAlbumsList);
-				$(this).after(elt);
-			}
-			else
-			{
-				$('#retrieveBtn').attr('disabled', false);
-			}
-		}
-	});
+	if ($('#addTrack').length === 1) {
+        MusicAlbumManager.initForm();
+    }
+	// $('form').on('click', '.btn.btn-lyrics-track', getTrackLyrics);
+	//
+    //
+	// $('#music_album_title').on('keyup', function(e) {
+	// 	if ($(this).val().length > 1)
+	// 	{
+	// 		if (!$(this).hasClass('span2'))
+	// 		{
+	// 			$(this).addClass('span2');
+	// 			var elt = $('<button id="retrieveBtn" type="button" class="btn"><i class="icon-refresh"></i></button>');
+	// 			$(elt).click(getAlbumsList);
+	// 			$(this).after(elt);
+	// 		}
+	// 		else
+	// 		{
+	// 			$('#retrieveBtn').attr('disabled', false);
+	// 		}
+	// 	}
+	// });
 });
 tmpl.regexp = /([\s'\\])(?![^%]*%\])|(?:\[%(=|#)([\s\S]+?)%\])|(\[%)|(%\])/g;
+
