@@ -16,10 +16,29 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MusicAlbumHandler
 {
+    /**
+     * @var RegistryInterface
+     */
     private $doctrine;
+
+    /**
+     * @var Form
+     */
     private $form;
+
+    /**
+     * @var Request
+     */
     private $request;
 
+
+    /**
+     * MusicAlbumHandler constructor.
+     *
+     * @param RegistryInterface $doctrine
+     * @param Form $form
+     * @param Request $request
+     */
     public function __construct(RegistryInterface $doctrine, Form $form, Request $request)
     {
         $this->doctrine = $doctrine;
@@ -76,9 +95,9 @@ class MusicAlbumHandler
 //                 $album->setOwner($this->currentUser); //@todo
                 $em->persist($album);
                 $em->flush();
-                return TRUE;
+                return true;
             }
-            return FALSE;
+            return false;
         }
     }
 }

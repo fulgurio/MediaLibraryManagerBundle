@@ -21,16 +21,15 @@ cover:
     label:              Pochette
 add_new_album:          Ajouter un nouvel album
 edit_album:             Editer l'album "%TITLE%"
-adding_music_success:   Album ajouté avec succès !
-editing_music_success:  Album modifié avec succès !
+adding_success:         Album ajouté avec succès !
+editing_success:        Album modifié avec succès !
 delete_confirm_message: Etes-vous sûr de vouloir supprimer "%TITLE%" ?
+delete_success:         Album supprimé avec succès !
 tracks:                 Pistes
-track_n:                Piste n°%TRACK_NB%
 add_track:              Ajouter une piste
 remove_track:           Supprimer une piste
 track:
     label:              Pistes
-#    track_number:       Piste %TRACK_NB%
     track_number:
         label:          Piste
     title:

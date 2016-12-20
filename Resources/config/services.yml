@@ -1,4 +1,0 @@
-parameters:
-#    fulgurio_media_library_manager.example.class: Fulgurio\MediaLibraryManagerBundle\Example
-
-services:

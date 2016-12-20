@@ -13,10 +13,11 @@ use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Fulgurio\MediaLibraryManagerBundle\Form\Type\MusicAlbumType;
 use Fulgurio\MediaLibraryManagerBundle\Form\Handler\MusicAlbumHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MusicController extends Controller
 {
@@ -35,10 +36,11 @@ class MusicController extends Controller
                 $this->get('knp_paginator'),
                 $request->get('page', 1),
                 $request->get('q')
-        );
-        return $this->render(
-            'FulgurioMediaLibraryManagerBundle:Music:list.html.twig',
-            array('albums' => $albums)
+                );
+
+        return $this->render('FulgurioMediaLibraryManagerBundle:Music:list.html.twig', array(
+            'albums' => $albums
+            )
         );
     }
 
@@ -49,7 +51,7 @@ class MusicController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function addAction($albumId = NULL, Request $request)
+    public function addAction($albumId = null, Request $request)
     {
         if (is_null($albumId))
         {
@@ -65,14 +67,12 @@ class MusicController extends Controller
         $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request);
         if ($formHandler->process($album))
         {
-            $this->addFlash('notice', (is_null($albumId) ? 'adding' : 'editing') . '_music_success');
+            $this->addFlash('notice', (is_null($albumId) ? 'adding' : 'editing') . '_success');
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
-        return $this->render(
-            'FulgurioMediaLibraryManagerBundle:Music:add.html.twig',
-            array(
-                'form' => $form->createView(),
-                'album' => $album
+        return $this->render('FulgurioMediaLibraryManagerBundle:Music:add.html.twig', array(
+            'form'  => $form->createView(),
+            'album' => $album
             )
         );
     }
@@ -82,28 +82,26 @@ class MusicController extends Controller
      *
      * @param number $albumId
      * @param Request $request
-     * @return Response
+     * @return Response|RedirectResponse
      */
     public function removeAction($albumId, Request $request)
     {
         $album = $this->getAlbum($albumId);
-        if ($request->get('confirm') === 'yes')
-        {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($album);
-            $em->flush();
+        if ($request->get('confirm')) {
+            if ('yes' === $request->get('confirm')) {
+                    $em = $this->getDoctrine()->getManager();
+                    $em->remove($album);
+                    $em->flush();
+                    $this->addFlash('notice', 'delete_success');
+            }
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
-        else if ($request->get('confirm') === 'no')
-        {
-            return $this->redirectToRoute('FulgurioMLM_Music_List');
-        }
-        return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig',
-            array(
-                'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
-                'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
-                'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $album->getTitle()), 'music'),
-        ));
+        return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig', array(
+            'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
+            'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
+            'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $album->getTitle()), 'music')
+            )
+        );
     }
 
     /**
@@ -152,11 +150,15 @@ class MusicController extends Controller
      *
      * @param number $albumId
      * @return MusicAlbum
+         *
+         * @throws NotFoundHttpException
      */
     private function getAlbum($albumId)
     {
-        $em = $this->getDoctrine()->getManager();
-        $album = $em->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')->find($albumId);
+        $album = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository('FulgurioMediaLibraryManagerBundle:MusicAlbum')
+                        ->find($albumId);
         if (is_null($album))
         {
             throw $this->createNotFoundException();

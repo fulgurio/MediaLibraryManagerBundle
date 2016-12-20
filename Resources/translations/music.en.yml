@@ -21,16 +21,17 @@ cover:
     label:              Cover
 add_new_album:          Add new album
 edit_album:             Edit "%TITLE%" album
-adding_music_success:   New album added successfully !
-editing_music_success:  Album edited successfully !
+adding_success:         New album added successfully !
+editing_success:        Album edited successfully !
 delete_confirm_message: Do you really want to remove "%TITLE%" ?
+delete_success:         Album deleted successfully !
 tracks:                 Tracks
-track_n:                Track n°%TRACK_NB%
 add_track:              Add track
 remove_track:           Remove track
 track:
     label:              Tracks
-    track_number:       Track %TRACK_NB%
+    track_number:
+        label:          Track
     title:
         label:          Title
     duration:

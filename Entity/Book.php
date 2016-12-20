@@ -70,7 +70,7 @@ class Book
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if ($this->publicationYear != NULL
+        if ($this->publicationYear != null
             && ($this->publicationYear < 1900 || $this->publicationYear > date('Y') + 1))
         {
             $context->buildViolation('book.publication_year.invalid')

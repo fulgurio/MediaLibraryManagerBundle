@@ -23,3 +23,4 @@ edit_book:              Editer le livre "%TITLE%"
 adding_success:         Livre ajouté avec succès !
 editing_success:        Livre modifié avec succès !
 delete_confirm_message: Etes-vous sûr de vouloir supprimer "%TITLE%" ?
+delete_success:         Livre supprimé avec succès !

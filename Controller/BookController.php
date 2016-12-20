@@ -13,7 +13,10 @@ use Fulgurio\MediaLibraryManagerBundle\Entity\Book;
 use Fulgurio\MediaLibraryManagerBundle\Form\Type\BookType;
 use Fulgurio\MediaLibraryManagerBundle\Form\Handler\BookHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookController extends Controller
 {
@@ -25,17 +28,18 @@ class BookController extends Controller
      */
     public function listAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $paginator = $this->get('knp_paginator');
-        $books = $em->getRepository('FulgurioMediaLibraryManagerBundle:Book')
-                ->findAllWithPaginator(
-                        $paginator,
-                        $request->get('page', 1),
-                        $request->get('q')
-        );
-        return $this->render(
-            'FulgurioMediaLibraryManagerBundle:Book:list.html.twig',
-            array('books' => $books)
+        $books = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('FulgurioMediaLibraryManagerBundle:Book')
+            ->findAllWithPaginator(
+                $this->get('knp_paginator'),
+                $request->get('page', 1),
+                $request->get('q')
+            );
+
+        return $this->render('FulgurioMediaLibraryManagerBundle:Book:list.html.twig', array(
+            'books' => $books
+            )
         );
     }
 
@@ -46,7 +50,7 @@ class BookController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function addAction($bookId = NULL, Request $request)
+    public function addAction($bookId = null, Request $request)
     {
         if (is_null($bookId))
         {
@@ -65,11 +69,9 @@ class BookController extends Controller
             $this->addFlash('notice', (is_null($bookId) ? 'adding' : 'editing') . '_success');
             return $this->redirectToRoute('FulgurioMLM_Book_List');
         }
-        return $this->render(
-            'FulgurioMediaLibraryManagerBundle:Book:add.html.twig',
-            array(
-                'form' => $form->createView(),
-                'book' => $book
+        return $this->render('FulgurioMediaLibraryManagerBundle:Book:add.html.twig', array(
+            'form' => $form->createView(),
+            'book' => $book
             )
         );
     }
@@ -79,28 +81,27 @@ class BookController extends Controller
      *
      * @param number $bookId
      * @param Request $request
-     * @return $response
+     * @return Response|RedirectResponse
      */
     public function removeAction($bookId, Request $request)
     {
         $book = $this->getBook($bookId);
-        if ($request->get('confirm') === 'yes')
+        if ($request->get('confirm'))
         {
-            $em = $this->getDoctrine()->getEntityManager();
-            $em->remove($book);
-            $em->flush();
+            if ('yes' === $request->get('confirm')) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->remove($book);
+                $em->flush();
+                $this->addFlash('notice', 'delete_success');
+            }
             return $this->redirectToRoute('FulgurioMLM_Book_List');
         }
-        else if ($request->get('confirm') === 'no')
-        {
-            return $this->redirectToRoute('FulgurioMLM_Book_List');
-        }
-        return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig',
-            array(
-                'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
-                'action' => $this->generateUrl('FulgurioMLM_Book_Remove', array('bookId' => $bookId)),
-                'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $book->getTitle()), 'book'),
-        ));
+        return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig', array(
+            'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
+            'action' => $this->generateUrl('FulgurioMLM_Book_Remove', array('bookId' => $bookId)),
+            'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $book->getTitle()), 'book')
+            )
+        );
     }
 
     /**
@@ -108,6 +109,8 @@ class BookController extends Controller
      *
      * @param number $bookId
      * @return Book
+     *
+     * @throws NotFoundHttpException
      */
     private function getBook($bookId)
     {

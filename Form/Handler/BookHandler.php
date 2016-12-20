@@ -16,10 +16,28 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BookHandler
 {
+    /**
+     * @var RegistryInterface
+     */
     private $doctrine;
+
+    /**
+     * @var Form
+     */
     private $form;
+
+    /**
+     * @var Request
+     */
     private $request;
 
+    /**
+     * BookHandler constructor.
+     *
+     * @param RegistryInterface $doctrine
+     * @param Form $form
+     * @param Request $request
+     */
     public function __construct(RegistryInterface $doctrine, Form $form, Request $request)
     {
         $this->doctrine = $doctrine;
@@ -43,9 +61,9 @@ class BookHandler
                 $em = $this->doctrine->getEntityManager();
                 $em->persist($book);
                 $em->flush();
-                return TRUE;
+                return true;
             }
-            return FALSE;
+            return false;
         }
     }
 }
