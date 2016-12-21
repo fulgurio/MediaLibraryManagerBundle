@@ -1,4 +1,5 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+
 {% block content %}
 			<h1>{% trans from 'music' %}music.title{% endtrans %}</h1>
 {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -60,11 +61,16 @@
 {% endblock %}
 
 {% block css %}
-		<link href="{{ asset('bundles/fulguriomedialibrarymanager/css/bootstrap-lightbox.min.css') }}" rel="stylesheet">
+		<link href="{{ asset('bundles/fulguriomedialibrarymanager/ekko-lightbox/dist/ekko-lightbox.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block javascript %}
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/bootstrap-lightbox.min.js') }}"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/ekko-lightbox/dist/ekko-lightbox.min.js') }}"></script>
+		<script>
+			$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+				event.preventDefault();
+				$(this).ekkoLightbox();
+			});
+		</script>
 {% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
-{% include 'FulgurioMediaLibraryManagerBundle::lightbox.html.twig' %}
 {% endblock %}
