@@ -13,6 +13,7 @@ use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Fulgurio\MediaLibraryManagerBundle\Form\Type\MusicAlbumType;
 use Fulgurio\MediaLibraryManagerBundle\Form\Handler\MusicAlbumHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ class MusicController extends Controller
                 $this->get('knp_paginator'),
                 $request->get('page', 1),
                 $request->get('q')
-                );
+            );
 
         return $this->render('FulgurioMediaLibraryManagerBundle:Music:list.html.twig', array(
             'albums' => $albums
@@ -49,7 +50,7 @@ class MusicController extends Controller
      *
      * @param number $albumId
      * @param Request $request
-     * @return Response
+     * @return Response|RedirectResponse
      */
     public function addAction($albumId = null, Request $request)
     {
@@ -72,7 +73,8 @@ class MusicController extends Controller
         }
         return $this->render('FulgurioMediaLibraryManagerBundle:Music:add.html.twig', array(
             'form'  => $form->createView(),
-            'album' => $album
+            'album' => $album,
+            'hasMusicService' => true === $this->container->hasParameter('fulgurio_media_library_manager.music_service')
             )
         );
     }
@@ -88,7 +90,8 @@ class MusicController extends Controller
     {
         $album = $this->getAlbum($albumId);
         if ($request->get('confirm')) {
-            if ('yes' === $request->get('confirm')) {
+            if ('yes' === $request->get('confirm'))
+            {
                     $em = $this->getDoctrine()->getManager();
                     $em->remove($album);
                     $em->flush();
@@ -108,28 +111,29 @@ class MusicController extends Controller
      * Retrieve album info from external webservice
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
+     *
+     * @throws \Exception|AccessDeniedHttpException
      */
     public function retrieveAlbumInfosAction(Request $request)
     {
-        if (!$this->has('nass600_media_info.music_info.manager'))
+        if (false === $request->isXmlHttpRequest() ||
+            false === $this->container->hasParameter('fulgurio_media_library_manager.music_service'))
         {
             throw new AccessDeniedHttpException();
         }
-        $musicManager = $this->get('nass600_media_info.music_info.manager');
-        $data = $musicManager->getAlbumInfo(
-            array(
-//                 'mbid' => '61bf0388-b8a9-48f4-81d1-7eb02706dfb0',
-                'artist' => $request->get('artist'),
-                'album' => $request->get('title'),
-                'ASIN' => $request->get('asin'),
-                'EAN' => $request->get('ean')
-            )
+        $serviceName = $this->container->getParameter('fulgurio_media_library_manager.music_service');
+        if (false === $this->has($serviceName))
+        {
+            throw new \Exception('Service ' . $serviceName . ' doesn\'t exist');
+        }
+        $musicManager = $this->get($serviceName);
+        $data = array(
+            'artist' => trim($request->get('artist')),
+            'album' => trim($request->get('title')),
+            'EAN' => trim($request->get('ean'))
         );
-//         $lyrics = $this->get('nass600_media_info.lyrics_info.manager');
-        $response = new Response(json_encode($data));
-        $response->headers->set('Content-Type', 'application/json');
-        return $response;
+        return new JsonResponse($musicManager->getAlbumInfo($data));
     }
 
     /**
@@ -137,21 +141,22 @@ class MusicController extends Controller
      *
      * @return Response
      */
-    public function retrieveLyricsTrackAction()
-    {
-//        $request = $this->getRequest();
-//        $artist = $request->get('artist');
-        $data = '';
-        return new Response($data);
-    }
+//    public function retrieveLyricsTrackAction()
+//    {
+////         $lyrics = $this->get('nass600_media_info.lyrics_info.manager');
+////        $request = $this->getRequest();
+////        $artist = $request->get('artist');
+//        $data = '';
+//        return new Response($data);
+//    }
 
     /**
      * Get album
      *
      * @param number $albumId
      * @return MusicAlbum
-         *
-         * @throws NotFoundHttpException
+     *
+     * @throws NotFoundHttpException
      */
     private function getAlbum($albumId)
     {

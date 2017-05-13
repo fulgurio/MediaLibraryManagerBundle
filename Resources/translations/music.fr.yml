@@ -38,3 +38,6 @@ track:
         label:          Durée
     lyrics:
         label:          Paroles
+search:
+    no_result:          Aucun résultat trouvé
+    found_result:       Résultats trouvés

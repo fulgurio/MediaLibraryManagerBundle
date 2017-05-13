@@ -22,6 +22,7 @@
 {#{%   set trackNb = form.tracks|length %}
 {%	 set track = form.tracks[0] %} #}
 			<table class="table" id="tracks">
+				<caption>{{ form.tracks.vars.label|trans }}</caption>
 				<thead>
 					<tr>
 						<th style="width: 10%">{% trans %}track.track_number.label{% endtrans %}</th>
@@ -33,15 +34,12 @@
 				<tbody>
 {% if form.tracks.vars is not empty %}
 {%   for trackNb, track in form.tracks %}
-{%     set trackNb = trackNb + 1 %}
-{%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' %}
+{%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' with { 'trackNb': trackNb + 1 } %}
 {%   endfor %}
 {% endif %}
-{% if app.request.request.get('addTrack') %}
-{%   set trackNb = app.request.request.get('addTrack')[volumeNb] + 1 %}
-{%   set track = form.tracks.vars.prototype %}
-{%   include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' %}
-{% endif %}
+{#{% if app.request.request.get('addTrack') %}#}
+{#{%   include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' with { 'trackNb': app.request.request.get('addTrack')[volumeNb] + 1, 'track': form.tracks.vars.prototype } %}#}
+{#{% endif %}#}
 				</tbody>
 				<tfoot>
 					<tr>
@@ -51,17 +49,19 @@
 					</tr>
 				</tfoot>
 			</table>
+			<script type="text/x-tmpl" id="tmpl-track">
+{% include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' with { 'track': form.tracks.vars.prototype } %}
+{% do form.tracks.setRendered %}
+			</script>
 		</div>
 	</div>
-				{#<div class="pull-right" id="searchResult"></div>
-				<div class="clearfix"></div>#}
 	<div class="form-actions form-actions-fixed-bottom">
 		<input type="hidden" name="{{ form._token.vars.full_name }}" value="{{ form._token.vars.value }}" />
         {{ form_row(form.submit) }}
 		<a href="{{ path('FulgurioMLM_Music_List') }}" class="btn">{% trans from 'common' %}cancel{% endtrans %}</a>
 	</div>
-{{ form_rest(form) }}
-{{ form_end(form) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
 {% endblock %}
 
 {% block css %}
@@ -69,15 +69,41 @@
 {% endblock %}
 
 {% block javascript %}
-		<script type="text/x-tmpl" id="tmpl-track">
-{% set track = form.tracks.vars.prototype %}
-{% include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' %}
-		</script>
+{% if hasMusicService %}
 		<script>
-var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}',
-	lyricsUrl = '{{ path('FulgurioMLM_Music_Retrieve_Track_Lyrics') }}';
+var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
 		</script>
+		<script type="text/x-tmpl" id="tmpl-search-result">
+			<div id="searchResult">
+[% if (o.items.length) { %]
+				<h3>{% trans %}search.found_result{% endtrans %}</h3>
+				<ul>
+		[% for (var i in o.items) { %]
+					<li data-index="[%=i%]">
+			[% if (o.items[i].thumbnail) { %]
+						<img src="[%=o.items[i].thumbnail%]" alt="" />
+			[% } %]
+						<div>
+							<a>[%=o.items[i].artist%] - [%=o.items[i].title%]</a>
+							<br />
+							[%=o.items[i].publisher%]
+							<br />
+							[%=o.items[i].ean%]
+						</div>
+					</li>
+		[% } %]
+				</ul>
+[% } else { %]
+				<p>{% trans %}search.no_result{% endtrans %}</p>
+[% } %]
+			</div>
+		</script>
+{% endif %}
+{#		<script>
+//var lyricsUrl = '{{ path('FulgurioMLM_Music_Retrieve_Track_Lyrics') }}';
+		</script>#}
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
-		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/tmpl.min.js') }}"></script>
+		<script src="{{ asset('bundles/fulguriomedialibrarymanager/blueimp-tmpl/js/tmpl.js') }}"></script>
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
+{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
 {% endblock %}

@@ -27,11 +27,10 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('fulgurio_media_library_manager');
         $rootNode
-            ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('cover_size')->defaultValue(50)->end()
-            ->end()
-        ;
+                ->scalarNode('book_service')->end()
+                ->scalarNode('music_service')->end()
+            ->end();
         return $treeBuilder;
     }
 }

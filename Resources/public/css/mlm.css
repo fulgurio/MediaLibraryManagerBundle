@@ -33,16 +33,36 @@ body {
 	text-align: left;
 }
 
-/*
+/** Webservice search results list **/
+#searchResult h3 {
+	padding-left: 10px;
+}
+
 #searchResult ul {
+	padding: 0;
+
 	list-style: none;
 }
-#searchResult a {
+#searchResult li {
+	display: block;
+	height: 95px;
+	position: relative;
+
 	cursor: pointer;
 }
-#searchResult li {
-	padding: 10px 0;
+
+#searchResult li:hover {
+	background: #f8f8f8;
 }
-#retrieveBtn {
-	margin: 0 0 0 10px;
-}*/
+
+#searchResult li img {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+
+	max-height: 75px;
+}
+
+#searchResult li div {
+	padding: 0 10px 0 95px;
+}

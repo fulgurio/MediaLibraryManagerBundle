@@ -117,3 +117,17 @@ $ php app/console doctrine:schema:update --force
 ### Install assets
 There's the [bower](https://bower.io/) config file to install all assets. You need to have bower 
 installed on your system, or there's a shell script which uses [docker](https://www.docker.com/).
+
+
+Get data from other websites
+------------
+There's a bundle [MediaInfoBundle](https://github.com/fulgurio/MediaInfoBundle) to get data from other website like LastFM, Amazon ...
+
+````yaml
+# app/config/config.yml
+fulgurio_media_library_manager:
+    music_service: "nass600_media_info.music_info.manager"
+    book_service: "nass600_media_info.book_info.manager"
+````
+
+Don't forget to configure this bundle !

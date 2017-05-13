@@ -1,81 +1,3 @@
-function getAlbumsList(e)
-{
-	e.preventDefault();
-	e.currentTarget.disabled = true;
-	$('#searchResult').empty();
-	getAlbumInfo({ artist: $('#music_album_artist').val(), title: $('#music_album_title').val() });
-}
-function getAlbumInfo(data)
-{
-	$.ajax({
-		url: searchUrl,
-		data: data,
-		success: function(d)
-		{
-			if (d.error)
-			{
-				$('#retrieveBtn').attr('disabled', false);
-				return;
-			}
-			else if (d instanceof Array)
-			{
-				if(d.length <= 0)
-				{
-					//@todo
-					$('#searchResult').append('<p>No result found</p>');
-				}
-				else
-				{
-					var ul = $('<ul></ul>');
-					for (var i = 0; i < d.length; i++)
-					{
-						var li = $('<li data-prototype="' + d[i].ean + '"></li>');
-						if (d[i].thumbnail)
-						{
-							$(li).append('<img src="' + d[i].thumbnail + '" alt="" />');
-						}
-						$(li).append('<div><a>' + d[i].artist + ' - ' + d[i].title + '</a><br />' + d[i].publisher + '<br />' + d[i].ean + '</div>');
-						$(li).find('a').click(function() {
-							getAlbumInfo({ ean: $(this).parent().parent().attr('data-prototype') });
-							$('#searchResult').empty();
-						});
-						$(ul).append($(li));
-					}
-					$('#searchResult').append($(ul));
-				}
-				return;
-			}
-			setAlbumInfo(d);
-		}
-	});
-}
-function setAlbumInfo(d)
-{
-	$('#music_album_artist').attr('value', d.artist);
-	$('#music_album_title').attr('value', d.title);
-	$('#music_album_ean').attr('value', d.ean);
-	$('#music_album_publication_date').attr('value', d.releaseYear);
-	$('#music_album_publisher').attr('value', d.publisher);
-	$('#music_album_cover_file_url').attr('value', d.image);
-	if (d.thumbnail != '')
-	{
-		$('#thumbnail img:first').attr('src', d.thumbnail);
-	}
-	$('#tracks').empty();
-	if (d.tracks)
-	{
-		for(var i = 0; i < d.tracks.length; i++)
-		{
-			for(var j = 0; j < d.tracks[i].length; j++)
-			{
-				var elt = addTrackForm(1, j + 1);
-				elt.find('input#inputTrackTitle_' + (i+1) + '_' + (j+1)).attr('value', d.tracks[i][j].title);
-				elt.find('input#inputTrackDuration_' + (i+1) + '_' + (j+1)).attr('value', d.tracks[i][j].duration);
-				elt.find('input#inputTrackLyrics_' + (i+1) + '_' + (j+1)).attr('value', d.tracks[i][j].lyrics);
-			}
-		}
-	}
-}
 function getTrackLyrics()
 {
 	var trackId = $(this).parent().parent().parent().attr('data-track');
@@ -86,8 +8,7 @@ function getTrackLyrics()
 			artist: $('#music_album_artist').val(),
 			trackLabel: $('#inputTrackTitle_' + trackId).val()
 		},
-		success: function(d)
-		{
+		success: function(d) {
 			$('#inputTrackLyrics_' + trackId).val(d);
 		}
 	});
@@ -99,14 +20,14 @@ var MusicAlbumManager = {
     /**
 	 * Add new track line
 	 *
-     * @param {Element} elt
      * @param {MouseEvent} e
      */
-	addTrack: function(elt, e) {
-        e.preventDefault();
-        var trackNb = $('#tracks tbody tr').length / 2 + 1;
+	addTrack: function(e) {
+        var trackNb = $('#tracks tbody tr').length / 2 + 1,
+            $elt = $(this.getTrackFormElement(trackNb));
 
-        $('#tracks tbody').append(this.getTrackFormElement(trackNb));
+        $('#tracks tbody').append($elt);
+        return $elt;
 	},
 
     /**
@@ -147,11 +68,19 @@ var MusicAlbumManager = {
 			newTrackIndex = newTrackNb - 1,
 			$elt = $('#track_' + trackNb);
 		if ($elt.length > 0) {
-			this.replaceId($elt, trackNb, newTrackNb, newTrackIndex);
+			this.updateId($elt, trackNb, newTrackNb, newTrackIndex);
         }
 	},
 
-	replaceId: function($elt, trackNb, newTrackNb, newTrackIndex) {
+    /**
+	 * Replace id number
+	 *
+     * @param $elt
+     * @param trackNb
+     * @param newTrackNb
+     * @param newTrackIndex
+     */
+    updateId: function($elt, trackNb, newTrackNb, newTrackIndex) {
         $elt.find('td:first-child').each(function() {
             this.innerHTML = newTrackNb;
         });
@@ -162,42 +91,132 @@ var MusicAlbumManager = {
             if (this.name) {
                 this.name = this.name.replace(/\[[0-9]+\]/, '[' + newTrackIndex + ']');
             }
-            console.log(this);
         });
-        $elt.attr('id', newTrackNb);
+        $elt.attr('id', 'track_' + newTrackNb);
         this.initNextTrack(trackNb + 1);
 	},
 
+    /**
+	 * Init form to add track
+     */
 	initForm: function() {
 		var self = this;
 
-        $('#addTrack').click(function(e) { self.addTrack(this, e); });
+        $('#addTrack').click(function(e) {
+            e.preventDefault();
+            self.addTrack();
+        });
         $('form').on('click', '.btn.btn-remove-track', function(e) { self.removeTrack(this, e); });
-	}
+	},
+
+
+    setAlbumInfo: function (d) {
+        var self = this;
+
+        $('#music_album_artist').val(d.artist);
+        $('#music_album_title').val(d.title);
+        $('#music_album_ean').val(d.ean);
+        $('#music_album_publication_year').attr('value', d.releaseYear);
+        $('#music_album_publisher').attr('value', d.publisher);
+        $('#music_album_cover_file_url').attr('value', d.cover);
+        if (d.thumbnail != '') {
+            $('#thumbnail img:first').attr('src', d.thumbnail);
+        }
+        $('#tracks tbody').empty();
+        if (d.tracks) {
+            for (var i = 0; i < d.tracks.length; i++) {
+                var $elt = self.addTrack(d.tracks[i]);
+                $elt.find('input[id$=_title]').val(d.tracks[i].name);
+                $elt.find('input[id$=duration]').val(d.tracks[i].duration);
+                if (d.tracks[i].lyrics !== 'undefined') {
+                    $elt.find('input[id$=lyrics]').val(d.tracks[i].lyrics);
+                }
+            }
+        }
+    },
+
+    /**
+     * Get album informations
+     *
+     * @param {{ artist: string, title: string, ean: string }} data
+     */
+	getAlbumInfos: function (data, callback) {
+    	var self = this;
+
+		$.ajax({
+			url: searchUrl,
+			data: data,
+			success: function(data) {
+                $('#retrieveBtn').attr('disabled', false);
+				if (data instanceof Array) {
+				    var $html = $(tmpl('tmpl-search-result', { 'items': data }));
+                    $html.find('li').each(function() {
+                        var $this = $(this);
+                        var index = $this.data('index');
+                        $this.click(function() {
+                            self.getAlbumInfos(data[index], function(d) {
+                                if (d instanceof Array) {
+                                }
+                                else {
+                                    $('#myModal').modal('hide');
+                                }
+                            });
+                        });
+                    });
+
+                    $('#myModal .modal-content').append($html);
+                    $('#myModal').modal('show');
+				}
+				else {
+                    self.setAlbumInfo(data);
+                }
+                if (typeof callback === 'function') {
+                    callback(data);
+                }
+			}
+		});
+	},
+
+    /**
+     * Search album data from configured webservice
+     *
+     * @param {element} elt
+     * @param {MouseEvent} event
+     */
+    searchAlbumData: function (elt, event) {
+        event.preventDefault();
+        $(elt).attr('disabled', true);
+        $('#searchResult').remove();
+        this.getAlbumInfos({ artist: $('#music_album_artist').val(), title: $('#music_album_title').val(), ean: $('#music_album_ean').val() });
+    },
+
+    /**
+	 * Add the search button to complete the form
+     */
+    addSearchButton: function() {
+        var self = this,
+            $albumTitle = $('#music_album_title'),
+            $retrieveBtn = $('<button id="retrieveBtn" type="button" class="btn btn-default pull-right"><i class="glyphicon glyphicon-refresh"></i></button>');
+
+        $albumTitle.addClass('pull-left');
+        $albumTitle.after($retrieveBtn);
+        $albumTitle.innerWidth($albumTitle.innerWidth() - $retrieveBtn.innerWidth() - 10);
+        $('#music_album_title, #music_album_artist').on('keyup', function() {
+            $retrieveBtn.attr('disabled', $(this).val().length === 0);
+        });
+
+        $retrieveBtn.click(function(e) { self.searchAlbumData(this, e); });
+    }
 };
+
 $(document).ready(function() {
 	if ($('#addTrack').length === 1) {
         MusicAlbumManager.initForm();
+        if (typeof searchUrl !== 'undefined') {
+            MusicAlbumManager.addSearchButton();
+        }
     }
 	// $('form').on('click', '.btn.btn-lyrics-track', getTrackLyrics);
-	//
-    //
-	// $('#music_album_title').on('keyup', function(e) {
-	// 	if ($(this).val().length > 1)
-	// 	{
-	// 		if (!$(this).hasClass('span2'))
-	// 		{
-	// 			$(this).addClass('span2');
-	// 			var elt = $('<button id="retrieveBtn" type="button" class="btn"><i class="icon-refresh"></i></button>');
-	// 			$(elt).click(getAlbumsList);
-	// 			$(this).after(elt);
-	// 		}
-	// 		else
-	// 		{
-	// 			$('#retrieveBtn').attr('disabled', false);
-	// 		}
-	// 	}
-	// });
 });
 tmpl.regexp = /([\s'\\])(?![^%]*%\])|(?:\[%(=|#)([\s\S]+?)%\])|(\[%)|(%\])/g;
 

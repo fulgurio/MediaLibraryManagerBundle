@@ -26,6 +26,14 @@ class FulgurioMediaLibraryManagerExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        $container->setParameter('fulgurio_media_library_manager.cover_size', $config['cover_size']);
+
+        if (isset($config['book_service']))
+        {
+            $container->setParameter('fulgurio_media_library_manager.book_service', $config['book_service']);
+        }
+        if (isset($config['music_service']))
+        {
+            $container->setParameter('fulgurio_media_library_manager.music_service', $config['music_service']);
+        }
     }
 }
