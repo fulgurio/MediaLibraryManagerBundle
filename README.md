@@ -112,3 +112,8 @@ For ORM run the following command.
 ``` bash
 $ php app/console doctrine:schema:update --force
 ```
+
+
+### Install assets
+There's the [bower](https://bower.io/) config file to install all assets. You need to have bower 
+installed on your system, or there's a shell script which uses [docker](https://www.docker.com/).
