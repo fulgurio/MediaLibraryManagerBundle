@@ -87,7 +87,7 @@ liip_imagine:
             filters:
                 thumbnail:  { size: [60, 75], mode: outbound }
         music_cover_thumb:
-            quality: 75
+            quality:        75
             filters:
                 thumbnail:  { size: [75, 75], mode: outbound }
 ```

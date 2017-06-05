@@ -53,7 +53,7 @@ class BookHandler
      */
     public function process(Book $book)
     {
-        if ($this->request->getMethod() == 'POST')
+        if ($this->request->isMethod('POST'))
         {
             $this->form->handleRequest($this->request);
             if ($this->form->isValid())
@@ -61,6 +61,7 @@ class BookHandler
                 $em = $this->doctrine->getEntityManager();
                 $em->persist($book);
                 $em->flush();
+
                 return true;
             }
             return false;

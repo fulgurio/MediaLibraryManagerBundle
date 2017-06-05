@@ -65,12 +65,15 @@ class MusicController extends Controller
             $action = $this->generateUrl('FulgurioMLM_Music_Edit', array('albumId' => $albumId));
         }
         $form = $this->createForm(new MusicAlbumType(), $album, array('action' => $action));
-        $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request);
+        $uploadMapping = $this->getParameter('vich_uploader.mappings');
+        $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request, $uploadMapping['music_cover']['upload_destination']);
         if ($formHandler->process($album))
         {
             $this->addFlash('notice', (is_null($albumId) ? 'adding' : 'editing') . '_success');
+
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
+
         return $this->render('FulgurioMediaLibraryManagerBundle:Music:add.html.twig', array(
             'form'  => $form->createView(),
             'album' => $album,
@@ -97,8 +100,10 @@ class MusicController extends Controller
                     $em->flush();
                     $this->addFlash('notice', 'delete_success');
             }
+
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
+
         return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig', array(
             'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
             'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
@@ -133,22 +138,9 @@ class MusicController extends Controller
             'album' => trim($request->get('title')),
             'EAN' => trim($request->get('ean'))
         );
+
         return new JsonResponse($musicManager->getAlbumInfo($data));
     }
-
-    /**
-     * Get track lyrics from external webservice
-     *
-     * @return Response
-     */
-//    public function retrieveLyricsTrackAction()
-//    {
-////         $lyrics = $this->get('nass600_media_info.lyrics_info.manager');
-////        $request = $this->getRequest();
-////        $artist = $request->get('artist');
-//        $data = '';
-//        return new Response($data);
-//    }
 
     /**
      * Get album
@@ -168,6 +160,7 @@ class MusicController extends Controller
         {
             throw $this->createNotFoundException();
         }
+
         return $album;
     }
 }

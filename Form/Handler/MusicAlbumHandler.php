@@ -9,6 +9,7 @@
  */
 namespace Fulgurio\MediaLibraryManagerBundle\Form\Handler;
 
+use Doctrine\ORM\EntityManager;
 use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
@@ -31,6 +32,10 @@ class MusicAlbumHandler
      */
     private $request;
 
+    /**
+     * @var string
+     */
+    private $uploadPath;
 
     /**
      * MusicAlbumHandler constructor.
@@ -39,11 +44,12 @@ class MusicAlbumHandler
      * @param Form $form
      * @param Request $request
      */
-    public function __construct(RegistryInterface $doctrine, Form $form, Request $request)
+    public function __construct(RegistryInterface $doctrine, Form $form, Request $request, $uploadPath)
     {
         $this->doctrine = $doctrine;
         $this->form = $form;
         $this->request = $request;
+        $this->uploadPath = $uploadPath;
     }
 
     /**
@@ -54,7 +60,7 @@ class MusicAlbumHandler
      */
     public function process(MusicAlbum $album)
     {
-        if ($this->request->getMethod() == 'POST')
+        if ($this->request->isMethod('POST'))
         {
             $originalTracks = array();
             foreach ($album->getTracks() as $track)
@@ -62,42 +68,73 @@ class MusicAlbumHandler
                 $originalTracks[] = $track;
             }
             $this->form->handleRequest($this->request);
-            if ($this->form->isValid()
-                    && $this->form->get('submit')->isClicked())
+            if ($this->form->isValid() && $this->form->isSubmitted())
             {
-                $em = $this->doctrine->getEntityManager();
-                foreach ($album->getTracks() as $trackNb => $track)
-                {
-                    foreach ($originalTracks as $key => $originalTrack)
-                    {
-                        if ($originalTrack->getId() == $track->getId())
-                        {
-                            unset($originalTracks[$key]);
-                        }
-                    }
-                    if (trim($track->getTitle()) == '')
-                    {
-                        $album->removeTrack($track);
-                    }
-                    else
-                    {
-                        $track->setVolumeNumber(1);//@todo
-                        $track->setTrackNumber($trackNb + 1);
-                        $track->setMusicAlbum($album);
-                        $em->persist($track);
-                    }
-                }
-                foreach ($originalTracks as $originalTrack)
-                {
-                    $album->removeTrack($originalTrack);
-                    $em->remove($originalTrack);
-                }
+                $em = $this->doctrine->getManager();
+                $this->initCover($album);
+                $this->initTracks($album, $originalTracks, $em);
 //                 $album->setOwner($this->currentUser); //@todo
                 $em->persist($album);
                 $em->flush();
+
                 return true;
             }
-            return false;
+        }
+        return false;
+    }
+
+    /**
+     * Init cover
+     *
+     * @param MusicAlbum $album
+     */
+    private function initCover(MusicAlbum $album)
+    {
+        $coverUrl = $this->form->get('cover_url')->getData();
+        if ($coverUrl)
+        {
+            $filename = basename($coverUrl);
+            $newFilename = uniqid() . substr($filename, strrpos($filename, '.'));
+            $targetName = $this->uploadPath . '/' . $newFilename;
+            copy($coverUrl, $targetName);
+            $album->setCover($newFilename);
+        }
+    }
+
+    /**
+     * Init tracks
+     *
+     * @param MusicAlbum $album
+     * @param array $originalTracks
+     * @param ObjectManager $em
+     */
+    private function initTracks(MusicAlbum $album, array $originalTracks, ObjectManager $em)
+    {
+        foreach ($album->getTracks() as $trackNb => $track)
+        {
+            foreach ($originalTracks as $key => $originalTrack)
+            {
+                if ($originalTrack->getId() == $track->getId())
+                {
+                    unset($originalTracks[$key]);
+                }
+            }
+            if (trim($track->getTitle()) == '')
+            {
+                $album->removeTrack($track);
+            }
+            else
+            {
+                $track->setVolumeNumber(1);//@todo
+                $track->setTrackNumber($trackNb + 1);
+                $track->setMusicAlbum($album);
+                $em->persist($track);
+            }
+        }
+        foreach ($originalTracks as $originalTrack)
+        {
+            $album->removeTrack($originalTrack);
+            $em->remove($originalTrack);
         }
     }
 }
