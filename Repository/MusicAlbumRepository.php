@@ -10,6 +10,7 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\Paginator;
 
 /**
  * MusicAlbumRepository
@@ -26,25 +27,31 @@ class MusicAlbumRepository extends EntityRepository
      */
     const NB_PER_PAGE = 10;
 
+
     /**
      * Get music album with pagination
      *
      * @param Paginator $paginator KNPPaginator
      * @param integer $page Current page
      * @param string $filter
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
-    public function findAllWithPaginator($paginator, $page, $filter)
+    public function findAllWithPaginator(Paginator $paginator, $page, $filter)
     {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('ma')
+            ->from('FulgurioMediaLibraryManagerBundle:MusicAlbum', 'ma')
+            ->orderBy('ma.artist', 'ASC')
+            ->addOrderBy('ma.title', 'ASC');
         if (!is_null($filter) && trim($filter) != '')
         {
-            $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma WHERE ma.artist LIKE :artist OR ma.title LIKE :title ORDER BY ma.artist ASC, ma.title ASC');
-            $query->setParameter('artist', $filter . '%');
-            $query->setParameter('title', $filter . '%');
+            $qb->where('ma.artist LIKE :artist')
+                ->orWhere('ma.title LIKE :title')
+                ->setParameter('artist', $filter . '%')
+                ->setParameter('title', $filter . '%');
         }
-        else
-        {
-            $query = $this->getEntityManager()->createQuery('SELECT ma FROM FulgurioMediaLibraryManagerBundle:MusicAlbum ma ORDER BY ma.artist ASC, ma.title ASC');
-        }
-        return $paginator->paginate($query, $page, self::NB_PER_PAGE);
+
+        return $paginator->paginate($qb->getQuery(), $page, self::NB_PER_PAGE);
     }
 }

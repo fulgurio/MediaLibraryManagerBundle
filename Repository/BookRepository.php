@@ -10,6 +10,7 @@
 namespace Fulgurio\MediaLibraryManagerBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Knp\Component\Pager\Paginator;
 
 /**
  * BookRepository
@@ -26,34 +27,30 @@ class BookRepository extends EntityRepository
      */
     const NB_PER_PAGE = 10;
 
+
     /**
      * Get book with pagination
      *
      * @param Paginator $paginator KNPPaginator
      * @param integer $page Current page
      * @param string $filter
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function findAllWithPaginator($paginator, $page, $filter)
     {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('b')
+            ->from('FulgurioMediaLibraryManagerBundle:Book', 'b')
+            ->orderBy('b.author', 'ASC')
+            ->addOrderBy('b.title', 'ASC');
         if (!is_null($filter) && trim($filter) != '')
         {
-            $query = $this->getEntityManager()->createQuery('
-                    SELECT b
-                    FROM FulgurioMediaLibraryManagerBundle:Book b
-                    WHERE b.author LIKE :author
-                      OR b.title LIKE :title
-                    ORDER BY b.author ASC, b.title ASC');
-            $query->setParameter('author', $filter . '%');
-            $query->setParameter('title', $filter . '%');
+            $qb->where('b.author LIKE :author')
+                ->orWhere('b.title LIKE :title')
+                ->setParameter('author', $filter . '%')
+                ->setParameter('title', $filter . '%');
         }
-        else
-        {
-            $query = $this->getEntityManager()->createQuery('
-                    SELECT b
-                    FROM FulgurioMediaLibraryManagerBundle:Book b
-                    ORDER BY b.author ASC, b.title ASC
-            ');
-        }
-        return $paginator->paginate($query, $page, self::NB_PER_PAGE);
+        return $paginator->paginate($qb->getQuery(), $page, self::NB_PER_PAGE);
     }
 }
