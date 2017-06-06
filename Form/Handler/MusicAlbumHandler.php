@@ -9,7 +9,7 @@
  */
 namespace Fulgurio\MediaLibraryManagerBundle\Form\Handler;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\Form;
@@ -37,12 +37,14 @@ class MusicAlbumHandler
      */
     private $uploadPath;
 
+
     /**
      * MusicAlbumHandler constructor.
      *
      * @param RegistryInterface $doctrine
      * @param Form $form
      * @param Request $request
+     * @param string $uploadPath
      */
     public function __construct(RegistryInterface $doctrine, Form $form, Request $request, $uploadPath)
     {

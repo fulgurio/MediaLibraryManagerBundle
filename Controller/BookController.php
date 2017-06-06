@@ -89,7 +89,7 @@ class BookController extends Controller
         if ($request->get('confirm'))
         {
             if ('yes' === $request->get('confirm')) {
-                $em = $this->getDoctrine()->getEntityManager();
+                $em = $this->getDoctrine()->getManager();
                 $em->remove($book);
                 $em->flush();
                 $this->addFlash('notice', 'delete.success');
