@@ -64,7 +64,7 @@ class MusicController extends Controller
             $album = $this->getAlbum($albumId);
             $action = $this->generateUrl('FulgurioMLM_Music_Edit', array('albumId' => $albumId));
         }
-        $form = $this->createForm(new MusicAlbumType(), $album, array('action' => $action));
+        $form = $this->createForm(MusicAlbumType::class, $album, array('action' => $action));
         $uploadMapping = $this->getParameter('vich_uploader.mappings');
         $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request, $uploadMapping['music_cover']['upload_destination']);
         if ($formHandler->process($album))

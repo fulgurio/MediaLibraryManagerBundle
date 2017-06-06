@@ -9,7 +9,12 @@
  */
 namespace Fulgurio\MediaLibraryManagerBundle\Form\Type;
 
+use Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,17 +26,17 @@ class MusicTrackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('volume_number', 'hidden', array('required' => true))
-//            ->add('track_number', 'hidden', array('required' => true))
-            ->add('title', 'text', array(
+//            ->add('volume_number', HiddenType::class, array('required' => true))
+//            ->add('track_number', HiddenType::class, array('required' => true))
+            ->add('title', TextType::class, array(
 //                'label'      => 'tracks.fields.title.label',
                 'max_length' => 128
             ))
-            ->add('duration', 'number', array(
+            ->add('duration', NumberType::class, array(
 //                'label'    => 'tracks.fields.duration.label',
                 'required' => false
             ))
-            ->add('lyrics', 'textarea', array(
+            ->add('lyrics', TextareaType::class, array(
                 'label'    => 'tracks.fields.lyrics.label',
                 'required' => false
             ));
@@ -44,14 +49,14 @@ class MusicTrackType extends AbstractType
     {
         $resolver->setDefaults(array(
             'translation_domain' => 'music',
-            'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicTrack'
+            'data_class' => MusicTrack::class
         ));
     }
 
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'MusicTrack';
     }

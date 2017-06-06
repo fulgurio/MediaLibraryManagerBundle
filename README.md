@@ -7,7 +7,7 @@ Actually, there's only music supported. Soon, we will add video, games ... just 
 Installation
 ------------
 
-This version of the bundle requires Symfony 2.7+.
+This version of the bundle requires Symfony 2.8+.
 
 ### Translations
 

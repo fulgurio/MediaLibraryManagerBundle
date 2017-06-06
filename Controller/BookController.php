@@ -62,7 +62,7 @@ class BookController extends Controller
             $book = $this->getBook($bookId);
             $action = $this->generateUrl('FulgurioMLM_Book_Edit', array('bookId' => $bookId));
         }
-        $form = $this->createForm(new BookType(), $book, array('action' => $action));
+        $form = $this->createForm(BookType::class, $book, array('action' => $action));
         $formHandler = new BookHandler($this->getDoctrine(), $form, $request);
         if ($formHandler->process($book))
         {

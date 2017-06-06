@@ -9,11 +9,19 @@
  */
 namespace Fulgurio\MediaLibraryManagerBundle\Form\Type;
 
+use Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum;
 use Fulgurio\MediaLibraryManagerBundle\Form\Type\MusicTrackType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class MusicAlbumType extends AbstractType
 {
@@ -23,41 +31,42 @@ class MusicAlbumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('artist', 'text', array(
+            ->add('artist', TextType::class, array(
                 'label'    => 'fields.artist.label',
                 'required' => false
             ))
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'label' => 'fields.title.label'
             ))
-            ->add('ean', 'text', array(
+            ->add('ean', TextType::class, array(
                 'label'      => 'fields.ean.label',
                 'required'   => false,
                 'max_length' => 13
             ))
             //@todo : add media type into configuration
-            ->add('media_type', 'choice', array(
+            ->add('media_type', ChoiceType::class, array(
                     'label'           => 'fields.media_type.label',
                     'choices'         => array(
-                        '1'           => 'fields.media_type.types.1',
-                        '2'           => 'fields.media_type.types.2',
-                        '3'           => 'fields.media_type.types.3'
+                        'fields.media_type.types.1' => '1',
+                        'fields.media_type.types.2' => '2',
+                        'fields.media_type.types.3' => '3'
                     ),
+                    'choices_as_values' => true,
                     'required'        => true,
                     'invalid_message' => 'music.media_type.invalid'
                 )
             )
-            ->add('publication_year', 'number', array(
+            ->add('publication_year', NumberType::class, array(
                 'label'           => 'fields.publication_year.label',
                 'required'        => false,
                 'invalid_message' => 'fields.publication_year.invalid',
                 'max_length'      => 4
             ))
-            ->add('publisher', 'text', array(
+            ->add('publisher', TextType::class, array(
                 'label'    => 'fields.publisher.label',
                 'required' => false
             ))
-            ->add('coverFile', 'vich_image', array(
+            ->add('coverFile', VichImageType::class, array(
                 'label'           => 'fields.cover.label',
                 'required'        => false,
                 'invalid_message' => 'fields.cover.invalid',
@@ -72,18 +81,18 @@ class MusicAlbumType extends AbstractType
                     ))
                 )
             ))
-            ->add('cover_url', 'hidden', array(
+            ->add('cover_url', HiddenType::class, array(
                 'required' => false,
                 'mapped'   => false
             ))
-            ->add('tracks', 'collection', array(
+            ->add('tracks', CollectionType::class, array(
                 'label'        => 'tracks.title',
-                'type'         => new MusicTrackType(),
+                'type'         => MusicTrackType::class,
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'by_reference' => false
             ))
-            ->add('submit', 'submit', array(
+            ->add('submit', SubmitType::class, array(
                 'label'              => 'save',
                 'translation_domain' => 'common'
             ));
@@ -96,14 +105,14 @@ class MusicAlbumType extends AbstractType
     {
         $resolver->setDefaults(array(
             'translation_domain' => 'music',
-            'data_class' => 'Fulgurio\MediaLibraryManagerBundle\Entity\MusicAlbum'
+            'data_class' => MusicAlbum::class
         ));
     }
 
     /**
      * @inheritdoc
      **/
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'music_album';
     }
