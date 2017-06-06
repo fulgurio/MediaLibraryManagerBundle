@@ -2,9 +2,14 @@
 
 {% trans_default_domain 'book' %}
 
+{% set title = ((book.id ? 'edit': 'add') ~ '.title')|trans({ '%TITLE%': book.title }) %}
+
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
+
 {% block content %}
-	<h1>{{ (book.id ? 'edit_book': 'add_new_book')|trans({ '%TITLE%': book.title }) }}</h1>
-{{ form_start(form, {'attr': { 'class': 'form-horizontal form-music' }}) }}
+	<h1>{{ title }}</h1>
+{{ form_start(form, {'attr': { 'class': 'form-horizontal form-book' }}) }}
+{{ form_errors(form) }}
 	<div class="row">
 		<div class="col-md-6">
 {{ form_errors(form) }}

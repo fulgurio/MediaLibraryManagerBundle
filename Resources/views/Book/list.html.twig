@@ -1,7 +1,7 @@
 {% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
 
 {% block content %}
-			<h1>{% trans from 'book' %}book.title{% endtrans %}</h1>
+			<h1>{% trans from 'book' %}title{% endtrans %}</h1>
 {% for flashMessage in app.session.flashbag.get('notice') %}
 			<div class="alert alert-success">{{ flashMessage|trans({}, 'book') }}<br /></div>
 {% endfor %}
@@ -19,7 +19,7 @@
 {% 	endif %}
 					<div class="col-xs-12 col-sm-8{% if books is empty and app.request.get('q') is null %} col-sm-offset-4{% endif %}">
 						<div class="input-group pull-right">
-							<a class="btn btn-primary" href="{{ path('FulgurioMLM_Book_Add') }}">{% trans from 'book' %}add_new_book{% endtrans %}</a>
+							<a class="btn btn-primary" href="{{ path('FulgurioMLM_Book_Add') }}">{% trans from 'book' %}add.label{% endtrans %}</a>
 						</div>
 					</div>
 				</div>
@@ -30,8 +30,8 @@
 					<thead>
 						<tr>
 							<th style="width: 10%">{#Cover#}</th>
-							<th style="width: 40%">{{ knp_pagination_sortable(books, 'author.label'|trans({}, 'book'), 'b.author')|raw }}</th>
-							<th style="width: 44%">{{ knp_pagination_sortable(books, 'title.label'|trans({}, 'book'), 'b.title')|raw }}</th>
+							<th style="width: 40%">{{ knp_pagination_sortable(books, 'fields.author.label'|trans({}, 'book'), 'b.author')|raw }}</th>
+							<th style="width: 44%">{{ knp_pagination_sortable(books, 'fields.title.label'|trans({}, 'book'), 'b.title')|raw }}</th>
 							<th style="width: 6%">{#Options#}</th>
 						</tr>
 					</thead>

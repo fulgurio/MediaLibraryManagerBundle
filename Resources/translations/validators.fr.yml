@@ -3,6 +3,8 @@ book:
         not_blank:              Le nom du livre est obligatoire
     author:
         not_blank:              L'auteur est obligatoire
+    media_type:
+        invalid:                Le type de support du média est invalide
     publication_year:
         invalid:                La date de publication est invalide
     cover:

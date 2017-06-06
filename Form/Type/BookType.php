@@ -17,45 +17,44 @@ use Symfony\Component\Validator\Constraints\File;
 class BookType extends AbstractType
 {
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('author', 'text', array(
-                'label' => 'author.label'
+                'label' => 'fields.author.label'
             ))
             ->add('title', 'text', array(
-                'label' => 'title.label'
+                'label' => 'fields.title.label'
             ))
             ->add('ean', 'text', array(
-                'label'      => 'ean.label',
+                'label'      => 'fields.ean.label',
                 'required'   => false,
                 'max_length' => 13
             ))
             //@todo : add media type into configuration
             ->add('media_type', 'choice', array(
-                'label'           => 'media_type.label',
-                'choices'         => array(
-                    '1'           => 'media_type.types.1',
-                    '2'           => 'media_type.types.2'
-                ),
-                'required'        => true,
-                'invalid_message' => 'validator.invalid.media_type'
+                    'label'           => 'fields.media_type.label',
+                    'choices'         => array(
+                        '1'           => 'fields.media_type.types.1',
+                        '2'           => 'fields.media_type.types.2'
+                    ),
+                    'required'        => true,
+                    'invalid_message' => 'book.invalid.media_type'
                 )
             )
             ->add('publication_year', 'number', array(
-                'label'           => 'publication_year.label',
+                'label'           => 'fields.publication_year.label',
                 'invalid_message' => 'book.publication_year.invalid',
                 'max_length'      => 4
             ))
             ->add('publisher', 'text', array(
-                'label'    => 'publisher.label',
+                'label'    => 'fields.publisher.label',
                 'required' => false
             ))
             ->add('coverFile', 'vich_image', array(
-                'label'           => 'cover.label',
+                'label'           => 'fields.cover.label',
                 'invalid_message' => 'validator.invalid.cover',
                 'allow_delete'    => true,
                 'download_link'   => false,
@@ -63,9 +62,9 @@ class BookType extends AbstractType
                 'constraints' => array(
                     new File(array(
                         'mimeTypes' => array('image/png', 'image/jpeg', 'image/jpg'),
-                        'mimeTypesMessage' => 'music.cover.not_a_image',
+                        'mimeTypesMessage' => 'book.cover.not_a_image',
                         'maxSize' => '2M',
-                        'maxSizeMessage' => 'music.cover.max_file_size'
+                        'maxSizeMessage' => 'book.cover.max_file_size'
                     ))
                 )
             ))
@@ -76,8 +75,7 @@ class BookType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\AbstractType::configureOptions()
+     * @inheritdoc
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -88,8 +86,7 @@ class BookType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\FormTypeInterface::getName()
+     * @inheritdoc
      */
     public function getName()
     {

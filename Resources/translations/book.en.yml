@@ -1,26 +1,29 @@
-book:
-    title:              Books
+title:                  Books
 no_book:                No book
-title:
-    label:              Book name
-author:
-    label:              Author
-ean:
-    label:              EAN
-media_type:
-    label:              Media type
-    types:
-        1:              Book
-        2:              Ebook
-publication_year:
-    label:              Publication year
-publisher:
-    label:              Publisher
-cover:
-    label:              Cover
-add_new_book:           Add new book
-edit_book:              Edit "%TITLE%" book
-adding_success:         New book added successfully !
-editing_success:        Book edited successfully !
-delete_confirm_message: Do you really want to remove "%TITLE%" ?
-delete_success:         Book deleted successfully !
+add:
+    label:              Add new book
+    success:            New book added successfully !
+edit:
+    label:              Edit "%TITLE%" book
+    success:            Book edited successfully !
+delete:
+    confirm_message:    Do you really want to remove "%TITLE%" ?
+    success:            Book deleted successfully !
+fields:
+    title:
+        label:          Book name
+    author:
+        label:          Author
+    ean:
+        label:          EAN
+    media_type:
+        label:          Media type
+        types:
+            1:          Book
+            2:          Ebook
+    publication_year:
+        label:          Publication year
+    publisher:
+        label:          Publisher
+    cover:
+        label:          Cover

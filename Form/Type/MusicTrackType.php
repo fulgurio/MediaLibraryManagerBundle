@@ -16,31 +16,29 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MusicTrackType extends AbstractType
 {
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\AbstractType::buildForm()
+     * @inheritdoc
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//         ->add('volume_number', 'hidden', array('required' => true))
-//         ->add('track_number', 'hidden', array('required' => true))
-        ->add('title', 'text', array(
-//            'label'      => 'track.title.label',
-            'max_length' => 128
-        ))
-        ->add('duration', 'number', array(
-//            'label'    => 'track.duration.label',
-            'required' => false
-        ))
-        ->add('lyrics', 'textarea', array(
-            'label'    => 'track.lyrics.label',
-            'required' => false
-        ));
+//            ->add('volume_number', 'hidden', array('required' => true))
+//            ->add('track_number', 'hidden', array('required' => true))
+            ->add('title', 'text', array(
+//                'label'      => 'tracks.fields.title.label',
+                'max_length' => 128
+            ))
+            ->add('duration', 'number', array(
+//                'label'    => 'tracks.fields.duration.label',
+                'required' => false
+            ))
+            ->add('lyrics', 'textarea', array(
+                'label'    => 'tracks.fields.lyrics.label',
+                'required' => false
+            ));
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\AbstractType::configureOptions()
+     * @inheritdoc
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -51,8 +49,7 @@ class MusicTrackType extends AbstractType
     }
 
     /**
-     * (non-PHPdoc)
-     * @see \Symfony\Component\Form\FormTypeInterface::getName()
+     * @inheritdoc
      */
     public function getName()
     {

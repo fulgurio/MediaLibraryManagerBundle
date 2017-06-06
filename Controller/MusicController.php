@@ -69,7 +69,7 @@ class MusicController extends Controller
         $formHandler = new MusicAlbumHandler($this->getDoctrine(), $form, $request, $uploadMapping['music_cover']['upload_destination']);
         if ($formHandler->process($album))
         {
-            $this->addFlash('notice', (is_null($albumId) ? 'adding' : 'editing') . '_success');
+            $this->addFlash('notice', (is_null($albumId) ? 'add' : 'edit') . '.success');
 
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
@@ -98,16 +98,16 @@ class MusicController extends Controller
                     $em = $this->getDoctrine()->getManager();
                     $em->remove($album);
                     $em->flush();
-                    $this->addFlash('notice', 'delete_success');
+                    $this->addFlash('notice', 'delete.success');
             }
 
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
 
         return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig', array(
-            'title' => $this->get('translator')->trans('remove_confirm_title', array(), 'common'),
+            'title' => $this->get('translator')->trans('remove_confirmation', array(), 'common'),
             'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
-            'confirmationMessage' => $this->get('translator')->trans('delete_confirm_message', array('%TITLE%' => $album->getTitle()), 'music')
+            'confirmationMessage' => $this->get('translator')->trans('delete.confirm_message', array('%TITLE%' => $album->getTitle()), 'music')
             )
         );
     }

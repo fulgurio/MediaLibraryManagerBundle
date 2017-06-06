@@ -2,10 +2,14 @@
 
 {% trans_default_domain 'music' %}
 
+{% set title = ((album.id ? 'edit': 'add') ~ '.label')|trans({ '%TITLE%': album.title }) %}
+
+{% block title %}{{ parent() }} - {{ title }}{% endblock %}
+
 {% block content %}
-	<h1>{{ (album.id ? 'edit_album': 'add_new_album')|trans({ '%TITLE%': album.title }) }}</h1>
-    {{ form_start(form, {'attr': { 'class': 'form-horizontal form-music' }}) }}
-    {{ form_errors(form) }}
+	<h1>{{ title }}</h1>
+{{ form_start(form, { 'attr': { 'class': 'form-horizontal form-music' }}) }}
+{{ form_errors(form) }}
 	<div class="row">
 		<div class="col-md-6">
 {{ form_row(form.artist) }}
@@ -25,9 +29,9 @@
 				<caption>{{ form.tracks.vars.label|trans }}</caption>
 				<thead>
 					<tr>
-						<th style="width: 10%">{% trans %}track.track_number.label{% endtrans %}</th>
-						<th style="width: 75%">{% trans %}track.title.label{% endtrans %}</th>
-						<th style="width: 15%">{% trans %}track.duration.label{% endtrans %}</th>
+						<th style="width: 10%">{% trans %}tracks.fields.track_number.label{% endtrans %}</th>
+						<th style="width: 75%">{% trans %}tracks.fields.title.label{% endtrans %}</th>
+						<th style="width: 15%">{% trans %}tracks.fields.duration.label{% endtrans %}</th>
 						<th style="width: 10%">&nbsp;</th>
 					</tr>
 				</thead>
@@ -44,7 +48,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="4">
-							<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.tracks is not empty }}" tabindex="2">{% trans %}add_track{% endtrans %}</button>
+							<button type="submit" class="btn btn-primary pull-right" id="addTrack" name="addTrack[{{ volumeNb }}]" value="{{ form.tracks is not empty }}" tabindex="2">{% trans %}tracks.add{% endtrans %}</button>
 						</td>
 					</tr>
 				</tfoot>
@@ -76,7 +80,7 @@ var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
 		<script type="text/x-tmpl" id="tmpl-search-result">
 			<div id="searchResult">
 [% if (o.items.length) { %]
-				<h3>{% trans %}search.found_result{% endtrans %}</h3>
+				<h3>{% trans from 'common' %}search.found_result{% endtrans %}</h3>
 				<ul>
 		[% for (var i in o.items) { %]
 					<li data-index="[%=i%]">
@@ -94,7 +98,7 @@ var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
 		[% } %]
 				</ul>
 [% } else { %]
-				<p>{% trans %}search.no_result{% endtrans %}</p>
+				<p>{% trans from 'common' %}search.no_result{% endtrans %}</p>
 [% } %]
 			</div>
 		</script>

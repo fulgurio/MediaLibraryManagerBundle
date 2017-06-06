@@ -2,10 +2,13 @@ project:
     title:                Media Library Manager
     author:               Fulgurio
 homepage:                 Accueil
+search:
+    title:                Rechercher
+    no_result:            Aucun résultat trouvé
+    found_result:         Résultats trouvés
 save:                     Enregistrer
-search:                   Rechercher
 cancel:                   Annuler
-remove_confirm_title:     Confirmation de suppression
+remove_confirmation:      Confirmation de suppression
 yes:                      Oui
 no:                       Non
 first_page:               Première page

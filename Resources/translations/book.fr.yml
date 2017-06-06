@@ -1,26 +1,29 @@
-book:
-    title:              Livres
+title:                  Livres
 no_book:                Aucun livre
-title:
-    label:              Nom du livre
-author:
-    label:              Auteur
-ean:
-    label:              EAN
-media_type:
-    label:              Type de média
-    types:
-        1:              Livre
-        2:              Livre électronique
-publication_year:
-    label:              Année de publication
-publisher:
-    label:              Editeur
-cover:
-    label:              Pochette
-add_new_book:           Ajouter un nouveau livre
-edit_book:              Editer le livre "%TITLE%"
-adding_success:         Livre ajouté avec succès !
-editing_success:        Livre modifié avec succès !
-delete_confirm_message: Etes-vous sûr de vouloir supprimer "%TITLE%" ?
-delete_success:         Livre supprimé avec succès !
+add:
+    label:              Ajouter un nouveau livre
+    success:            Livre ajouté avec succès !
+edit:
+    label:              Editer le livre "%TITLE%"
+    success:            Livre modifié avec succès !
+delete:
+    confirm_message:    Etes-vous sûr de vouloir supprimer "%TITLE%" ?
+    success:            Livre supprimé avec succès !
+fields:
+    title:
+        label:          Nom du livre
+    author:
+        label:          Auteur
+    ean:
+        label:          EAN
+    media_type:
+        label:          Type de média
+        types:
+            1:          Livre
+            2:          Livre électronique
+    publication_year:
+        label:          Année de publication
+    publisher:
+        label:          Editeur
+    cover:
+        label:          Pochette

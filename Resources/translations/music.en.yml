@@ -1,40 +1,44 @@
-music:
-    title:              Music
-no_album:               No album
-title:
-    label:              Album name
-artist:
-    label:              Artist
-ean:
-    label:              EAN
-media_type:
-    label:              Media type
-    types:
-        1:              Cd
-        2:              MP3
-        3:              Vinyl
-publication_year:
-    label:              Publication year
-publisher:
-    label:              Publisher
-cover:
-    label:              Cover
-add_new_album:          Add new album
-edit_album:             Edit "%TITLE%" album
-adding_success:         New album added successfully !
-editing_success:        Album edited successfully !
-delete_confirm_message: Do you really want to remove "%TITLE%" ?
-delete_success:         Album deleted successfully !
-tracks:                 Tracks
-add_track:              Add track
-remove_track:           Remove track
-track:
-    label:              Tracks
-    track_number:
-        label:          Track
+title:                      Music
+no_album:                   No album
+add:
+    label:                  Add new album
+    success:                New album added successfully !
+edit:
+    label:                  Edit "%TITLE%" album
+    success:                Album edited successfully !
+delete:
+    confirm_message:        Do you really want to remove "%TITLE%" ?
+    success:                Album deleted successfully !
+fields:
     title:
-        label:          Title
-    duration:
-        label:          Duration
-    lyrics:
-        label:          Lyrics
+        label:              Album name
+    artist:
+        label:              Artist
+    ean:
+        label:              EAN
+    media_type:
+        label:              Media type
+        types:
+            1:              Cd
+            2:              MP3
+            3:              Vinyl
+    publication_year:
+        label:              Publication year
+    publisher:
+        label:              Publisher
+    cover:
+        label:              Cover
+tracks:
+    title:                  Tracks
+    add:                    Add track
+    remove:                 Remove track
+    fields:
+        label:              Tracks
+        track_number:
+            label:          Track
+        title:
+            label:          Title
+        duration:
+            label:          Duration
+        lyrics:
+            label:          Lyrics

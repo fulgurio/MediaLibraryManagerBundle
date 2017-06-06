@@ -1,43 +1,44 @@
-music:
-    title:              Musique
-no_album:               Aucun album
-title:
-    label:              Nom de l'album
-artist:
-    label:              Artiste
-ean:
-    label:              EAN
-media_type:
-    label:              Type de média
-    types:
-        1:              Cd
-        2:              MP3
-        3:              Vinyl
-publication_year:
-    label:              Année de publication
-publisher:
-    label:              Editeur
-cover:
-    label:              Pochette
-add_new_album:          Ajouter un nouvel album
-edit_album:             Editer l'album "%TITLE%"
-adding_success:         Album ajouté avec succès !
-editing_success:        Album modifié avec succès !
-delete_confirm_message: Etes-vous sûr de vouloir supprimer "%TITLE%" ?
-delete_success:         Album supprimé avec succès !
-tracks:                 Pistes
-add_track:              Ajouter une piste
-remove_track:           Supprimer une piste
-track:
-    label:              Pistes
-    track_number:
-        label:          Piste
+title:                      Musique
+no_album:                   Aucun album
+add:
+    label:                  Ajouter un nouvel album
+    success:                Album ajouté avec succès !
+edit:
+    label:                  Editer l'album "%TITLE%"
+    success:                Album modifié avec succès !
+delete:
+    confirm_message:        Etes-vous sûr de vouloir supprimer "%TITLE%" ?
+    success:                Album supprimé avec succès !
+fields:
     title:
-        label:          Titre
-    duration:
-        label:          Durée
-    lyrics:
-        label:          Paroles
-search:
-    no_result:          Aucun résultat trouvé
-    found_result:       Résultats trouvés
+        label:              Nom de l'album
+    artist:
+        label:              Artiste
+    ean:
+        label:              EAN
+    media_type:
+        label:              Type de média
+        types:
+            1:              Cd
+            2:              MP3
+            3:              Vinyl
+    publication_year:
+        label:              Année de publication
+    publisher:
+        label:              Editeur
+    cover:
+        label:              Pochette
+tracks:
+    title:                  Pistes
+    add:                    Ajouter une piste
+    remove:                 Supprimer une piste
+    fields:
+        label:              Pistes
+        track_number:
+            label:          Piste
+        title:
+            label:          Titre
+        duration:
+            label:          Durée
+        lyrics:
+            label:          Paroles

@@ -3,6 +3,8 @@ book:
         not_blank:              Book name is required
     author:
         not_blank:              Author is required
+    media_type:
+        invalid:                Media type is invalid
     publication_year:
         invalid:                Publication date is not valid
     cover:

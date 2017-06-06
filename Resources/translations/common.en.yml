@@ -2,15 +2,15 @@ project:
     title:                Media Library Manager
     author:               Fulgurio
 homepage:                 Homepage
+search:
+    title:                Search
+    no_result:            No result found
+    found_result:         Results found
 save:                     Save
-search:                   Search
 cancel:                   Cancel
-popup_confirmation:       Confirmation popup
+remove_confirmation:      Removing Confirmation
 yes:                      Yes
 no:                       No
-select_image:             Select image
-change_image:             Change
-remove_image:             Remove
 first_page:               First page
 last_page:                Last page
 previous_page:            Previous page
@@ -18,3 +18,4 @@ next_page:                Next page
 no_result:                No result found
 edit:                     Edit
 delete:                   Delete
+browse:                   Browse
