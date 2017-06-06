@@ -68,7 +68,13 @@ var MusicAlbumManager = {
       newTrackIndex = newTrackNb - 1,
       $elt = $('#track_' + trackNb);
     if ($elt.length > 0) {
+      $elt.find('td:first-child').each(function() {
+        this.innerHTML = newTrackNb;
+      });
       this.updateId($elt, trackNb, newTrackNb, newTrackIndex);
+      // Lyrics
+      this.updateId($elt.next(), trackNb, newTrackNb, newTrackIndex);
+      this.initNextTrack(trackNb + 1);
     }
   },
 
@@ -81,9 +87,6 @@ var MusicAlbumManager = {
    * @param newTrackIndex
    */
   updateId: function($elt, trackNb, newTrackNb, newTrackIndex) {
-    $elt.find('td:first-child').each(function() {
-      this.innerHTML = newTrackNb;
-    });
     $elt.find('input,label,select,textarea,button').each(function() {
       if (this.id) {
         this.id = this.id.replace(/_[0-9]+_/, '_' + newTrackIndex + '_');
@@ -93,7 +96,6 @@ var MusicAlbumManager = {
       }
     });
     $elt.attr('id', 'track_' + newTrackNb);
-    this.initNextTrack(trackNb + 1);
   },
 
   /**
