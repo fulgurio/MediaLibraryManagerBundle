@@ -47,6 +47,7 @@ class BookType extends AbstractType
             ->add('publication_year', 'number', array(
                 'label'           => 'fields.publication_year.label',
                 'invalid_message' => 'book.publication_year.invalid',
+                'required'        => false,
                 'max_length'      => 4
             ))
             ->add('publisher', 'text', array(

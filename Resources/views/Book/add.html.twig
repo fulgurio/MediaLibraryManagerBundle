@@ -2,7 +2,7 @@
 
 {% trans_default_domain 'book' %}
 
-{% set title = ((book.id ? 'edit': 'add') ~ '.title')|trans({ '%TITLE%': book.title }) %}
+{% set title = ((book.id ? 'edit': 'add') ~ '.label')|trans({ '%TITLE%': book.title }) %}
 
 {% block title %}{{ parent() }} - {{ title }}{% endblock %}
 
