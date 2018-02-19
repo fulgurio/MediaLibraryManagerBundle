@@ -4,7 +4,7 @@
     "description": "Own media library manager online with Symfony2 framework",
     "keywords": ["media", "library"],
     "homepage": "http://github.com/fulgurio/MediaLibraryManagerBundle",
-    "license": "GPL",
+    "license": "GPL-2.0-or-later",
 
     "authors": [
         {
