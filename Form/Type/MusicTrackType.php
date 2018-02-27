@@ -30,7 +30,9 @@ class MusicTrackType extends AbstractType
 //            ->add('track_number', HiddenType::class, array('required' => true))
             ->add('title', TextType::class, array(
 //                'label'      => 'tracks.fields.title.label',
-                'max_length' => 128
+                'attr' => [
+                    'max_length' => 128
+                ]
             ))
             ->add('duration', NumberType::class, array(
 //                'label'    => 'tracks.fields.duration.label',

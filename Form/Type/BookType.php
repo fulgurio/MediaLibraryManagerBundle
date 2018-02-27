@@ -37,7 +37,9 @@ class BookType extends AbstractType
             ->add('ean', TextType::class, array(
                 'label'      => 'fields.ean.label',
                 'required'   => false,
-                'max_length' => 13
+                'attr'            => [
+                    'max_length' => 13
+                ]
             ))
             //@todo : add media type into configuration
             ->add('media_type', ChoiceType::class, array(
@@ -46,7 +48,6 @@ class BookType extends AbstractType
                         'fields.media_type.types.1' => '1',
                         'fields.media_type.types.2' => '2'
                     ),
-                    'choices_as_values' => true,
                     'required'        => true,
                     'invalid_message' => 'book.invalid.media_type'
                 )
@@ -55,7 +56,9 @@ class BookType extends AbstractType
                 'label'           => 'fields.publication_year.label',
                 'invalid_message' => 'book.publication_year.invalid',
                 'required'        => false,
-                'max_length'      => 4
+                'attr'            => [
+                    'max_length'      => 4
+                ]
             ))
             ->add('publisher', TextType::class, array(
                 'label'    => 'fields.publisher.label',

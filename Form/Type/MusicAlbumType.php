@@ -41,7 +41,9 @@ class MusicAlbumType extends AbstractType
             ->add('ean', TextType::class, array(
                 'label'      => 'fields.ean.label',
                 'required'   => false,
-                'max_length' => 13
+                'attr'       => [
+                    'max_length' => 13
+                ]
             ))
             //@todo : add media type into configuration
             ->add('media_type', ChoiceType::class, array(
@@ -51,7 +53,6 @@ class MusicAlbumType extends AbstractType
                         'fields.media_type.types.2' => '2',
                         'fields.media_type.types.3' => '3'
                     ),
-                    'choices_as_values' => true,
                     'required'        => true,
                     'invalid_message' => 'music.media_type.invalid'
                 )
@@ -60,7 +61,9 @@ class MusicAlbumType extends AbstractType
                 'label'           => 'fields.publication_year.label',
                 'required'        => false,
                 'invalid_message' => 'fields.publication_year.invalid',
-                'max_length'      => 4
+                'attr'       => [
+                    'max_length'  => 4
+                ]
             ))
             ->add('publisher', TextType::class, array(
                 'label'    => 'fields.publisher.label',
@@ -87,7 +90,7 @@ class MusicAlbumType extends AbstractType
             ))
             ->add('tracks', CollectionType::class, array(
                 'label'        => 'tracks.title',
-                'type'         => MusicTrackType::class,
+                'entry_type'         => MusicTrackType::class,
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'by_reference' => false

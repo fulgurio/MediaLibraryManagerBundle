@@ -1,4 +1,4 @@
-{% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+{% extends '@FulgurioMediaLibraryManager/base.html.twig' %}
 
 {% block content %}
 			<h1>{% trans from 'music' %}title{% endtrans %}</h1>
@@ -55,7 +55,7 @@
 {%   endfor %}
 					</tbody>
 				</table>
-{{ knp_pagination_render(albums, 'FulgurioMediaLibraryManagerBundle::pagination.html.twig')|raw }}
+{{ knp_pagination_render(albums, '@FulgurioMediaLibraryManager/pagination.html.twig')|raw }}
 			</form>
 {% endif %}
 {% endblock %}
@@ -72,5 +72,5 @@
 				$(this).ekkoLightbox();
 			});
 		</script>
-{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
+{% include '@FulgurioMediaLibraryManager/popup.html.twig' %}
 {% endblock %}

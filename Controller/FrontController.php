@@ -15,6 +15,6 @@ class FrontController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('FulgurioMediaLibraryManagerBundle:Front:index.html.twig');
+        return $this->render('@FulgurioMediaLibraryManager/Front/index.html.twig');
     }
 }

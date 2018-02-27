@@ -39,7 +39,7 @@ class MusicController extends Controller
                 $request->get('q')
             );
 
-        return $this->render('FulgurioMediaLibraryManagerBundle:Music:list.html.twig', array(
+        return $this->render('@FulgurioMediaLibraryManager/Music/list.html.twig', array(
             'albums' => $albums
             )
         );
@@ -74,7 +74,7 @@ class MusicController extends Controller
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
 
-        return $this->render('FulgurioMediaLibraryManagerBundle:Music:add.html.twig', array(
+        return $this->render('@FulgurioMediaLibraryManager/Music/add.html.twig', array(
             'form'  => $form->createView(),
             'album' => $album,
             'hasMusicService' => true === $this->container->hasParameter('fulgurio_media_library_manager.music_service')
@@ -104,7 +104,7 @@ class MusicController extends Controller
             return $this->redirectToRoute('FulgurioMLM_Music_List');
         }
 
-        return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig', array(
+        return $this->render('@FulgurioMediaLibraryManager/confirm.html.twig', array(
             'title' => $this->get('translator')->trans('remove_confirmation', array(), 'common'),
             'action' => $this->generateUrl('FulgurioMLM_Music_Remove', array('albumId' => $albumId)),
             'confirmationMessage' => $this->get('translator')->trans('delete.confirm_message', array('%TITLE%' => $album->getTitle()), 'music')

@@ -7,14 +7,14 @@ Actually, there's only music supported. Soon, we will add video, games ... just 
 Installation
 ------------
 
-This version of the bundle requires Symfony 2.8+.
+This version of the bundle requires Symfony 3.4+.
 
 ### Translations
 
 If you wish to use default texts provided in this bundle, you have to make
 sure you have translator enabled in your config.
 
-``` yaml
+```yaml
 # app/config/config.yml
 
 framework:
@@ -33,7 +33,7 @@ composer require fulgurio/media-library-manager-bundle:dev-master
 
 Enable the bundle in the kernel, with others required bundles:
 
-``` php
+```php
 <?php
 // app/AppKernel.php
 
@@ -45,29 +45,29 @@ public function registerBundles()
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
-            new Fulgurio\MediaLibraryManagerBundle\FulgurioMediaLibraryManagerBundle(),
+            new Fulgurio\MediaLibraryManagerBundle\FulgurioMediaLibraryManagerBundle()
     );
 }
 ```
 ### Set the configuration of bundles
 
-``` yaml
+```yaml
 # app/config/config.yml
 twig:
 [...]
     form_themes:
-        - 'VichUploaderBundle:Form:fields.html.twig'
-        - 'FulgurioMediaLibraryManagerBundle:Form:fields.html.twig'
+        - '@VichUploader/Form/fields.html.twig'
+        - '@FulgurioMediaLibraryManager/Form/fields.html.twig'
 [...]
 vich_uploader:
     db_driver: orm # or mongodb or propel or phpcr
     mappings:
         book_cover:
             uri_prefix:         /uploads/book
-            upload_destination: %kernel.root_dir%/../web/uploads/book
+            upload_destination: "%kernel.root_dir%/../web/uploads/book"
         music_cover:
             uri_prefix:         /uploads/music
-            upload_destination: %kernel.root_dir%/../web/uploads/music
+            upload_destination: "%kernel.root_dir%/../web/uploads/music"
 
 # Gedmo bundle
 stof_doctrine_extensions:
@@ -98,7 +98,7 @@ Now that you have activated and configured the bundle, all that is left to do is
 import the routing files.
 
 In YAML:
-``` yaml
+``yaml
 # app/config/routing.yml
 fulgurio_media_library_manager:
     resource: "@FulgurioMediaLibraryManagerBundle/Resources/config/routing.yml"
@@ -109,7 +109,7 @@ fulgurio_media_library_manager:
 
 For ORM run the following command.
 
-``` bash
+```bash
 $ php app/console doctrine:schema:update --force
 ```
 
@@ -123,11 +123,11 @@ Get data from other websites
 ------------
 There's a bundle [MediaInfoBundle](https://github.com/fulgurio/MediaInfoBundle) to get data from other website like LastFM, Amazon ...
 
-````yaml
+```yaml
 # app/config/config.yml
 fulgurio_media_library_manager:
     music_service: "nass600_media_info.music_info.manager"
     book_service: "nass600_media_info.book_info.manager"
-````
+```
 
 Don't forget to configure this bundle !
