@@ -1,4 +1,4 @@
-{% extends 'FulgurioMediaLibraryManagerBundle::base' ~ (app.request.isXmlHttpRequest ? '-modal' : '') ~ '.html.twig' %}
+{% extends '@FulgurioMediaLibraryManager/base' ~ (app.request.isXmlHttpRequest ? '-modal' : '') ~ '.html.twig' %}
 
 {% block title %}{{ title }}{% endblock %}
 

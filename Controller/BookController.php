@@ -37,7 +37,7 @@ class BookController extends Controller
                 $request->get('q')
             );
 
-        return $this->render('FulgurioMediaLibraryManagerBundle:Book:list.html.twig', array(
+        return $this->render('@FulgurioMediaLibraryManager/Book/list.html.twig', array(
             'books' => $books
             )
         );
@@ -69,7 +69,7 @@ class BookController extends Controller
             $this->addFlash('notice', (is_null($bookId) ? 'add' : 'edit') . '.success');
             return $this->redirectToRoute('FulgurioMLM_Book_List');
         }
-        return $this->render('FulgurioMediaLibraryManagerBundle:Book:add.html.twig', array(
+        return $this->render('@FulgurioMediaLibraryManager/Book/add.html.twig', array(
             'form' => $form->createView(),
             'book' => $book
             )
@@ -96,7 +96,7 @@ class BookController extends Controller
             }
             return $this->redirectToRoute('FulgurioMLM_Book_List');
         }
-        return $this->render('FulgurioMediaLibraryManagerBundle::confirm.html.twig', array(
+        return $this->render('@FulgurioMediaLibraryManager/confirm.html.twig', array(
             'title' => $this->get('translator')->trans('remove_confirmation', array(), 'common'),
             'action' => $this->generateUrl('FulgurioMLM_Book_Remove', array('bookId' => $bookId)),
             'confirmationMessage' => $this->get('translator')->trans('delete.confirm_message', array('%TITLE%' => $book->getTitle()), 'book')

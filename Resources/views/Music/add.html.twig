@@ -1,4 +1,4 @@
-{% extends 'FulgurioMediaLibraryManagerBundle::base.html.twig' %}
+{% extends '@FulgurioMediaLibraryManager/base.html.twig' %}
 
 {% trans_default_domain 'music' %}
 
@@ -38,11 +38,11 @@
 				<tbody>
 {% if form.tracks.vars is not empty %}
 {%   for trackNb, track in form.tracks %}
-{%     include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' with { 'trackNb': trackNb + 1 } %}
+{%     include '@FulgurioMediaLibraryManager/Music/addTrack.html.twig' with { 'trackNb': trackNb + 1 } %}
 {%   endfor %}
 {% endif %}
 {#{% if app.request.request.get('addTrack') %}#}
-{#{%   include 'FulgurioMediaLibraryManagerBundle:Music:addTrack.html.twig' with { 'trackNb': app.request.request.get('addTrack')[volumeNb] + 1, 'track': form.tracks.vars.prototype } %}#}
+{#{%   include '@FulgurioMediaLibraryManager/Music/addTrack.html.twig' with { 'trackNb': app.request.request.get('addTrack')[volumeNb] + 1, 'track': form.tracks.vars.prototype } %}#}
 {#{% endif %}#}
 				</tbody>
 				<tfoot>
@@ -54,7 +54,7 @@
 				</tfoot>
 			</table>
 			<script type="text/x-tmpl" id="tmpl-track">
-{% include 'FulgurioMediaLibraryManagerBundle:Music:addTrackJs.html.twig' with { 'track': form.tracks.vars.prototype } %}
+{% include '@FulgurioMediaLibraryManager/Music/addTrackJs.html.twig' with { 'track': form.tracks.vars.prototype } %}
 {% do form.tracks.setRendered %}
 			</script>
 		</div>
@@ -109,5 +109,5 @@ var searchUrl = '{{ path('FulgurioMLM_Music_Retrieve_Album_Infos') }}';
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/bootstrap-fileinput/js/fileinput.min.js') }}"></script>
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/blueimp-tmpl/js/tmpl.js') }}"></script>
 		<script src="{{ asset('bundles/fulguriomedialibrarymanager/js/music.js') }}"></script>
-{% include 'FulgurioMediaLibraryManagerBundle::popup.html.twig' %}
+{% include '@FulgurioMediaLibraryManager/popup.html.twig' %}
 {% endblock %}
